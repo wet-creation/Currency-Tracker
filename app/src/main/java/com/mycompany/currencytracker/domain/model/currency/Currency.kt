@@ -9,7 +9,9 @@ data class Currency(
     val timestamp: Long,
     val rate: Double,
     val id: Long
-)
+){
+    constructor() : this("","",0,0.0,0)
+}
 
 fun toCurrancyList(
     currencyRate: List<RateDto>,

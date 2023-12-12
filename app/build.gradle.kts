@@ -4,8 +4,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
-
-    // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
 
 }
@@ -60,9 +58,10 @@ android {
 dependencies {
     val coroutinesVer = "1.7.1"
     val coroutineLifecycleScopeVer = "2.6.2"
-    val daggerHiltVer = "2.44"
+    val daggerHiltVer = "2.48"
     val retrofitVer = "2.9.0"
     val okhttpVer = "5.0.0-alpha.2"
+    val hiltCompilerVer = "1.1.0"
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")
@@ -95,13 +94,15 @@ dependencies {
 // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:$daggerHiltVer")
     kapt("com.google.dagger:hilt-android-compiler:$daggerHiltVer")
+    kapt("androidx.hilt:hilt-compiler:$hiltCompilerVer")
+    implementation("androidx.hilt:hilt-navigation-compose:$hiltCompilerVer")
+
 
 // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVer")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVer")
     implementation("com.squareup.okhttp3:okhttp:$okhttpVer")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVer")
-
     implementation("com.google.firebase:firebase-analytics")
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 }
