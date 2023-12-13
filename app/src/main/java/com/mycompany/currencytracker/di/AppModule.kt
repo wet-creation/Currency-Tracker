@@ -1,9 +1,9 @@
 package com.mycompany.currencytracker.di
 
 import com.mycompany.currencytracker.common.Constants
-import com.mycompany.currencytracker.data.remote.CurrencyTrackerApi
-import com.mycompany.currencytracker.data.repository.CurrencyTrackerImp
-import com.mycompany.currencytracker.domain.repository.CurrencyTrackerRepository
+import com.mycompany.currencytracker.data.remote.CurrencyTrackerApiCurrencies
+import com.mycompany.currencytracker.data.repository.CurrenciesImp
+import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,17 +17,17 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideCurrencyTrackerApi(): CurrencyTrackerApi {
+    fun provideCurrencyTrackerApi(): CurrencyTrackerApiCurrencies {
         return Retrofit.Builder()
             .baseUrl(Constants.CURRENCY_TRACKER_REST_API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(CurrencyTrackerApi::class.java)
+            .create(CurrencyTrackerApiCurrencies::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideCurrencyTrackerRepository(api: CurrencyTrackerApi): CurrencyTrackerRepository {
-        return CurrencyTrackerImp(api)
+    fun provideCurrencyTrackerRepository(api: CurrencyTrackerApiCurrencies): CurrenciesRepository {
+        return CurrenciesImp(api)
     }
 }

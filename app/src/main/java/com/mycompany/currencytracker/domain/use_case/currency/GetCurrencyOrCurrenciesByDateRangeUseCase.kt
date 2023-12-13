@@ -2,8 +2,7 @@ package com.mycompany.currencytracker.domain.use_case.currency
 
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.domain.model.currency.Currency
-import com.mycompany.currencytracker.domain.model.currency.toCurrancyList
-import com.mycompany.currencytracker.domain.repository.CurrencyTrackerRepository
+import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -11,7 +10,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class GetCurrencyOrCurrenciesByDateRangeUseCase @Inject constructor(
-    private val repository: CurrencyTrackerRepository
+    private val repository: CurrenciesRepository
 ) {
     operator fun invoke(
         startDate: String,
@@ -21,9 +20,8 @@ class GetCurrencyOrCurrenciesByDateRangeUseCase @Inject constructor(
         flow {
             try {
                 emit(Resource.Loading())
-                val currencyRate = repository.getHistoricalByDateRange(startDate, endDate, symbol)
-                val currencyName = repository.getCurrenciesName(symbol)
-                emit(Resource.Success(toCurrancyList(currencyRate, currencyName)))
+                val currencyResponse = repository.getHistoricalByDateRange(startDate, endDate, symbol)
+                emit(Resource.Success(currencyResponse.map { it.toCurrency() }))
             } catch (e: HttpException) {
                 emit(Resource.Error(e.localizedMessage ?: "error"))
             } catch (e: IOException) {

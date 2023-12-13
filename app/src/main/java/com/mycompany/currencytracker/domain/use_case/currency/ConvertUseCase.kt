@@ -2,7 +2,7 @@ package com.mycompany.currencytracker.domain.use_case.currency
 
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.domain.model.currency.Convert
-import com.mycompany.currencytracker.domain.repository.CurrencyTrackerRepository
+import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -10,7 +10,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class ConvertUseCase @Inject constructor(
-    private val repository: CurrencyTrackerRepository
+    private val repository: CurrenciesRepository
 ) {
     operator fun invoke(value: Double, from: String, to: String): Flow<Resource<Convert>> = flow {
         try {
