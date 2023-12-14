@@ -1,6 +1,6 @@
-package com.mycompany.currencytracker.data.remote.dto.currency
+package com.mycompany.currencytracker.data.remote.dto
 
-import com.mycompany.currencytracker.domain.model.currency.Convert
+import com.mycompany.currencytracker.domain.model.Convert
 
 data class ConvertDto(
     val timestamp: Long,

@@ -1,12 +1,12 @@
 package com.mycompany.currencytracker.data.remote
 
-import com.mycompany.currencytracker.data.remote.dto.currency.ConvertDto
+import com.mycompany.currencytracker.data.remote.dto.ConvertDto
 import com.mycompany.currencytracker.data.remote.dto.currency.CurrencyDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface CurrencyTrackerApiCurrencies {
+interface CurrencyTrackerCurrencyService {
     @GET("latest")
     suspend fun getLatest(): List<CurrencyDto>
 
