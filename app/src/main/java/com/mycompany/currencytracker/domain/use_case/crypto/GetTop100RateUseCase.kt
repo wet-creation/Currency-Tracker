@@ -12,10 +12,10 @@ import javax.inject.Inject
 class GetTop100RateUseCase @Inject constructor(
     private val cryptosRepository: CryptosRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Crypto>>> = flow {
+    operator fun invoke(isBaseCrypto : Boolean = false): Flow<Resource<List<Crypto>>> = flow {
         try {
             emit(Resource.Loading())
-            val cryptos = cryptosRepository.getLatest()
+            val cryptos = cryptosRepository.getLatest(isBaseCrypto)
             emit(Resource.Success(cryptos.map { it.toCrypto() }))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "error"))
