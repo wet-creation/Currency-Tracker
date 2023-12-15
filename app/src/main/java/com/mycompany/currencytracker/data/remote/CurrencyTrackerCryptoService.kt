@@ -7,19 +7,19 @@ import retrofit2.http.Query
 
 interface CurrencyTrackerCryptoService {
     @GET("latest/crypto")
-    suspend fun getLatest(@Query("isBaseCrypto") isBaseCrypto: Boolean): List<CryptoDto>
+    suspend fun getLatest(@Query("baseCurrency") baseCurrency: String): List<CryptoDto>
 
     @GET("latest/{symbol}/crypto")
     suspend fun getLatestBySymbol(
         @Path("symbol") symbol: String,
-        @Query("isBaseCrypto") isBaseCrypto: Boolean
+        @Query("baseCurrency") baseCurrency: String
     ): CryptoDto
 
     @GET("historical/{date}/crypto")
     suspend fun getHistoricalByOneDate(
         @Path("date") date: String,
         @Query("symbol") symbol: String? = null,
-        @Query("isBaseCrypto") isBaseCrypto: Boolean
+        @Query("baseCurrency") baseCurrency: String
     ): List<CryptoDto>
 
     @GET("historical/crypto")
@@ -27,6 +27,6 @@ interface CurrencyTrackerCryptoService {
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String,
         @Query("symbol") symbol: String? = null,
-        @Query("isBaseCrypto") isBaseCrypto: Boolean
+        @Query("baseCurrency") baseCurrency: String
     ): List<CryptoDto>
 }

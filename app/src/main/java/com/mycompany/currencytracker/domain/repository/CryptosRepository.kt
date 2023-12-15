@@ -3,19 +3,19 @@ package com.mycompany.currencytracker.domain.repository
 import com.mycompany.currencytracker.data.remote.dto.crypto.CryptoDto
 
 interface CryptosRepository {
-    suspend fun getLatest(isBaseCrypto: Boolean = false): List<CryptoDto>
-    suspend fun getLatestBySymbol(symbol: String, isBaseCrypto: Boolean = false): CryptoDto
+    suspend fun getLatest(baseCurrency: String = "USD"): List<CryptoDto>
+    suspend fun getLatestBySymbol(symbol: String, baseCurrency: String = "USD"): CryptoDto
 
     suspend fun getHistoricalByOneDate(
         date: String,
         symbol: String? = null,
-        isBaseCrypto: Boolean = false
+        baseCurrency: String = "USD"
     ): List<CryptoDto>
 
     suspend fun getHistoricalByDateRange(
         startDate: String,
         endDate: String,
         symbol: String? = null,
-        isBaseCrypto: Boolean = false
+        baseCurrency: String = "USD"
     ): List<CryptoDto>
 }

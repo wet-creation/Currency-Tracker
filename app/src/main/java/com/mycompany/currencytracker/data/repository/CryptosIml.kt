@@ -8,29 +8,29 @@ import javax.inject.Inject
 class CryptosIml @Inject constructor(
     private val api: CurrencyTrackerCryptoService
 ) : CryptosRepository {
-    override suspend fun getLatest(isBaseCrypto: Boolean): List<CryptoDto> {
-        return api.getLatest(isBaseCrypto)
+    override suspend fun getLatest(baseCurrency: String): List<CryptoDto> {
+        return api.getLatest(baseCurrency)
     }
 
-    override suspend fun getLatestBySymbol(symbol: String, isBaseCrypto: Boolean): CryptoDto {
-        return api.getLatestBySymbol(symbol, isBaseCrypto)
+    override suspend fun getLatestBySymbol(symbol: String, baseCurrency: String): CryptoDto {
+        return api.getLatestBySymbol(symbol, baseCurrency)
     }
 
     override suspend fun getHistoricalByOneDate(
         date: String,
         symbol: String?,
-        isBaseCrypto: Boolean
+        baseCurrency: String
     ): List<CryptoDto> {
-        return api.getHistoricalByOneDate(date, symbol, isBaseCrypto)
+        return api.getHistoricalByOneDate(date, symbol, baseCurrency)
     }
 
     override suspend fun getHistoricalByDateRange(
         startDate: String,
         endDate: String,
         symbol: String?,
-        isBaseCrypto: Boolean
+        baseCurrency: String
     ): List<CryptoDto> {
-        return api.getHistoricalByDateRange(startDate, endDate, symbol, isBaseCrypto)
+        return api.getHistoricalByDateRange(startDate, endDate, symbol, baseCurrency)
     }
 
 }
