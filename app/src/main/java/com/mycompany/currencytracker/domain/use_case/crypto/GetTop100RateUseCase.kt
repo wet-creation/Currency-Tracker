@@ -1,7 +1,7 @@
 package com.mycompany.currencytracker.domain.use_case.crypto
 
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.crypto.Crypto
+import com.mycompany.currencytracker.domain.model.crypto.CryptoDetails
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,10 +12,10 @@ import javax.inject.Inject
 class GetTop100RateUseCase @Inject constructor(
     private val cryptosRepository: CryptosRepository
 ) {
-    operator fun invoke(baseCrypto : String = "USD"): Flow<Resource<List<Crypto>>> = flow {
+    operator fun invoke(baseCurrency : String = "USD"): Flow<Resource<List<CryptoDetails>>> = flow {
         try {
             emit(Resource.Loading())
-            val cryptos = cryptosRepository.getLatest(baseCrypto)
+            val cryptos = cryptosRepository.getLatest(baseCurrency)
             emit(Resource.Success(cryptos.map { it.toCrypto() }))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "error"))
