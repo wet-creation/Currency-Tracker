@@ -15,7 +15,10 @@ data class CryptoDetails(
     val athTimestamp: Long,
     val atl: Double,
     val atlTimestamp: Long,
-    val circulatingSupply: Double
+    val circulatingSupply: Double,
+    val _24h: Double?,
+    val _7d: Double?,
+    val _30d: Double?
 ) {
     constructor() : this(
         0.0,
@@ -32,6 +35,9 @@ data class CryptoDetails(
         0,
         0.0,
         0,
-        0.0
+        0.0,
+        null,
+        null,
+        null
     )
 }
