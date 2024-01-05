@@ -18,6 +18,9 @@ data class CryptoDto(
     val atl: Double,
     val atl_timestamp: Long,
     val circulating_supply: Double,
+    val _24h: Double?,
+    val _7d: Double?,
+    val _30d: Double?,
 ) {
     fun toCrypto() = CryptoDetails(
         current_price,
@@ -34,6 +37,9 @@ data class CryptoDto(
         ath_timestamp,
         atl,
         atl_timestamp,
-        circulating_supply
+        circulating_supply,
+        _24h,
+        _7d,
+        _30d
     )
 }

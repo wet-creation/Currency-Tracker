@@ -7,7 +7,19 @@ data class CurrencyDto(
     val symbol: String,
     val timestamp: Long,
     val rate: Double,
-    val name: String
+    val name: String,
+    val _24h: Double?,
+    val _7d: Double?,
+    val _30d: Double?,
 ) {
-    fun toCurrency(): Currency = Currency(symbol, name, timestamp, rate, id)
+    fun toCurrency(): Currency = Currency(
+        symbol,
+        name,
+        timestamp,
+        rate,
+        id,
+        _24h,
+        _7d,
+        _30d
+    )
 }
