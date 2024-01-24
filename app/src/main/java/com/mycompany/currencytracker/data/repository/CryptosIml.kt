@@ -1,7 +1,7 @@
 package com.mycompany.currencytracker.data.repository
 
-import com.mycompany.currencytracker.data.remote.CurrencyTrackerCryptoService
-import com.mycompany.currencytracker.data.remote.dto.crypto.CryptoDto
+import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCryptoService
+import com.mycompany.currencytracker.data.remote.dto.currency.crypto.CryptoDto
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import javax.inject.Inject
 

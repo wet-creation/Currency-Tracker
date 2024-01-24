@@ -1,7 +1,7 @@
 package com.mycompany.currencytracker.domain.use_case.crypto
 
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.crypto.CryptoDetails
+import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

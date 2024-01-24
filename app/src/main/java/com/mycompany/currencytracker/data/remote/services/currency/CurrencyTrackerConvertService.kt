@@ -1,6 +1,6 @@
-package com.mycompany.currencytracker.data.remote
+package com.mycompany.currencytracker.data.remote.services.currency
 
-import com.mycompany.currencytracker.data.remote.dto.ConvertDto
+import com.mycompany.currencytracker.data.remote.dto.currency.ConvertDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -1,6 +1,6 @@
 package com.mycompany.currencytracker.domain.repository
 
-import com.mycompany.currencytracker.data.remote.dto.currency.CurrencyDto
+import com.mycompany.currencytracker.data.remote.dto.currency.fiat.CurrencyDto
 
 interface CurrenciesRepository {
 
