@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.domain.model.currency
+package com.mycompany.currencytracker.domain.model.currency.fiat
 
 data class Currency(
     val symbol: String,

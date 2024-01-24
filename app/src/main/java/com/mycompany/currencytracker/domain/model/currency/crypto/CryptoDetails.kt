@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.domain.model.crypto
+package com.mycompany.currencytracker.domain.model.currency.crypto
 
 data class CryptoDetails(
     val rate: Double,

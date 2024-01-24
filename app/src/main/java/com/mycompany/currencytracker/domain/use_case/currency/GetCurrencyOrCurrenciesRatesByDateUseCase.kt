@@ -1,7 +1,7 @@
 package com.mycompany.currencytracker.domain.use_case.currency
 
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.currency.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

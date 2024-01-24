@@ -1,6 +1,6 @@
-package com.mycompany.currencytracker.data.remote.dto.crypto
+package com.mycompany.currencytracker.data.remote.dto.currency.crypto
 
-import com.mycompany.currencytracker.domain.model.crypto.CryptoDetails
+import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
 
 data class CryptoDto(
     val current_price: Double,

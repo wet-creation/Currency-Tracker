@@ -1,7 +1,7 @@
 package com.mycompany.currencytracker.data.repository
 
-import com.mycompany.currencytracker.data.remote.CurrencyTrackerConvertService
-import com.mycompany.currencytracker.data.remote.dto.ConvertDto
+import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerConvertService
+import com.mycompany.currencytracker.data.remote.dto.currency.ConvertDto
 import com.mycompany.currencytracker.domain.repository.ConvertRepository
 import javax.inject.Inject
 

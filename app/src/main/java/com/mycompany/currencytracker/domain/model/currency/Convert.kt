@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.domain.model
+package com.mycompany.currencytracker.domain.model.currency
 
 data class Convert(
     val timestamp: Long,

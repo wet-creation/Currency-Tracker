@@ -1,6 +1,6 @@
-package com.mycompany.currencytracker.data.remote.dto.currency
+package com.mycompany.currencytracker.data.remote.dto.currency.fiat
 
-import com.mycompany.currencytracker.domain.model.currency.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 
 data class CurrencyDto(
     val id: Long,

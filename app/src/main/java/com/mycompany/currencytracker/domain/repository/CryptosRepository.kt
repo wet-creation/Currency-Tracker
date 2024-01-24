@@ -1,6 +1,6 @@
 package com.mycompany.currencytracker.domain.repository
 
-import com.mycompany.currencytracker.data.remote.dto.crypto.CryptoDto
+import com.mycompany.currencytracker.data.remote.dto.currency.crypto.CryptoDto
 
 interface CryptosRepository {
     suspend fun getLatest(baseCurrency: String = "USD"): List<CryptoDto>

@@ -1,7 +1,7 @@
 package com.mycompany.currencytracker.domain.use_case.convert
 
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.Convert
+import com.mycompany.currencytracker.domain.model.currency.Convert
 import com.mycompany.currencytracker.domain.repository.ConvertRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
