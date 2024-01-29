@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.mycompany.currencytracker"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -24,7 +24,7 @@ android {
             useSupportLibrary = true
         }
     }
-
+    
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -52,10 +52,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
 }
 
 
 dependencies {
+    implementation("androidx.compose.ui:ui-android:1.5.4")
+    implementation("com.android.car.ui:car-ui-lib:2.5.1")
     val coroutinesVer = "1.7.1"
     val coroutineLifecycleScopeVer = "2.6.2"
     val daggerHiltVer = "2.48"

@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.currency_list.components
 
+import android.content.res.Resources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -40,6 +41,14 @@ val exampleCurrency = Currency(
     _30d = -1.0
 )
 
+fun getResourceId(resourceName: String, resourceType: String, packageName: String): Int {
+    return try {
+        Resources.getSystem().getIdentifier(resourceName, resourceType, packageName)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        0
+    }
+}
 
 @Preview
 @Composable
