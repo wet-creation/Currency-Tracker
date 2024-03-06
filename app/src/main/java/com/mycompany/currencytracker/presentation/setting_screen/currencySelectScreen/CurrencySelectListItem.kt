@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.common.Constants
-import com.mycompany.currencytracker.datastore.StoreUserSetting
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 import com.mycompany.currencytracker.presentation.ui.theme.borderColor
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor

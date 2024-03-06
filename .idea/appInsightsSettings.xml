@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.mycompany.currencytracker" />
-                  <option name="mobileSdkAppId" value="1:84599351085:android:64c39203358097d04055a4" />
-                  <option name="projectId" value="currency-tracker-9cd04" />
-                  <option name="projectNumber" value="84599351085" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

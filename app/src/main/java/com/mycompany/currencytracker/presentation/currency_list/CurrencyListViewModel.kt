@@ -11,18 +11,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.datastore.StoreUserSetting
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
 import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class CurrencyListViewModel @Inject constructor(
-    private val getCurrenciesListUseCase: GetCurrenciesListUseCase
+    private val getCurrenciesListUseCase: GetCurrenciesListUseCase,
+    private val userSettings: StoreUserSetting
 ) : ViewModel() {
     private val _state = mutableStateOf(CurrencyListState())
     val state: State<CurrencyListState> = _state
@@ -31,7 +33,7 @@ class CurrencyListViewModel @Inject constructor(
     }
 
     private fun getCurrencies(){
-        getCurrenciesListUseCase().onEach { result ->
+        getCurrenciesListUseCase(userSettings.getCurrency()).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = CurrencyListState(currencies = result.data ?: emptyList())

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.datastore.StoreUserSetting
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
 import kotlinx.coroutines.launch

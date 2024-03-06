@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.datastore.StoreUserSetting
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
 
@@ -36,7 +36,6 @@ fun CurrencyListScreen(
     val context = LocalContext.current
     val dataStore = StoreUserSetting(context)
 
-    val savedCurrency = dataStore.getCurrency.collectAsState(initial = "")
 
 
     val state = viewModel.state.value

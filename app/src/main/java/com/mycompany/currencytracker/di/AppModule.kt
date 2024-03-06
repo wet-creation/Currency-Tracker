@@ -1,6 +1,8 @@
 package com.mycompany.currencytracker.di
 
+import android.content.Context
 import com.mycompany.currencytracker.common.Constants
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerConvertService
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCryptoService
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCurrencyService
@@ -22,6 +24,7 @@ import com.mycompany.currencytracker.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -113,6 +116,12 @@ object AppModule {
     @Singleton
     fun provideUserNotificationRepository(api: UserServiceNotification): UserNotificationRepository {
         return UserNotificationImpl(api)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserSettings(@ApplicationContext appContext: Context): StoreUserSetting {
+        return StoreUserSetting(appContext)
     }
 
 }
