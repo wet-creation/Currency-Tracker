@@ -1,5 +1,6 @@
-package com.mycompany.currencytracker.presentation.currency_list
+package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,20 +24,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
+import kotlinx.coroutines.launch
 
 @Composable
-fun CurrencyListScreen(
-    viewModel: CurrencyListViewModel = hiltViewModel()
+fun CurrencySelectList(
+    viewModel: CurrencySelectListViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    val dataStore = StoreUserSetting(context)
-
-    val savedCurrency = dataStore.getCurrency.collectAsState(initial = "")
 
 
     val state = viewModel.state.value
@@ -47,42 +44,12 @@ fun CurrencyListScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Column {
-            Row (
-                modifier = Modifier
-                    .width(349.dp)
-                    .height(42.dp)
-                    .padding(start = 20.dp, end = 13.dp, top = 15.dp)
-            ){
-                Text(
-                    modifier = Modifier.weight(0.9f),
-                    text = "#",
-                    style = MaterialTheme.typography.labelSmall
-                )
-                Text(
-                    modifier = Modifier.weight(2f),
-                    text = stringResource(R.string.list_column_name),
-                    style = MaterialTheme.typography.labelSmall
-                )
-                Text(
-                    modifier = Modifier.weight(3f),
-                    text = stringResource(R.string.list_column_price),
-                    textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.labelSmall
-                )
-                Text(
-                    modifier = Modifier.weight(1.8f),
-                    text = stringResource(R.string.list_column_change),
-                    textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.labelSmall
-                )
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            itemsIndexed(list) { _, currency ->
+                CurrencySelectItem(currency = currency)
+                Divider()
             }
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(list) { currNumber, currency ->
-                    CurrencyListItem(currency = currency, curr_number = currNumber + 1, onItemClick = {})
-                }
 
-            }
         }
         if (state.error.isNotBlank()) {
             Text(

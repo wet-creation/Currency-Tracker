@@ -6,6 +6,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.mycompany.currencytracker.R
 
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -15,7 +16,14 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 22.sp,
         letterSpacing = 0.5.sp
+    ),
+    labelSmall = TextStyle(
+        fontSize = 12.sp,
+        lineHeight = 22.sp,
+        fontWeight = FontWeight(400),
+        color = secondTextColor
     )
+
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,

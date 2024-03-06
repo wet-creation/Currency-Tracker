@@ -1,6 +1,8 @@
 package com.mycompany.currencytracker.presentation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,11 +23,13 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -47,55 +51,48 @@ import com.mycompany.currencytracker.presentation.seacrh.SearchScreen
 import com.mycompany.currencytracker.presentation.ui.theme.secondBackColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
-
-
 @Composable
-fun BottomNavGraph(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = BottomBarScreen.Home.route
-    ) {
-        composable(BottomBarScreen.Home.route) {
-            MainListScreen()
-        }
-        composable(BottomBarScreen.Search.route) {
-            SearchScreen()
-        }
-        composable(BottomBarScreen.Favorite.route) {
-            FavoriteListScreen()
-        }
-    }
-}
-
-
-@Composable
-fun BottomBar(navHostController: NavHostController) {
+fun BottomBar(
+    navHostController: NavHostController,
+    bottomBarState: MutableState<Boolean>
+){
     val screens = listOf(
         BottomBarScreen.Home,
         BottomBarScreen.Search,
         BottomBarScreen.Favorite
     )
-    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
 
-    Row(
-        modifier = Modifier
-            .width(390.dp)
-            .height(80.dp)
-            .background(color = secondBackColor, shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        screens.forEach { screen ->
-            AddItem(
-                screen = screen,
-                currentDestination = currentDestination,
-                navController = navHostController
-            )
+    AnimatedVisibility(
+
+        visible = bottomBarState.value,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+        content = {
+            val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
+
+            Row(
+                modifier = Modifier
+                    .width(390.dp)
+                    .height(80.dp)
+                    .background(
+                        color = secondBackColor,
+                        shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
+                    ),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                screens.forEach { screen ->
+                    AddItem(
+                        screen = screen,
+                        currentDestination = currentDestination,
+                        navController = navHostController
+                    )
+                }
+            }
         }
-    }
+    )
 }
-
 @Composable
 fun RowScope.AddItem(
     screen: BottomBarScreen,
@@ -128,10 +125,10 @@ fun RowScope.AddItem(
                     .padding(0.17778.dp)
                     .width(40.dp)
                     .height(40.dp),
-                painter = painterResource(id = if (selected) screen.selectedIcon else screen.unselectedIcon),
-                contentDescription = "icon"
+                painter = painterResource(id = screen.icon),
+                contentDescription = "icon",
+                colorFilter = ColorFilter.tint(contentColor)
             )
-
             Text(
                 text = screen.title,
                 style = TextStyle(

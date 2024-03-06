@@ -1,31 +1,25 @@
-package com.mycompany.currencytracker.presentation.currency_list
+package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen
 
-import android.app.Application
-import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
-import dagger.hilt.android.internal.Contexts.getApplication
+import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class CurrencyListViewModel @Inject constructor(
+class CurrencySelectListViewModel @Inject constructor(
     private val getCurrenciesListUseCase: GetCurrenciesListUseCase
+
 ) : ViewModel() {
     private val _state = mutableStateOf(CurrencyListState())
     val state: State<CurrencyListState> = _state
+
     init {
         getCurrencies()
     }

@@ -15,28 +15,24 @@ import com.mycompany.currencytracker.common.Constants
 sealed class BottomBarScreen(
     val route: String,
     val title: String,
-    val selectedIcon: Int,
-    val unselectedIcon: Int
+    val icon: Int
 ) {
     object Home: BottomBarScreen(
         route = Constants.home,
         //title = Resources.getSystem().getString(R.string.home_screen_name),
         title = "Home",
-        selectedIcon  = R.drawable.home_selected,
-        unselectedIcon = R.drawable.home_unselected
+        icon = R.drawable.home_icon
     )
     object Search: BottomBarScreen(
         route = Constants.search,
         //title = Resources.getSystem().getString(R.string.search_screen_name),
         title = "Search",
-        selectedIcon = R.drawable.search_selected,
-        unselectedIcon = R.drawable.search_unselected
+        icon = R.drawable.search_icon
     )
     object Favorite: BottomBarScreen(
         route = Constants.favorite,
         //title = Resources.getSystem().getString(R.string.favorite_screen_name),
         title = "Favorite",
-        selectedIcon = R.drawable.favorite_selected,
-        unselectedIcon = R.drawable.favorite_unselected
+        icon = R.drawable.favorite_icon
     )
 }
