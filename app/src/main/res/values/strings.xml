@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Currency Tracker</string>
+    <string name="home_screen_name">Home</string>
+    <string name="search_screen_name">Search</string>
+    <string name="favorite_screen_name">Favourite</string>
+    <string name="list_column_name">Name</string>
+    <string name="list_column_price">Price</string>
+    <string name="list_column_change">24h</string>
+    <string name="setting_my_account">My Account</string>
+    <string name="setting_dark_mode">Dark Mode</string>
+    <string name="setting_currency">Currency (Primary / Secondary)</string>
+    <string name="setting_language">Language</string>
 </resources>

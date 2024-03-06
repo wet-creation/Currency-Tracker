@@ -13,10 +13,10 @@ import javax.inject.Inject
 class GetCurrenciesListUseCase @Inject constructor(
     private val repository: CurrenciesRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Currency>>> = flow {
+    operator fun invoke(baseCurrency : String = "USD"): Flow<Resource<List<Currency>>> = flow {
         try {
             emit(Resource.Loading())
-            val currencyResponse = repository.getLatest()
+            val currencyResponse = repository.getLatest(baseCurrency)
             emit(Resource.Success(currencyResponse.map { it.toCurrency() }))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "error"))
