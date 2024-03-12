@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -50,10 +51,10 @@ fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boole
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
     val title: String = when (navBackStackEntry?.destination?.route ?: home) {
-        my_account_screen -> "My Account"
-        calculator_screen -> "Currency Converter"
-        select_main_currency_screen -> "Select currency"
-        else -> "Currency Tracker"
+        my_account_screen -> stringResource(id = R.string.account_top_bar)
+        calculator_screen -> stringResource(id = R.string.converter_top_bar)
+        select_main_currency_screen -> stringResource(id = R.string.select_currency_top_bar)
+        else -> stringResource(id = R.string.app_name)
     }
 
     AnimatedVisibility(

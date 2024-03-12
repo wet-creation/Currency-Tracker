@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,6 +28,7 @@ import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
 import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CryptoListScreen(
     viewModel: CryptoListViewModel = hiltViewModel()
@@ -31,9 +36,15 @@ fun CryptoListScreen(
     val state = viewModel.state.value
     val list: MutableList<CryptoDetails> = state.cryptos.toMutableList()
 
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = state.isLoading,
+        onRefresh = { viewModel.getCryptos() }
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .pullRefresh(pullRefreshState)
     ) {
         Column {
             Row (
@@ -71,10 +82,20 @@ fun CryptoListScreen(
                 }
 
             }
+            PullRefreshIndicator(
+                refreshing = viewModel.state.value.isLoading,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
         }
         if (state.error.isNotBlank()) {
             Text(
                 text = state.error
+            )
+            PullRefreshIndicator(
+                refreshing = viewModel.state.value.isLoading,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
             )
         }
         if (state.isLoading) {

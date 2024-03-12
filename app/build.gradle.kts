@@ -110,4 +110,6 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVer")
 //    implementation("com.google.firebase:firebase-analytics")
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("androidx.compose.material:material:1.6.3")
+
 }
