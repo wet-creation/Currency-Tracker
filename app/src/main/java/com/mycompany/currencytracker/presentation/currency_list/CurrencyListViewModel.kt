@@ -32,7 +32,7 @@ class CurrencyListViewModel @Inject constructor(
         getCurrencies()
     }
 
-    private fun getCurrencies(){
+    fun getCurrencies(){
         getCurrenciesListUseCase(userSettings.getCurrency()).onEach { result ->
             when(result) {
                 is Resource.Success -> {

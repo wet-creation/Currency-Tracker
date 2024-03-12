@@ -1,10 +1,11 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen
+package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.сurrency
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
+import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
 import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,10 +16,13 @@ import javax.inject.Inject
 @HiltViewModel
 class CurrencySelectListViewModel @Inject constructor(
     private val getCurrenciesListUseCase: GetCurrenciesListUseCase
-
 ) : ViewModel() {
+
     private val _state = mutableStateOf(CurrencyListState())
     val state: State<CurrencyListState> = _state
+
+    private val _searchResult = mutableStateOf<List<Currency>>(emptyList())
+    val searchResult: State<List<Currency>> = _searchResult
 
     init {
         getCurrencies()
@@ -28,7 +32,9 @@ class CurrencySelectListViewModel @Inject constructor(
         getCurrenciesListUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _state.value = CurrencyListState(currencies = result.data ?: emptyList())
+                    val currencies = result.data ?: emptyList()
+                    _state.value = CurrencyListState(currencies = currencies)
+                    _searchResult.value = currencies
                 }
                 is Resource.Error -> {
                     _state.value = CurrencyListState(
@@ -40,5 +46,12 @@ class CurrencySelectListViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun search(query: String) {
+        val filteredList = _state.value.currencies.filter { currency ->
+            currency.name.contains(query, ignoreCase = true) || currency.symbol.contains(query, ignoreCase = true)
+        }
+        _searchResult.value = filteredList
     }
 }

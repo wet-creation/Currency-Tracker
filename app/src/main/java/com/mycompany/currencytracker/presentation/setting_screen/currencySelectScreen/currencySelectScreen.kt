@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -19,7 +18,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListScreen
-import com.mycompany.currencytracker.presentation.currency_list.CurrencyListScreen
+import com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.crypto.CryptoSelectList
+import com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.сurrency.CurrencySelectList
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable
@@ -55,7 +55,7 @@ fun CurrencySelectScreen() {
         }
         when (tabIndex) {
             0 -> CurrencySelectList()
-            1 -> CryptoListScreen()
+            1 -> CryptoSelectList()
         }
     }
 }

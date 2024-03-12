@@ -21,3 +21,5 @@ val secondTextColor = Color(0xFF999999)
 
 val secondBackColor = Color(0xFF111110)
 val borderColor = Color(0xFF6F6D6D)
+
+val buttonsColor = Color(0xFF3D362D)

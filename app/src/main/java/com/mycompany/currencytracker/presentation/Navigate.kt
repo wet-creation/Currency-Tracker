@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.mycompany.currencytracker.presentation.calculator.CalculatorScreen
 import com.mycompany.currencytracker.presentation.fav_list.FavoriteListScreen
 import com.mycompany.currencytracker.presentation.notification_screen.NotificatiionScreen
 import com.mycompany.currencytracker.presentation.seacrh.SearchScreen
@@ -33,6 +34,9 @@ fun Navigate(navController: NavHostController) {
         }
         composable(Screen.SelectMainCurrencyScreen.route){
             CurrencySelectScreen()
+        }
+        composable(Screen.CalculatorScreen.route){
+            CalculatorScreen()
         }
     }
 }
