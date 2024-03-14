@@ -82,12 +82,12 @@ fun CryptoListScreen(
                 }
 
             }
-            PullRefreshIndicator(
-                refreshing = viewModel.state.value.isLoading,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
         }
+        PullRefreshIndicator(
+            refreshing = viewModel.state.value.isLoading,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
         if (state.error.isNotBlank()) {
             Text(
                 text = state.error

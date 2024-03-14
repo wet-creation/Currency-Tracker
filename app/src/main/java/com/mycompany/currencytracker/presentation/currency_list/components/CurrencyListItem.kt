@@ -1,8 +1,5 @@
 package com.mycompany.currencytracker.presentation.currency_list.components
 
-import android.content.res.Resources
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -21,14 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toLowerCase
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.common.Constants.image_url
 import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 
@@ -104,13 +96,13 @@ fun CurrencyListItem(
         Row(
             horizontalArrangement = Arrangement.End
         ) {
-            changeRate(currency = currency)
+            ChangeRate(currency = currency)
         }
     }
 }
 
 @Composable
-fun changeRate(
+fun ChangeRate(
     currency: Currency,
     time: Int = 24
 ) {

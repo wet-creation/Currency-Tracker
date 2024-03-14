@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
-import com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.SearchBar
+import com.mycompany.currencytracker.presentation.calculator.currencySelectScreen.SearchBar
 
 @Composable
 fun CurrencySelectList(
