@@ -1,6 +1,6 @@
 package com.mycompany.currencytracker.data.remote.dto.currency.fiat
 
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 
 data class CurrencyDto(
     val id: Long,
@@ -12,14 +12,5 @@ data class CurrencyDto(
     val _7d: Double?,
     val _30d: Double?,
 ) {
-    fun toCurrency(): Currency = Currency(
-        symbol,
-        name,
-        timestamp,
-        rate,
-        id,
-        _24h,
-        _7d,
-        _30d
-    )
+
 }

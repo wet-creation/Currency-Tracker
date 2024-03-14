@@ -22,14 +22,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.common.Constants.image_url
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.rateDownColor
 import com.mycompany.currencytracker.presentation.ui.theme.rateUpColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
-val exampleCurrency = Currency(
+val exampleFiatDetails = FiatDetails(
     symbol = "USD",
     name = "US Dollar",
     timestamp = System.currentTimeMillis(),
@@ -43,14 +43,14 @@ val exampleCurrency = Currency(
 
 @Composable
 fun CurrencyListItem(
-    currency: Currency = exampleCurrency,
-    curr_number: Int = 1,
-    onItemClick: (Currency) -> Unit
+    fiatDetails: FiatDetails = exampleFiatDetails,
+    currNumber: Int = 1,
+    onItemClick: (FiatDetails) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable{onItemClick(currency)}
+            .clickable{onItemClick(fiatDetails)}
             .padding(20.dp)
             .width(349.dp)
             .height(24.dp),
@@ -58,7 +58,7 @@ fun CurrencyListItem(
     ) {
         Text(
             modifier = Modifier.weight(0.9f),
-            text = "$curr_number",
+            text = "$currNumber",
             style = MaterialTheme.typography.bodyLarge,
             color = secondTextColor
         )
@@ -68,13 +68,13 @@ fun CurrencyListItem(
                     .width(24.dp)
                     .height(24.dp)
                     .clip(CircleShape),
-                model = image_url + currency.symbol.lowercase() + ".png",
+                model = image_url + fiatDetails.symbol.lowercase() + ".png",
                 contentDescription = "image description",
                 contentScale = ContentScale.Crop
             )
             Text(
                 modifier = Modifier.padding(start = 12.dp),
-                text = currency.symbol,
+                text = fiatDetails.symbol,
                 style = MaterialTheme.typography.bodyLarge,
                 color = mainTextColor
             )
@@ -84,9 +84,9 @@ fun CurrencyListItem(
                 .weight(3f)
                 .padding(horizontal = 10.dp),
             text = when {
-                currency.rate >= 1 -> "$${String.format("%.2f", currency.rate)}"
-                currency.rate >= 0.0001 -> "$${String.format("%.4f", currency.rate)}"
-                currency.rate >= 0.00000001 -> "$${String.format("%.8f", currency.rate)}"
+                fiatDetails.rate >= 1 -> "$${String.format("%.2f", fiatDetails.rate)}"
+                fiatDetails.rate >= 0.0001 -> "$${String.format("%.4f", fiatDetails.rate)}"
+                fiatDetails.rate >= 0.00000001 -> "$${String.format("%.8f", fiatDetails.rate)}"
                 else -> "$0.00000000"
             },
             style = MaterialTheme.typography.bodyLarge,
@@ -96,25 +96,25 @@ fun CurrencyListItem(
         Row(
             horizontalArrangement = Arrangement.End
         ) {
-            ChangeRate(currency = currency)
+            ChangeRate(fiatDetails = fiatDetails)
         }
     }
 }
 
 @Composable
 fun ChangeRate(
-    currency: Currency,
+    fiatDetails: FiatDetails,
     time: Int = 24
 ) {
     val pastRate: Double? = when (time) {
-        24 -> currency._24h
-        7 -> currency._7d
-        30 -> currency._30d
+        24 -> fiatDetails._24h
+        7 -> fiatDetails._7d
+        30 -> fiatDetails._30d
         else -> null
     }
 
     pastRate?.let {
-        if (currency.rate >= it) {
+        if (fiatDetails.rate >= it) {
             Icon(
                 modifier = Modifier
                     .padding(end = 0.dp)
@@ -124,7 +124,7 @@ fun ChangeRate(
                 tint = rateUpColor
             )
             Text(
-                text = "${String.format("%.2f", (currency.rate / pastRate - 1) * 100)}%",
+                text = "${String.format("%.2f", (fiatDetails.rate / pastRate - 1) * 100)}%",
                 style = MaterialTheme.typography.bodyLarge,
                 color = rateUpColor
             )
@@ -136,7 +136,7 @@ fun ChangeRate(
                 tint = rateDownColor
             )
             Text(
-                text = "${String.format("%.2f", (pastRate / currency.rate - 1) * 100)}%",
+                text = "${String.format("%.2f", (pastRate / fiatDetails.rate - 1) * 100)}%",
                 style = MaterialTheme.typography.bodyLarge,
                 color = rateDownColor
             )

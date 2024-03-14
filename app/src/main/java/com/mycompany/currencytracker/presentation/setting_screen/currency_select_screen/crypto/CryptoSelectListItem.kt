@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.сurrency
+package com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.crypto
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -20,24 +19,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.mycompany.currencytracker.common.Constants
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
-import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
-fun CurrencySelectItem(
-    currency: Currency,
-) {
+fun CryptoSelectListItem(
+    crypto: CryptoGeneralInfo,
+    onItemClick: ()->Unit
+){
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     val dataStore = StoreUserSetting(context)
 
-    val savedCurrency = dataStore.getCurrency.collectAsState(initial = "")
+    val savedCrypto = dataStore.getCrypto.collectAsState(initial = "")
 
-    val color = if (savedCurrency.value == currency.symbol) {
+    val color = if (savedCrypto.value == crypto.symbol) {
         selectTextColor
     } else {
         secondTextColor
@@ -49,9 +47,7 @@ fun CurrencySelectItem(
             .height(56.dp)
             .padding(start = 20.dp, bottom = 16.dp, top = 16.dp)
             .clickable {
-                scope.launch {
-                    dataStore.saveCurrency(currency.symbol)
-                }
+                onItemClick()
             }
     ) {
         AsyncImage(
@@ -59,7 +55,7 @@ fun CurrencySelectItem(
                 .width(24.dp)
                 .height(24.dp)
                 .clip(CircleShape),
-            model = Constants.image_url + currency.symbol.lowercase() + ".png",
+            model = crypto.image,
             contentDescription = "image description",
             contentScale = ContentScale.Crop
         )
@@ -67,12 +63,12 @@ fun CurrencySelectItem(
             modifier = Modifier
                 .padding(start = 12.dp)
                 .width(79.dp),
-            text = currency.symbol,
+            text = crypto.symbol.uppercase(Locale.getDefault()),
             style = MaterialTheme.typography.bodyLarge,
             color = color
         )
         Text(
-            text = currency.name,
+            text = crypto.name,
             style = TextStyle(
                 fontSize = 16.sp,
                 lineHeight = 22.sp,

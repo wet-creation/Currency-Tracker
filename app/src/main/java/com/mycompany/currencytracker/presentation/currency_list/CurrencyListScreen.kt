@@ -9,41 +9,44 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrencyListScreen(
     viewModel: CurrencyListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    val list: MutableList<Currency> = state.currencies.toMutableList()
+    val list: MutableList<FiatDetails> = state.currencies.toMutableList()
     list.removeIf { it.symbol == "BTC" }
 
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = state.isLoading,
-        onRefresh = { viewModel.getCurrencies() }
-    )
-
+    val pullRefreshState = rememberPullToRefreshState()
+    LaunchedEffect(viewModel.state.value.isLoading) {
+        if (state.isLoading)
+            pullRefreshState.startRefresh()
+        else
+            pullRefreshState.endRefresh()
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .pullRefresh(pullRefreshState)
+            .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         Column {
             Row (
@@ -77,15 +80,14 @@ fun CurrencyListScreen(
             }
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 itemsIndexed(list) { currNumber, currency ->
-                    CurrencyListItem(currency = currency, curr_number = currNumber + 1, onItemClick = {})
+                    CurrencyListItem(fiatDetails = currency, currNumber = currNumber + 1, onItemClick = {})
                 }
 
             }
 
 
         }
-        PullRefreshIndicator(
-            refreshing = viewModel.state.value.isLoading,
+        PullToRefreshContainer(
             state = pullRefreshState,
             modifier = Modifier.align(Alignment.TopCenter)
         )
@@ -93,8 +95,7 @@ fun CurrencyListScreen(
             Text(
                 text = state.error
             )
-            PullRefreshIndicator(
-                refreshing = viewModel.state.value.isLoading,
+            PullToRefreshContainer(
                 state = pullRefreshState,
                 modifier = Modifier.align(Alignment.TopCenter)
             )

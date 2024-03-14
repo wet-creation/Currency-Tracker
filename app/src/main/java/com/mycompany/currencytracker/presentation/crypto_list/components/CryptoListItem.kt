@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.crypto_list.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,7 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
+import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.rateDownColor
 import com.mycompany.currencytracker.presentation.ui.theme.rateUpColor
@@ -35,18 +36,20 @@ import kotlin.math.floor
 
 @Composable
 fun CryptoListItem(
-    crypto: CryptoDetails,
-    number: Int = 1
-){
+    crypto: CryptoGeneralInfo,
+    number: Int = 1,
+    onItemClick: (crypto: CryptoGeneralInfo) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp)
             .width(349.dp)
-            .height(43.dp),
+            .height(43.dp)
+            .clickable { onItemClick(crypto) },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Top
-    ){
+    ) {
         Text(
             modifier = Modifier.weight(0.9f),
             text = "$number",
@@ -66,10 +69,10 @@ fun CryptoListItem(
             Column(
                 verticalArrangement = Arrangement.spacedBy(-1.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
                     modifier = Modifier.padding(start = 12.dp),
-                    text = "${crypto.symbol.toUpperCase()}",
+                    text = crypto.symbol.uppercase(),
                     style = MaterialTheme.typography.bodyLarge,
                     color = mainTextColor
                 )
@@ -105,23 +108,21 @@ fun CryptoListItem(
         Row(
             horizontalArrangement = Arrangement.End
         ) {
-            changeCryptoRate(crypto = crypto)
+            ChangeCryptoRate(crypto = crypto)
         }
     }
 }
 
 @Composable
-fun changeCryptoRate(
-    crypto: CryptoDetails,
+fun ChangeCryptoRate(
+    crypto: CryptoGeneralInfo,
     time: Int = 24
 ) {
-    var change = 0.00
-    var pastRate: Double?
-    when (time) {
-        24 -> pastRate = crypto._24h
-        7 -> pastRate = crypto._7d
-        30 -> pastRate = crypto._30d
-        else -> pastRate = null
+    val pastRate: Double? = when (time) {
+        24 -> crypto._24h
+        7 -> crypto._7d
+        30 -> crypto._30d
+        else -> null
     }
 
     pastRate?.let {
@@ -163,8 +164,8 @@ fun changeCryptoRate(
 
 }
 
-fun calculateMarketCap(marketCap: Long) : String{
-    return when{
+fun calculateMarketCap(marketCap: Long): String {
+    return when {
         marketCap >= 1000000000 -> "${floor(marketCap / 1000000000f * 1000f) / 1000f} B"
         marketCap >= 1000000 -> "${floor(marketCap / 1000000f * 1000f) / 1000f} M"
         else -> "$marketCap"

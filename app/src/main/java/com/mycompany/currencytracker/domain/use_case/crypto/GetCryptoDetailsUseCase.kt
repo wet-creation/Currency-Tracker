@@ -3,6 +3,7 @@ package com.mycompany.currencytracker.domain.use_case.crypto
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
+import com.mycompany.currencytracker.domain.model.currency.crypto.toCryptoDetails
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,7 +21,7 @@ class GetCryptoDetailsUseCase @Inject constructor(
             emit(Resource.Loading())
             debugLog("Crypto symbol $symbol")
             val cryptoResponse = repository.getLatestBySymbol(symbol)
-            emit(Resource.Success(cryptoResponse.toCrypto()))
+            emit(Resource.Success(cryptoResponse.toCryptoDetails()))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "error"))
         } catch (e: IOException) {

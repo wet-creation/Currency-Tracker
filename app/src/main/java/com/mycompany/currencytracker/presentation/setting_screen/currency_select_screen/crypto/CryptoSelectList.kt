@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.crypto
+package com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.crypto
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.SearchBar
+import com.mycompany.currencytracker.presentation.common.currency.SearchBar
 
 @Composable
 fun CryptoSelectList(
@@ -48,7 +48,7 @@ fun CryptoSelectList(
             items(searchResult) { crypto ->
                CryptoSelectListItem(
                     crypto = crypto
-                )
+                ) {}
             }
         }
 

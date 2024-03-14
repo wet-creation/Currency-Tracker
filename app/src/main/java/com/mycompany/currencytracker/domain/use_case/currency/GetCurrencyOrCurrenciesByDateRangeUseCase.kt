@@ -1,7 +1,8 @@
 package com.mycompany.currencytracker.domain.use_case.currency
 
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
+import com.mycompany.currencytracker.domain.model.currency.fiat.toCurrency
 import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,7 +17,7 @@ class GetCurrencyOrCurrenciesByDateRangeUseCase @Inject constructor(
         startDate: String,
         endDate: String,
         symbol: String? = null
-    ): Flow<Resource<List<Currency>>> =
+    ): Flow<Resource<List<FiatDetails>>> =
         flow {
             try {
                 emit(Resource.Loading())

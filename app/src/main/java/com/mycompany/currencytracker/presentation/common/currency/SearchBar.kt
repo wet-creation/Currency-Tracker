@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen
+package com.mycompany.currencytracker.presentation.common.currency
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -22,9 +21,9 @@ import androidx.compose.ui.unit.sp
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.presentation.ui.theme.buttonsColor
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun SearchBar(searchText : String, onSearchTextChanged: (String) -> Unit){
+fun SearchBar(searchText : String, onSearchTextChanged: (String) -> Unit) {
     TextField(
         value = searchText,
         onValueChange = onSearchTextChanged,
@@ -49,10 +48,12 @@ fun SearchBar(searchText : String, onSearchTextChanged: (String) -> Unit){
             )
         },
         shape = CircleShape,
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
+        colors = TextFieldDefaults.colors(
+            unfocusedTextColor = Color.Gray,
+            focusedTextColor = Color.White,
             disabledTextColor = Color.Transparent,
-            containerColor = buttonsColor,
+            focusedContainerColor = buttonsColor,
+            unfocusedContainerColor = buttonsColor,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent

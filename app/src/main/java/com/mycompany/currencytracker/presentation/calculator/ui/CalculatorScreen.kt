@@ -8,41 +8,73 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.BottomSheetValue
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.rememberBottomSheetScaffoldState
-import androidx.compose.material.rememberBottomSheetState
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.presentation.calculator.CalculatorViewModel
 import com.mycompany.currencytracker.presentation.calculator.states.ActionInput
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertButton
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertItem
+import com.mycompany.currencytracker.presentation.common.currency.ListScreen
+import com.mycompany.currencytracker.presentation.common.currency.MyTab
+import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoListScreen
+import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatListScreen
+import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
+import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
 import com.mycompany.currencytracker.presentation.ui.theme.darkBackgroundColor
+import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalculatorScreen() {
     val viewModel = hiltViewModel<CalculatorViewModel>()
     val rowState1 = viewModel.calculatorState1.value
     val rowState2 = viewModel.calculatorState2.value
-    val sheetScaffoldState = rememberBottomSheetState(
-        initialValue = BottomSheetValue.Collapsed
-    )
+    val sheetScaffoldState = rememberModalBottomSheetState()
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = sheetScaffoldState
     )
-    val scope = rememberCoroutineScope ()
+    val scope = rememberCoroutineScope()
     BottomSheetScaffold(
         sheetContent = {
+            ListScreen(fiatListScreen = {
+                FiatListScreen(
+                    haveHeader = false,
+                    itemContent = { currencyItem, currNumber ->
+                        CurrencyListItem(currencyItem, currNumber) {
 
+                        }
+                    })
+            }, cryptoListScreen = {
+                CryptoListScreen(
+                    haveHeader = false,
+                    itemContent = { crypto ->
+                        CryptoListItem(crypto = crypto) {
+
+                        }
+                    }
+                )
+            }) { title ->
+                Text(
+                    text = title,
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        color = selectTextColor,
+                    )
+                )
+            }
         },
         scaffoldState = scaffoldState,
         sheetPeekHeight = 0.dp

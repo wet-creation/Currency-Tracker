@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.сurrency
+package com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.сurrency
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,8 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
-import com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.SearchBar
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
+import com.mycompany.currencytracker.presentation.common.currency.SearchBar
 
 @Composable
 fun CurrencySelectList(
@@ -30,7 +30,7 @@ fun CurrencySelectList(
 
     val state = viewModel.state.value
 
-    val searchResult: MutableList<Currency> = viewModel.searchResult.value.toMutableList()
+    val searchResult: MutableList<FiatDetails> = viewModel.searchResult.value.toMutableList()
     searchResult.removeIf { it.symbol == "BTC" }
 
     var searchText by remember { mutableStateOf("") }
@@ -51,7 +51,9 @@ fun CurrencySelectList(
             modifier = Modifier.fillMaxWidth()
         ) {
             items(searchResult) { currency ->
-                CurrencySelectItem(currency = currency)
+                CurrencySelectListItem(fiatDetails = currency) {
+
+                }
             }
         }
 

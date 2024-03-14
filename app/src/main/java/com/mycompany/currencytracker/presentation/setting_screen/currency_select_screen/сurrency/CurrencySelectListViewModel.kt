@@ -1,11 +1,11 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.сurrency
+package com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.сurrency
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
 import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +21,8 @@ class CurrencySelectListViewModel @Inject constructor(
     private val _state = mutableStateOf(CurrencyListState())
     val state: State<CurrencyListState> = _state
 
-    private val _searchResult = mutableStateOf<List<Currency>>(emptyList())
-    val searchResult: State<List<Currency>> = _searchResult
+    private val _searchResult = mutableStateOf<List<FiatDetails>>(emptyList())
+    val searchResult: State<List<FiatDetails>> = _searchResult
 
     init {
         getCurrencies()
@@ -38,7 +38,7 @@ class CurrencySelectListViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _state.value = CurrencyListState(
-                        error = result.message ?: "an unexpected error occured"
+                        error = result.message ?: "an unexpected error occurred"
                     )
                 }
                 is Resource.Loading -> {

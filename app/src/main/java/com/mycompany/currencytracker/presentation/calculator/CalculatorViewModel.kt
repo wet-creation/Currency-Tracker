@@ -10,7 +10,7 @@ import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.Convert
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.domain.use_case.convert.ConvertUseCase
 import com.mycompany.currencytracker.domain.use_case.crypto.GetCryptoDetailsUseCase
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrencyDetailsUseCase
@@ -70,11 +70,11 @@ class CalculatorViewModel @Inject constructor(
         getCrypto(userSetting.getCrypto())
     }
     private fun getFiat(symbol: String) {
-        var fiatDetails: Currency
+        var fiatDetails: FiatDetails
         currencyDetailsUseCase(symbol).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    fiatDetails = result.data ?: Currency()
+                    fiatDetails = result.data ?: FiatDetails()
                     _calculatorRowState1.value = _calculatorRowState1.value.copy(
                         image = image_url + fiatDetails.symbol.lowercase() + ".png",
                         symbol = fiatDetails.symbol,

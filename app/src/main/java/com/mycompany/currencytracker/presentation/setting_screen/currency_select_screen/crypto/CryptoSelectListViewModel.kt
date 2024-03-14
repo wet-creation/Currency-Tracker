@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.crypto
+package com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.crypto
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.domain.use_case.crypto.GetTop100RateUseCase
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListState
-import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -23,8 +22,8 @@ class CryptoSelectListViewModel @Inject constructor(
     private val _state = mutableStateOf(CryptoListState())
     val state: State<CryptoListState> = _state
 
-    private val _searchResult = mutableStateOf<List<CryptoDetails>>(emptyList())
-    val searchResult: State<List<CryptoDetails>> = _searchResult
+    private val _searchResult = mutableStateOf<List<CryptoGeneralInfo>>(emptyList())
+    val searchResult: State<List<CryptoGeneralInfo>> = _searchResult
 
     init {
         getCryptos()

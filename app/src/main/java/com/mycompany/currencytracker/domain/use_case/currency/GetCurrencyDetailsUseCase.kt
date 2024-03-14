@@ -1,7 +1,8 @@
 package com.mycompany.currencytracker.domain.use_case.currency
 
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
+import com.mycompany.currencytracker.domain.model.currency.fiat.toCurrency
 import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,7 +15,7 @@ class GetCurrencyDetailsUseCase @Inject constructor(
 ) {
     operator fun invoke(
         symbol: String
-    ): Flow<Resource<Currency>> = flow {
+    ): Flow<Resource<FiatDetails>> = flow {
         try {
             emit(Resource.Loading())
             val currencyResponse = repository.getLatestBySymbol(symbol)
