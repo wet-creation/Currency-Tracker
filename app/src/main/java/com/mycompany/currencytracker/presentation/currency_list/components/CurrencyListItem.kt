@@ -74,7 +74,7 @@ fun CurrencyListItem(
             )
             Text(
                 modifier = Modifier.padding(start = 12.dp),
-                text = "${currency.symbol}",
+                text = currency.symbol,
                 style = MaterialTheme.typography.bodyLarge,
                 color = mainTextColor
             )
@@ -106,13 +106,11 @@ fun ChangeRate(
     currency: Currency,
     time: Int = 24
 ) {
-    var change = 0.00
-    var pastRate: Double?
-    when (time) {
-        24 -> pastRate = currency._24h
-        7 -> pastRate = currency._7d
-        30 -> pastRate = currency._30d
-        else -> pastRate = null
+    val pastRate: Double? = when (time) {
+        24 -> currency._24h
+        7 -> currency._7d
+        30 -> currency._30d
+        else -> null
     }
 
     pastRate?.let {

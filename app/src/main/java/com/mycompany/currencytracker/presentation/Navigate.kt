@@ -9,7 +9,7 @@ import com.mycompany.currencytracker.presentation.fav_list.FavoriteListScreen
 import com.mycompany.currencytracker.presentation.notification_screen.NotificatiionScreen
 import com.mycompany.currencytracker.presentation.seacrh.SearchScreen
 import com.mycompany.currencytracker.presentation.setting_screen.SettingScreen
-import com.mycompany.currencytracker.presentation.calculator.currencySelectScreen.CurrencySelectScreen
+import com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.CurrencySelectScreen
 
 @Composable
 fun Navigate(navController: NavHostController) {

@@ -3,9 +3,7 @@ package com.mycompany.currencytracker.domain.use_case.crypto
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
-import com.mycompany.currencytracker.domain.model.currency.fiat.Currency
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
-import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

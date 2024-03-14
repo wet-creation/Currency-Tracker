@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mycompany.currencytracker.presentation.calculator.currencySelectScreen.crypto.CryptoSelectList
-import com.mycompany.currencytracker.presentation.calculator.currencySelectScreen.сurrency.CurrencySelectList
+import com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.crypto.CryptoSelectList
+import com.mycompany.currencytracker.presentation.setting_screen.currencySelectScreen.сurrency.CurrencySelectList
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable
