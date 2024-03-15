@@ -12,13 +12,9 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -26,34 +22,37 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.presentation.currency_list.CurrencyListViewModel
+import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
+import eu.bambooapps.material3.pullrefresh.pullRefresh
+import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FiatListScreen(
     haveHeader: Boolean,
+    viewModel: IFiatViewModel = hiltViewModel<CurrencyListViewModel>(),
     itemContent: @Composable (
         currencyItem: FiatDetails,
         currNumber: Int
-    ) -> Unit
-
+    ) -> Unit,
 ) {
-    val viewModel: CurrencyListViewModel = hiltViewModel()
+
     val state = viewModel.state.value
-    val list: MutableList<FiatDetails> = state.currencies.toMutableList()
+    val list: MutableList<FiatDetails> = viewModel.state.value.currencies.toMutableList()
     list.removeIf { it.symbol == "BTC" }
 
-    val pullRefreshState = rememberPullToRefreshState()
-    LaunchedEffect(viewModel.state.value.isLoading) {
-        if (state.isLoading)
-            pullRefreshState.startRefresh()
-        else
-            pullRefreshState.endRefresh()
-    }
+    val pullRefreshState =
+        rememberPullRefreshState(
+            refreshing = state.isLoading,
+            onRefresh = { viewModel.getCurrencies() }
+        )
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .nestedScroll(pullRefreshState.nestedScrollConnection)
+            .pullRefresh(pullRefreshState)
     ) {
         Column {
             if (haveHeader) {
@@ -88,27 +87,42 @@ fun FiatListScreen(
                 }
             }
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(list) { currNumber, currency ->
-                    itemContent(
-                        currency,
-                        currNumber + 1
-                    )
+
+                if (viewModel is CurrencyListViewModel) {
+                    itemsIndexed(list) { currNumber, currency ->
+                        itemContent(
+                            currency,
+                            currNumber + 1
+                        )
+                    }
+                } else if (viewModel is FiatSearchListViewModel) {
+                    itemsIndexed(viewModel.searchResult.value) { currNumber, currency ->
+                        itemContent(
+                            currency,
+                            currNumber + 1
+                        )
+                    }
                 }
+
 
             }
 
         }
-        PullToRefreshContainer(
+        PullRefreshIndicator(
+            refreshing = state.isLoading,
             state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
+            modifier = Modifier
+                .align(Alignment.TopCenter)
         )
         if (state.error.isNotBlank()) {
             Text(
                 text = state.error
             )
-            PullToRefreshContainer(
+            PullRefreshIndicator(
+                refreshing = state.isLoading,
                 state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
             )
         }
     }

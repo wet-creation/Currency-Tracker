@@ -12,13 +12,9 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -26,30 +22,32 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListViewModel
+import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
+import eu.bambooapps.material3.pullrefresh.pullRefresh
+import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CryptoListScreen(
     haveHeader: Boolean,
+    viewModel: ICryptoViewModel = hiltViewModel<CryptoListViewModel>(),
     itemContent: @Composable (
         currencyItem: CryptoGeneralInfo,
-    ) -> Unit,
+    ) -> Unit
+
 ) {
-    val viewModel: CryptoListViewModel = hiltViewModel()
     val state = viewModel.state.value
     val list: MutableList<CryptoGeneralInfo> = state.cryptos.toMutableList()
 
-    val pullRefreshState = rememberPullToRefreshState()
-    LaunchedEffect(viewModel.state.value.isLoading) {
-        if (state.isLoading)
-            pullRefreshState.startRefresh()
-        else
-            pullRefreshState.endRefresh()
-    }
+    val pullRefreshState =
+        rememberPullRefreshState(
+            refreshing = state.isLoading,
+            onRefresh = { viewModel.getCrypto() }
+        )
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .nestedScroll(pullRefreshState.nestedScrollConnection)
+            .pullRefresh(pullRefreshState)
     ) {
         Column {
             if (haveHeader) {
@@ -84,23 +82,37 @@ fun CryptoListScreen(
                 }
             }
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(list) { _, crypto ->
-                    itemContent(crypto)
+                if (viewModel is CryptoListViewModel) {
+                    itemsIndexed(list) { _, crypto ->
+                        itemContent(crypto)
+                    }
+                } else if (viewModel is CryptoSearchListViewModel) {
+                    itemsIndexed(viewModel.searchResult.value) { _, currency ->
+                        itemContent(
+                            currency
+                        )
+                    }
                 }
+
+
 
             }
         }
-        PullToRefreshContainer(
+        PullRefreshIndicator(
+            refreshing = state.isLoading,
             state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
+            modifier = Modifier
+                .align(Alignment.TopCenter)
         )
         if (state.error.isNotBlank()) {
             Text(
                 text = state.error
             )
-            PullToRefreshContainer(
+            PullRefreshIndicator(
+                refreshing = state.isLoading,
                 state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
             )
         }
     }

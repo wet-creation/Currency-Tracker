@@ -16,4 +16,6 @@
     <string name="converter_top_bar">Currency Converter</string>
     <string name="account_top_bar">My Account</string>
     <string name="select_currency_top_bar">Select currency</string>
+    <string name="fiat">Fiat</string>
+    <string name="crypto">Crypto</string>
 </resources>

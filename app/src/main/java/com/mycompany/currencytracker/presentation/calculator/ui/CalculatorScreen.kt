@@ -27,7 +27,6 @@ import com.mycompany.currencytracker.presentation.calculator.states.ActionInput
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertButton
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertItem
 import com.mycompany.currencytracker.presentation.common.currency.ListScreen
-import com.mycompany.currencytracker.presentation.common.currency.MyTab
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoListScreen
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatListScreen
 import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem

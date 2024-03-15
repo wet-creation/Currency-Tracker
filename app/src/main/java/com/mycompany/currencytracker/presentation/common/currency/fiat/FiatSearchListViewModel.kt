@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.сurrency
+package com.mycompany.currencytracker.presentation.common.currency.fiat
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class CurrencySelectListViewModel @Inject constructor(
+class FiatSearchListViewModel @Inject constructor(
     private val getCurrenciesListUseCase: GetCurrenciesListUseCase
-) : ViewModel() {
+) : ViewModel(), IFiatViewModel {
 
     private val _state = mutableStateOf(CurrencyListState())
-    val state: State<CurrencyListState> = _state
+    override val state: State<CurrencyListState> = _state
 
     private val _searchResult = mutableStateOf<List<FiatDetails>>(emptyList())
     val searchResult: State<List<FiatDetails>> = _searchResult
@@ -27,8 +27,7 @@ class CurrencySelectListViewModel @Inject constructor(
     init {
         getCurrencies()
     }
-
-    private fun getCurrencies(){
+     override fun getCurrencies(){
         getCurrenciesListUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {

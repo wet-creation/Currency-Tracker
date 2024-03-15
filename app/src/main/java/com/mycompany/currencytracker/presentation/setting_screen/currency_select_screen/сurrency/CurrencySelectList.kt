@@ -22,10 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.presentation.common.currency.SearchBar
+import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
 
 @Composable
 fun CurrencySelectList(
-    viewModel: CurrencySelectListViewModel = hiltViewModel()
+    viewModel: FiatSearchListViewModel = hiltViewModel()
 ) {
 
     val state = viewModel.state.value

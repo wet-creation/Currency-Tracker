@@ -24,7 +24,7 @@ fun MainListScreen() {
             CryptoListScreen(
                 haveHeader = true
             ) { crypto ->
-                CryptoListItem(crypto = crypto) {
+                CryptoListItem(crypto = crypto, number = crypto.rank) {
 
                 }
             }

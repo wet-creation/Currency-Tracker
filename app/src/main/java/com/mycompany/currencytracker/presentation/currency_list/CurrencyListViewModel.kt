@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
+import com.mycompany.currencytracker.presentation.common.currency.fiat.IFiatViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,24 +17,27 @@ import javax.inject.Inject
 class CurrencyListViewModel @Inject constructor(
     private val getCurrenciesListUseCase: GetCurrenciesListUseCase,
     private val userSettings: StoreUserSetting
-) : ViewModel() {
+) : ViewModel(), IFiatViewModel {
     private val _state = mutableStateOf(CurrencyListState())
-    val state: State<CurrencyListState> = _state
+    override val state: State<CurrencyListState> = _state
+
     init {
         getCurrencies()
     }
 
-    fun getCurrencies(){
+    override fun getCurrencies() {
         getCurrenciesListUseCase(userSettings.getCurrency()).onEach { result ->
-            when(result) {
+            when (result) {
                 is Resource.Success -> {
                     _state.value = CurrencyListState(currencies = result.data ?: emptyList())
                 }
+
                 is Resource.Error -> {
                     _state.value = CurrencyListState(
                         error = result.message ?: "an unexpected error occured"
                     )
                 }
+
                 is Resource.Loading -> {
                     _state.value = CurrencyListState(isLoading = true)
                 }

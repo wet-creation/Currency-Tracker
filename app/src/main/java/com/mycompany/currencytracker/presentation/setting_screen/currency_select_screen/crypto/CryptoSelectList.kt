@@ -21,10 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.presentation.common.currency.SearchBar
+import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
 
 @Composable
 fun CryptoSelectList(
-    viewModel: CryptoSelectListViewModel = hiltViewModel()
+    viewModel: CryptoSearchListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     val searchResult = viewModel.searchResult.value

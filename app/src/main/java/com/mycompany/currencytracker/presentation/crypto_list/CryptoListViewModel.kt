@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.crypto.GetTop100RateUseCase
+import com.mycompany.currencytracker.presentation.common.currency.crypto.ICryptoViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,16 +17,17 @@ import javax.inject.Inject
 class CryptoListViewModel @Inject constructor(
     private val getTop100RateUseCase: GetTop100RateUseCase,
     private val userSettings: StoreUserSetting
-) : ViewModel() {
+) : ViewModel(), ICryptoViewModel {
 
     private val _state = mutableStateOf(CryptoListState())
-    val state: State<CryptoListState> = _state
+    override val state: State<CryptoListState> = _state
+
 
     init {
-        getCryptos()
+        getCrypto()
     }
 
-    fun getCryptos(){
+    override fun getCrypto(){
         getTop100RateUseCase(userSettings.getCrypto()).onEach { result ->
             when(result) {
                 is Resource.Success -> {

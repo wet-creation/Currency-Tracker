@@ -1,11 +1,10 @@
-package com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.crypto
+package com.mycompany.currencytracker.presentation.common.currency.crypto
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.domain.use_case.crypto.GetTop100RateUseCase
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListState
@@ -15,21 +14,21 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class CryptoSelectListViewModel @Inject constructor(
+class CryptoSearchListViewModel @Inject constructor(
     private val getTop100RateUseCase: GetTop100RateUseCase
-) : ViewModel() {
+) : ViewModel(), ICryptoViewModel {
 
     private val _state = mutableStateOf(CryptoListState())
-    val state: State<CryptoListState> = _state
+    override val state: State<CryptoListState> = _state
 
     private val _searchResult = mutableStateOf<List<CryptoGeneralInfo>>(emptyList())
     val searchResult: State<List<CryptoGeneralInfo>> = _searchResult
 
     init {
-        getCryptos()
+        getCrypto()
     }
 
-    private fun getCryptos(){
+    override fun getCrypto(){
         getTop100RateUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
@@ -39,7 +38,7 @@ class CryptoSelectListViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _state.value = CryptoListState(
-                        error = result.message ?: "an unexpected error occured"
+                        error = result.message ?: "an unexpected error occurred"
                     )
                 }
                 is Resource.Loading -> {
