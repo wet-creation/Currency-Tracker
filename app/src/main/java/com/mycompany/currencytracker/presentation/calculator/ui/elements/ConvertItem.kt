@@ -24,7 +24,8 @@ import com.mycompany.currencytracker.presentation.calculator.states.RowStateCalc
 @Composable
 fun ConvertItem(
     rowStateCalculator: RowStateCalculator,
-    contentDescription: String
+    contentDescription: String,
+    onChangeCurrency: () -> Unit = {}
 ) {
     Row(
         Modifier
@@ -38,6 +39,7 @@ fun ConvertItem(
                 .weight(1f)
                 .fillMaxWidth()
                 .clickable {
+                    onChangeCurrency()
                     debugLog("Change currency")
                 }
         ) {
@@ -68,13 +70,6 @@ fun ConvertItem(
                     debugLog("Select value")
                 }
         ) {
-//            BasicTextField(
-//                value = rowStateCalculator.sum,
-//                textStyle = MaterialTheme.typography.displayLarge,
-//                onValueChange = {},
-//                singleLine = true,
-//
-//            )
             Text(
                 text = rowStateCalculator.sum,
                 style = MaterialTheme.typography.displayLarge,

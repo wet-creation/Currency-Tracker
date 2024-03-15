@@ -14,7 +14,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -26,46 +31,64 @@ import com.mycompany.currencytracker.presentation.calculator.CalculatorViewModel
 import com.mycompany.currencytracker.presentation.calculator.states.ActionInput
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertButton
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertItem
+import com.mycompany.currencytracker.presentation.calculator.ui.elements.CryptoListItem
+import com.mycompany.currencytracker.presentation.calculator.ui.elements.FiatListItem
 import com.mycompany.currencytracker.presentation.common.currency.ListScreen
+import com.mycompany.currencytracker.presentation.common.currency.SearchPosition
+import com.mycompany.currencytracker.presentation.common.currency.StateListScreen
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoListScreen
+import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatListScreen
-import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
-import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
+import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.ui.theme.darkBackgroundColor
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalculatorScreen() {
     val viewModel = hiltViewModel<CalculatorViewModel>()
+    val fiatSearchListViewModel = hiltViewModel<FiatSearchListViewModel>()
+    val cryptoSearchListViewModel = hiltViewModel<CryptoSearchListViewModel>()
     val rowState1 = viewModel.calculatorState1.value
     val rowState2 = viewModel.calculatorState2.value
     val sheetScaffoldState = rememberModalBottomSheetState()
+    var searchQuery by remember {
+        mutableStateOf("")
+    }
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = sheetScaffoldState
     )
     val scope = rememberCoroutineScope()
     BottomSheetScaffold(
         sheetContent = {
-            ListScreen(fiatListScreen = {
-                FiatListScreen(
-                    haveHeader = false,
-                    itemContent = { currencyItem, currNumber ->
-                        CurrencyListItem(currencyItem, currNumber) {
+            ListScreen(
+                searchPosition = SearchPosition.InBetween,
+                stateListScreen = StateListScreen(searchQuery) {
+                    searchQuery = it
+                },
+                fiatListScreen = {
+                    FiatListScreen(
+                        haveHeader = false,
+                        viewModel = fiatSearchListViewModel,
+                        itemContent = { currencyItem, _ ->
+                            FiatListItem(currencyItem) {
 
-                        }
-                    })
-            }, cryptoListScreen = {
-                CryptoListScreen(
-                    haveHeader = false,
-                    itemContent = { crypto ->
-                        CryptoListItem(crypto = crypto) {
+                            }
+                        })
+                },
+                cryptoListScreen = {
+                    CryptoListScreen(
+                        haveHeader = false,
+                        viewModel = cryptoSearchListViewModel,
+                        itemContent = { crypto ->
+                            CryptoListItem(crypto = crypto) {
 
+                            }
                         }
-                    }
-                )
-            }) { title ->
+                    )
+                }) { title ->
                 Text(
                     text = title,
                     style = TextStyle(
@@ -90,11 +113,19 @@ fun CalculatorScreen() {
             ConvertItem(
                 rowState1,
                 contentDescription = "img ${rowState1.symbol}"
-            )
+            ) {
+                scope.launch {
+                    scaffoldState.bottomSheetState.expand()
+                }
+            }
             ConvertItem(
                 rowState2,
                 contentDescription = "img ${rowState2.symbol}"
-            )
+            ) {
+                scope.launch {
+                    scaffoldState.bottomSheetState.expand()
+                }
+            }
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -149,8 +180,10 @@ fun CalculatorScreen() {
             }
         }
     }
-
-
+    LaunchedEffect(key1 = searchQuery) {
+        fiatSearchListViewModel.search(searchQuery)
+        cryptoSearchListViewModel.search(searchQuery)
+    }
 }
 
 

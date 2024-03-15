@@ -39,8 +39,7 @@ fun FiatListScreen(
 ) {
 
     val state = viewModel.state.value
-    val list: MutableList<FiatDetails> = viewModel.state.value.currencies.toMutableList()
-    list.removeIf { it.symbol == "BTC" }
+    val list = state.currencies
 
     val pullRefreshState =
         rememberPullRefreshState(

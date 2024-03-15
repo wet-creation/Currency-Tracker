@@ -34,7 +34,7 @@ class CurrencyListViewModel @Inject constructor(
 
                 is Resource.Error -> {
                     _state.value = CurrencyListState(
-                        error = result.message ?: "an unexpected error occured"
+                        error = result.message ?: "an unexpected error occurred"
                     )
                 }
 
