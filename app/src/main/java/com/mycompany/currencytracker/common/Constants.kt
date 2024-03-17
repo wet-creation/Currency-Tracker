@@ -1,7 +1,7 @@
 package com.mycompany.currencytracker.common
 
 object Constants {
-    const val CURRENCY_TRACKER_REST_API_URL = "http://109.196.191.83:56260"
+    const val CURRENCY_TRACKER_REST_API_URL = "http://109.196.179.233:56260"
     const val home = "home"
     const val search = "search"
     const val favorite = "favorite"

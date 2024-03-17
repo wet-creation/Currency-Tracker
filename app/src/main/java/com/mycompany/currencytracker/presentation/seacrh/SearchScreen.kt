@@ -24,7 +24,6 @@ import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable
 fun SearchScreen() {
-
     val fiatSearchListViewModel = hiltViewModel<FiatSearchListViewModel>()
     val cryptoSearchListViewModel = hiltViewModel<CryptoSearchListViewModel>()
     var stateQuery by remember {

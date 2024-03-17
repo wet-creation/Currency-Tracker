@@ -12,7 +12,7 @@ import javax.inject.Inject
 class ConvertUseCase @Inject constructor(
     private val repository: ConvertRepository
 ) {
-    operator fun invoke(from: String, to: String, value: Double): Flow<Resource<Convert>> = flow {
+    operator fun invoke(from: String, to: String, value: Double = 0.0): Flow<Resource<Convert>> = flow {
         try {
             emit(Resource.Loading())
             val converted = repository.convert(value, from, to).toConvert()
