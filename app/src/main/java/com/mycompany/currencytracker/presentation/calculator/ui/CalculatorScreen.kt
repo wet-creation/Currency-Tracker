@@ -1,15 +1,18 @@
 package com.mycompany.currencytracker.presentation.calculator.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -22,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -140,7 +144,8 @@ fun CalculatorScreen() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(top = 20.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
 
@@ -154,11 +159,18 @@ fun CalculatorScreen() {
                     isFistRowOpen = true
                 }
             }
-            Button(onClick = {
-                viewModel.swapRows()
-            }) {
-                Text(text = "SwapRows")
+            Row(horizontalArrangement = Arrangement.Absolute.Left, modifier = Modifier.fillMaxWidth().
+            padding(start = 20.dp, bottom = 20.dp)) {
+                Button(onClick = {
+                    viewModel.swapRows()
+                }) {
+                    Box(modifier = Modifier) {
+                        Icon(painter = painterResource(id = R.drawable.change_values_icon), contentDescription = "change_values")
+                    }
+
+                }
             }
+
 
             ConvertItem(
                 rowState2,
