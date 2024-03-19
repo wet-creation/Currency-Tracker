@@ -33,6 +33,7 @@ fun MainListScreen(
             }
         })
     { title ->
+
         Text(
             text = title,
             style = TextStyle(
@@ -40,6 +41,7 @@ fun MainListScreen(
                 color = selectTextColor,
             )
         )
+
 
     }
 }

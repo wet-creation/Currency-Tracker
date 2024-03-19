@@ -1,6 +1,5 @@
 package com.mycompany.currencytracker.presentation.calculator.ui.elements
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -36,7 +35,6 @@ fun ConvertButton(
             }
             .then(modifier)
             .fillMaxHeight()
-            .background(background)
             .clip(RoundedCornerShape(50.dp))
     ) {
         if (text != "-1")

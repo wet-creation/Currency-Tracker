@@ -18,14 +18,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.presentation.calculator.states.RowStateCalculator
 
 @Composable
 fun ConvertItem(
     rowStateCalculator: RowStateCalculator,
     contentDescription: String,
-    onChangeCurrency: () -> Unit = {}
+    onClickCurrency: () -> Unit = {}
 ) {
     Row(
         Modifier
@@ -39,8 +38,8 @@ fun ConvertItem(
                 .weight(1f)
                 .fillMaxWidth()
                 .clickable {
-                    onChangeCurrency()
-                    debugLog("Change currency")
+                    onClickCurrency()
+
                 }
         ) {
             AsyncImage(
@@ -66,15 +65,13 @@ fun ConvertItem(
             modifier = Modifier
                 .weight(3f)
                 .fillMaxWidth()
-                .clickable {
-                    debugLog("Select value")
-                }
         ) {
             Text(
-                text = rowStateCalculator.sum,
+                text =  if (rowStateCalculator.sum != "0.0000") rowStateCalculator.sum else "0",
                 style = MaterialTheme.typography.displayLarge,
                 textAlign = TextAlign.End,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 1
             )
             Text(
                 text = rowStateCalculator.name,
