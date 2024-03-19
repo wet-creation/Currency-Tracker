@@ -9,18 +9,20 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.Currency
 import javax.inject.Inject
 
 class GetCryptoDetailsUseCase @Inject constructor(
     private val repository: CryptosRepository
 ) {
     operator fun invoke(
-        symbol: String
+        symbol: String,
+        baseCurrency: String = "USD"
     ): Flow<Resource<CryptoDetails>> = flow {
         try {
             emit(Resource.Loading())
             debugLog("Crypto symbol $symbol")
-            val cryptoResponse = repository.getLatestBySymbol(symbol)
+            val cryptoResponse = repository.getLatestBySymbol(symbol, baseCurrency)
             emit(Resource.Success(cryptoResponse.toCryptoDetails()))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "error"))

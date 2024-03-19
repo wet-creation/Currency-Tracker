@@ -105,7 +105,7 @@ fun CalculatorScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(darkBackgroundColor),
+                ,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
 

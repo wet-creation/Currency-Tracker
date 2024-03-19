@@ -8,17 +8,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.Currency
 import javax.inject.Inject
 
 class GetCurrencyDetailsUseCase @Inject constructor(
     private val repository: CurrenciesRepository
 ) {
     operator fun invoke(
-        symbol: String
+        symbol: String,
+        baseCurrency: String = "USD"
     ): Flow<Resource<FiatDetails>> = flow {
         try {
             emit(Resource.Loading())
-            val currencyResponse = repository.getLatestBySymbol(symbol)
+            val currencyResponse = repository.getLatestBySymbol(symbol, baseCurrency)
             emit(Resource.Success(currencyResponse.toCurrency()))
 
         } catch (e: HttpException) {

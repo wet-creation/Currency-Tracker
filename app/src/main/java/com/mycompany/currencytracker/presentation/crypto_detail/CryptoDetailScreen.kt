@@ -1,6 +1,5 @@
-package com.mycompany.currencytracker.presentation.currency_detail
+package com.mycompany.currencytracker.presentation.crypto_detail
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -18,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun CurrencyDetailScreen(
-    viewModel: CurrencyDetailViewModel = hiltViewModel(),
+fun CryptoDetailScreen(
+    viewModel: CryptoDetailViewModel = hiltViewModel(),
 ) {
 
     val state = viewModel.state.value
@@ -27,7 +26,7 @@ fun CurrencyDetailScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        state.currency?.let {currency ->
+        state.crypto?.let {crypto ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -37,7 +36,7 @@ fun CurrencyDetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         Text(
-                            text = "$${currency.rate}",
+                            text = "$${crypto.rate}",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp)
