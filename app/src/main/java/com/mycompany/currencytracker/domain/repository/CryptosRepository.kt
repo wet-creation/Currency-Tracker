@@ -5,7 +5,7 @@ import com.mycompany.currencytracker.data.remote.dto.currency.crypto.CryptoDto
 interface CryptosRepository {
     suspend fun getLatest(baseCurrency: String = "USD"): List<CryptoDto>
     suspend fun getLatestBySymbol(symbol: String, baseCurrency: String = "USD"): CryptoDto
-    suspend fun getPeriod(timestamp: Long, symbol: String = "USD"): List<CryptoDto>
+    suspend fun getPeriod(timestamp: Long, symbol: String, baseCurrency: String = "USD"): List<CryptoDto>
     suspend fun getHistoricalByOneDate(
         date: String,
         symbol: String? = null,
