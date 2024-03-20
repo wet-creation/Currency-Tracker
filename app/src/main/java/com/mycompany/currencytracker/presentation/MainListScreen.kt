@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.mycompany.currencytracker.presentation.common.currency.ListScreen
-import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoListScreen
-import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatListScreen
+import com.mycompany.currencytracker.presentation.common.ListScreen
+import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
+import com.mycompany.currencytracker.presentation.common.fiat.FiatListScreen
 import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
 import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor

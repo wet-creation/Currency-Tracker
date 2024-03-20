@@ -18,6 +18,4 @@ object Constants {
     const val select_main_currency_screen = "select_main_currency_screen"
     const val fiat_detail_screen = "fiat_detail_screen"
     const val coin_detail_screen = "coin_detail_screen"
-
-
 }

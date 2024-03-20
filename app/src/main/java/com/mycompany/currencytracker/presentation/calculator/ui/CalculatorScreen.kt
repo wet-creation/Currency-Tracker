@@ -37,13 +37,13 @@ import com.mycompany.currencytracker.presentation.calculator.ui.elements.Convert
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.CryptoListItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.FiatListItem
-import com.mycompany.currencytracker.presentation.common.currency.ListScreen
-import com.mycompany.currencytracker.presentation.common.currency.SearchPosition
-import com.mycompany.currencytracker.presentation.common.currency.StateListScreen
-import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoListScreen
-import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
-import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatListScreen
-import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.ListScreen
+import com.mycompany.currencytracker.presentation.common.SearchPosition
+import com.mycompany.currencytracker.presentation.common.StateListScreen
+import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
+import com.mycompany.currencytracker.presentation.common.crypto.CryptoSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.fiat.FiatListScreen
+import com.mycompany.currencytracker.presentation.common.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import kotlinx.coroutines.launch
 

@@ -8,25 +8,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.common.Constants.image_url
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
+import com.mycompany.currencytracker.presentation.common.fiat.ChangeFiatRate
 
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.rateDownColor
-import com.mycompany.currencytracker.presentation.ui.theme.rateUpColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
 val exampleFiatDetails = FiatDetails(
@@ -52,9 +48,9 @@ fun CurrencyListItem(
             .fillMaxWidth()
             .clickable{onItemClick(fiatDetails)}
             .padding(20.dp)
-            .width(349.dp)
             .height(24.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             modifier = Modifier.weight(0.9f),
@@ -96,58 +92,8 @@ fun CurrencyListItem(
         Row(
             horizontalArrangement = Arrangement.End
         ) {
-            ChangeRate(fiatDetails = fiatDetails)
+            ChangeFiatRate(fiatDetails = fiatDetails)
         }
     }
 }
 
-@Composable
-fun ChangeRate(
-    fiatDetails: FiatDetails,
-    time: Int = 24
-) {
-    val pastRate: Double? = when (time) {
-        24 -> fiatDetails._24h
-        7 -> fiatDetails._7d
-        30 -> fiatDetails._30d
-        else -> null
-    }
-
-    pastRate?.let {
-        if (fiatDetails.rate >= it) {
-            Icon(
-                modifier = Modifier
-                    .padding(end = 0.dp)
-                    .rotate(180f),
-                imageVector = Icons.Rounded.ArrowDropDown,
-                contentDescription = "currDown",
-                tint = rateUpColor
-            )
-            Text(
-                text = "${String.format("%.2f", (fiatDetails.rate / pastRate - 1) * 100)}%",
-                style = MaterialTheme.typography.bodyLarge,
-                color = rateUpColor
-            )
-        } else {
-            Icon(
-                modifier = Modifier.padding(end = 0.dp),
-                imageVector = Icons.Rounded.ArrowDropDown,
-                contentDescription = "currDown",
-                tint = rateDownColor
-            )
-            Text(
-                text = "${String.format("%.2f", (pastRate / fiatDetails.rate - 1) * 100)}%",
-                style = MaterialTheme.typography.bodyLarge,
-                color = rateDownColor
-            )
-        }
-
-        return
-    }
-    Text(
-        text = "-",
-        style = MaterialTheme.typography.bodyLarge,
-        color = secondTextColor
-    )
-
-}

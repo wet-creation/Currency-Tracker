@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common.currency.crypto
+package com.mycompany.currencytracker.presentation.common.crypto
 
 import androidx.compose.runtime.State
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListState

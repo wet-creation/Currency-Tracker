@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common.currency
+package com.mycompany.currencytracker.presentation.common
 
 data class StateListScreen (
     val inputText: String = "",
