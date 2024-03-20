@@ -39,6 +39,13 @@ val Typography = Typography(
         fontWeight = FontWeight(400),
         color = mainTextColor
     ),
+    labelMedium = TextStyle(
+        fontSize = 16.sp,
+        lineHeight = 22.sp,
+        fontWeight = FontWeight(700),
+        color = secondTextColor
+    ),
+
 
 
     /* Other default text styles to override

@@ -6,7 +6,7 @@ interface CurrenciesRepository {
 
     suspend fun getLatest(baseCurrency: String = "USD"): List<CurrencyDto>
     suspend fun getLatestBySymbol(symbol: String, baseCurrency: String = "USD"): CurrencyDto
-
+    suspend fun getPeriod(timestamp: Long, symbol: String = "USD"): List<CurrencyDto>
     suspend fun getHistoricalByOneDate(
         date: String,
         symbol: String? = null,

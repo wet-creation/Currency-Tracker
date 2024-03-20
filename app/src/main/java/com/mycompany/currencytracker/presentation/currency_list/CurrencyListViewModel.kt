@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
-import com.mycompany.currencytracker.presentation.common.currency.fiat.IFiatViewModel
+import com.mycompany.currencytracker.presentation.common.fiat.IFiatViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
