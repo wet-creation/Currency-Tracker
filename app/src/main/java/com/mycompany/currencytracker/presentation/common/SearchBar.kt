@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -14,10 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.presentation.ui.theme.buttonsColor
 
@@ -59,11 +57,6 @@ fun SearchBar(searchText : String, onSearchTextChanged: (String) -> Unit) {
             disabledIndicatorColor = Color.Transparent
         ),
         singleLine = true,
-        textStyle = TextStyle(
-            fontSize = 16.sp,
-            lineHeight = 22.sp,
-            fontWeight = FontWeight(700),
-            color = Color(0xFF999999)
-        )
+        textStyle = MaterialTheme.typography.labelMedium
     )
 }
