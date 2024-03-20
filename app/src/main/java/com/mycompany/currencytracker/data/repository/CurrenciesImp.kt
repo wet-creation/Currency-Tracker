@@ -16,8 +16,12 @@ class CurrenciesImp @Inject constructor(
         return api.getLatestBySymbol(symbol, baseCurrency)
     }
 
-    override suspend fun getPeriod(timestamp: Long, symbol: String): List<CurrencyDto> {
-        return api.getPeriod(timestamp, symbol)
+    override suspend fun getPeriod(
+        timestamp: Long,
+        symbol: String,
+        baseCurrency: String
+    ): List<CurrencyDto> {
+        return api.getPeriod(timestamp, symbol, baseCurrency)
     }
 
     override suspend fun getHistoricalByOneDate(

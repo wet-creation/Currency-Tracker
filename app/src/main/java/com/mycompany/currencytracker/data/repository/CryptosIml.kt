@@ -16,8 +16,12 @@ class CryptosIml @Inject constructor(
         return api.getLatestBySymbol(symbol, baseCurrency)
     }
 
-    override suspend fun getPeriod(timestamp: Long, symbol: String): List<CryptoDto> {
-        return api.getPeriod(timestamp, symbol)
+    override suspend fun getPeriod(
+        timestamp: Long,
+        symbol: String,
+        baseCurrency: String
+    ): List<CryptoDto> {
+        return api.getPeriod(timestamp, symbol, baseCurrency)
     }
 
     override suspend fun getHistoricalByOneDate(
