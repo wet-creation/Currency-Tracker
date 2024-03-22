@@ -28,7 +28,7 @@ val Typography = Typography(
         color = mainTextColor
     ),
     displayLarge = TextStyle(
-        fontSize = 32.sp,
+        fontSize = 28.sp,
         lineHeight = 22.sp,
         fontWeight = FontWeight(600),
         color = mainTextColor
@@ -39,14 +39,12 @@ val Typography = Typography(
         fontWeight = FontWeight(400),
         color = mainTextColor
     ),
-    labelMedium = TextStyle(
-        fontSize = 16.sp,
+    titleLarge = TextStyle(
+        fontSize = 32.sp,
         lineHeight = 22.sp,
-        fontWeight = FontWeight(700),
-        color = secondTextColor
+        fontWeight = FontWeight(600),
+        color = mainTextColor
     ),
-
-
 
     /* Other default text styles to override
     titleLarge = TextStyle(
@@ -64,11 +62,4 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
     */
-)
-val listStyle = Typography(
-    bodyLarge = TextStyle(
-        fontSize = 16.sp,
-        lineHeight = 22.sp,
-        fontWeight = FontWeight(400),
-    )
 )
