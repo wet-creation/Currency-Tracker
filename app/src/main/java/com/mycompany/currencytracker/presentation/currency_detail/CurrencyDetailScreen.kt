@@ -1,14 +1,11 @@
 package com.mycompany.currencytracker.presentation.currency_detail
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -22,8 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.presentation.common.fiat.ChangeFiatRate
-import com.mycompany.currencytracker.presentation.currency_detail.components.ChangeRatesItem
+import com.mycompany.currencytracker.presentation.common.ChangeRate
+import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
+import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
 import com.mycompany.currencytracker.presentation.currency_detail.components.FiatDetailInfo
 
 @Composable
@@ -42,28 +40,31 @@ fun CurrencyDetailScreen(
     ) {
         state.currency?.let { currency ->
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize().padding(start = 20.dp, end = 20.dp)
             ) {
                 item {
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(20.dp),
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
                             text = "${savedCurrency.value} ${String.format("%.6f", currency.rate)}",
                             style = MaterialTheme.typography.titleLarge
                         )
                         Row(modifier = Modifier.padding(start = 5.dp, top = 10.dp)) {
-                            ChangeFiatRate(fiatDetails = currency)
+                            ChangeRate(fiatDetails = currency)
                         }
                     }
+                }
+                item {
+                    Chart()
                 }
                 item {
                     ChangeRatesItem(currency = currency)
                 }
                 item {
-                    FiatDetailInfo(currency = currency)
+                    FiatDetailInfo(currency = currency, savedCurrency.value)
                 }
             }
 

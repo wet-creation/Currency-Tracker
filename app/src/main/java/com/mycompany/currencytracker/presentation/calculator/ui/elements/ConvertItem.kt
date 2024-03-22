@@ -68,7 +68,7 @@ fun ConvertItem(
         ) {
             Text(
                 text =  if (rowStateCalculator.sum != "0.0000") rowStateCalculator.sum else "0",
-                style = MaterialTheme.typography.displayLarge,
+                style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 1

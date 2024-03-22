@@ -9,16 +9,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowDropDown
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -28,13 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
-import com.mycompany.currencytracker.presentation.common.crypto.ChangeCryptoRate
-import com.mycompany.currencytracker.presentation.common.crypto.calculateMarketCap
+import com.mycompany.currencytracker.presentation.common.ChangeRate
+import com.mycompany.currencytracker.presentation.common.crypto.calculateDecimalPlaces
+import com.mycompany.currencytracker.presentation.common.crypto.calculateDigit
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.rateDownColor
-import com.mycompany.currencytracker.presentation.ui.theme.rateUpColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
-import kotlin.math.floor
 
 @Composable
 fun CryptoListItem(
@@ -79,7 +73,7 @@ fun CryptoListItem(
                 )
                 Text(
                     modifier = Modifier.padding(start = 12.dp),
-                    text = calculateMarketCap(crypto.marketCap),
+                    text = calculateDigit(crypto.marketCap),
                     style = TextStyle(
                         fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(300),
@@ -96,12 +90,7 @@ fun CryptoListItem(
             modifier = Modifier
                 .weight(3f)
                 .padding(horizontal = 10.dp),
-            text = when {
-                crypto.rate >= 1 -> "$${String.format("%.2f", crypto.rate)}"
-                crypto.rate >= 0.0001 -> "$${String.format("%.4f", crypto.rate)}"
-                crypto.rate >= 0.00000001 -> "$${String.format("%.8f", crypto.rate)}"
-                else -> "$0.00000000"
-            },
+            text = calculateDecimalPlaces(crypto.rate),
             style = MaterialTheme.typography.bodyLarge,
             color = mainTextColor,
             textAlign = TextAlign.End
@@ -109,8 +98,7 @@ fun CryptoListItem(
         Row(
             horizontalArrangement = Arrangement.End
         ) {
-            ChangeCryptoRate(crypto = crypto)
+            ChangeRate(crypto)
         }
     }
 }
-

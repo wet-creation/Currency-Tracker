@@ -29,7 +29,7 @@ val Typography = Typography(
         color = mainTextColor
     ),
     displayLarge = TextStyle(
-        fontSize = 32.sp,
+        fontSize = 28.sp,
         lineHeight = 22.sp,
         fontWeight = FontWeight(600),
         color = mainTextColor

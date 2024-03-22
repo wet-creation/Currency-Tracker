@@ -11,6 +11,7 @@ import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrencyDetailsUseCase
+import com.mycompany.currencytracker.domain.use_case.currency.GetFiatAdditionalInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CurrencyDetailViewModel @Inject constructor(
-    private val getCurrencyDetailsUseCase: GetCurrencyDetailsUseCase,
+    private val getCurrencyAdditionalInfo: GetFiatAdditionalInfoUseCase,
     savedStateHandle: SavedStateHandle,
     private val userSettings: StoreUserSetting
 ) : ViewModel() {
@@ -32,7 +33,7 @@ class CurrencyDetailViewModel @Inject constructor(
     }
 
     private fun getCurrency(currencySym: String) {
-        getCurrencyDetailsUseCase(currencySym, userSettings.getCurrency()).onEach { result ->
+        getCurrencyAdditionalInfo(currencySym, userSettings.getCurrency()).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = CurrencyDetailState(currency = result.data)

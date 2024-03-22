@@ -1,9 +1,10 @@
 package com.mycompany.currencytracker.domain.model.currency.crypto
 
 import com.mycompany.currencytracker.data.remote.dto.currency.crypto.CryptoDto
+import com.mycompany.currencytracker.domain.model.currency.IChangeRates
 
 data class CryptoDetails(
-    val rate: Double,
+    override val rate: Double,
     val image: String,
     val timestamp: Int,
     val rank: Int,
@@ -17,10 +18,10 @@ data class CryptoDetails(
     val atl: Double,
     val atlTimestamp: Long,
     val circulatingSupply: Double,
-    val _24h: Double?,
-    val _7d: Double?,
-    val _30d: Double?
-) {
+    override val _24h: Double?,
+    override val _7d: Double?,
+    override val _30d: Double?
+) : IChangeRates {
     constructor() : this(
         0.0,
         "",

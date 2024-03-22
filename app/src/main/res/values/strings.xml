@@ -22,4 +22,16 @@
     <string name="enter_email">Enter email..</string>
     <string name="enter_name">Enter your name..</string>
     <string name="enter_surname">Enter your surname..</string>
+    <string name="_24h_max">24H High</string>
+    <string name="_24h_low">24H Low</string>
+    <string name="average">Average</string>
+    <string name="fiat_open">Open</string>
+    <string name="fiat_close">Close</string>
+    <string name="crypto_rank">Market Cap Rank</string>
+    <string name="market_cap">Market Cap</string>
+    <string name="total_supply">Total Supply</string>
+    <string name="max_supply">Max Supply</string>
+    <string name="circulating_supply">Circulating Supply</string>
+    <string name="atl">All Time Low</string>
+    <string name="ath">All Time High</string>
 </resources>

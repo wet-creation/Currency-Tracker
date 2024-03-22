@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common.fiat
+package com.mycompany.currencytracker.presentation.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -11,14 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
-import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
+import com.mycompany.currencytracker.domain.model.currency.IChangeRates
 import com.mycompany.currencytracker.presentation.ui.theme.rateDownColor
 import com.mycompany.currencytracker.presentation.ui.theme.rateUpColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
 @Composable
-fun ChangeFiatRate(
-    fiatDetails: FiatDetails,
+fun ChangeRate(
+    fiatDetails: IChangeRates,
     time: Int = 24
 ) {
     val pastRate: Double? = when (time) {
