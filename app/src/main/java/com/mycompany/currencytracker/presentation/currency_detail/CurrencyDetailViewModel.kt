@@ -1,6 +1,5 @@
 package com.mycompany.currencytracker.presentation.currency_detail
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -9,8 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Constants
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
-import com.mycompany.currencytracker.domain.use_case.currency.GetCurrencyDetailsUseCase
 import com.mycompany.currencytracker.domain.use_case.currency.GetFiatAdditionalInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
