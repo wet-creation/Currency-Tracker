@@ -20,7 +20,7 @@ class GetCurrenciesListUseCase @Inject constructor(
             val currencyResponse = repository.getLatest(baseCurrency)
             emit(Resource.Success(currencyResponse.map { it.toCurrency() }))
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "error"))
+            emit(Resource.Error(e.code().toString()))
         } catch (e: IOException) {
             emit(Resource.Error("Check your internet connection"))
         }

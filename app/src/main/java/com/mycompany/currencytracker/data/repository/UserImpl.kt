@@ -6,7 +6,7 @@ import com.mycompany.currencytracker.data.remote.services.user.UserService
 import com.mycompany.currencytracker.domain.repository.UserRepository
 import javax.inject.Inject
 
-class Userimpl @Inject constructor(
+class UserImpl @Inject constructor(
     val api: UserService
 ) : UserRepository {
     override suspend fun register(userDto: UserDto) {

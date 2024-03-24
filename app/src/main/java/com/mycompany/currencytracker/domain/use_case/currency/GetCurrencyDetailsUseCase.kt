@@ -24,7 +24,7 @@ class GetCurrencyDetailsUseCase @Inject constructor(
             emit(Resource.Success(currencyResponse.toCurrency()))
 
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "error"))
+            emit(Resource.Error(e.code().toString()))
         } catch (e: IOException) {
             emit(Resource.Error("Check your internet connection"))
         }

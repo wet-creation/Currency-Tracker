@@ -24,7 +24,7 @@ class GetCurrencyOrCurrenciesByDateRangeUseCase @Inject constructor(
                 val currencyResponse = repository.getHistoricalByDateRange(startDate, endDate, symbol)
                 emit(Resource.Success(currencyResponse.map { it.toCurrency() }))
             } catch (e: HttpException) {
-                emit(Resource.Error(e.localizedMessage ?: "error"))
+                emit(Resource.Error(e.code().toString()))
             } catch (e: IOException) {
                 emit(Resource.Error("Check your internet connection"))
             }

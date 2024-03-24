@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.presentation.common.ChangeRate
-import com.mycompany.currencytracker.presentation.common.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.common.crypto.calculateDigit
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
@@ -90,7 +89,7 @@ fun CryptoListItem(
             modifier = Modifier
                 .weight(3f)
                 .padding(horizontal = 10.dp),
-            text = calculateDecimalPlaces(crypto.rate),
+            text = crypto.rate.toString(),
             style = MaterialTheme.typography.bodyLarge,
             color = mainTextColor,
             textAlign = TextAlign.End

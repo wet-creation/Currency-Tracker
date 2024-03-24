@@ -4,10 +4,10 @@ import kotlin.math.floor
 
 fun calculateDigit(number: Long): String {
     return when {
-        number >= 1000000000000000 -> "${floor(number / 1000000000000000f * 100f) / 100f} q"
-        number >= 1000000000000 -> "${floor(number / 1000000000000f * 100f) / 100f} T"
-        number >= 1000000000 -> "${floor(number / 1000000000f * 100f) / 100f} B"
-        number >= 1000000 -> "${floor(number / 1000000f * 100f) / 100f} M"
+        number >= 1_000_000_000_000_000 -> "${floor(number / 9.9999999E14f * 100f) / 100f} q"
+        number >= 1_000_000_000_000 -> "${floor(number / 1_000_000_000_000f * 100f) / 100f} T"
+        number >= 1_000_000_000 -> "${floor(number / 1_000_000_000f * 100f) / 100f} B"
+        number >= 1_000_000 -> "${floor(number / 1_000_000f * 100f) / 100f} M"
         else -> "$number"
     }
 }

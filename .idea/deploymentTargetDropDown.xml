@@ -2,10 +2,32 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="RegisterScreen">
+      <entry key="CryptoDetailScreenTest">
         <State />
       </entry>
+      <entry key="CurrencyListViewModelTest">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Dead so Dvora\.android\avd\Pixel_6_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-23T09:29:39.890752800Z" />
+        </State>
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="cryptoDetailScreen_loadingState_displayedCorrectly()">
+        <State />
+      </entry>
+      <entry key="whenGetCurrenciesListUseCaseReturnsSuccessStateContainsCurrencies()">
         <State />
       </entry>
     </value>
