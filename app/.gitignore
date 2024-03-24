@@ -1,2 +1,2 @@
 /build
-/src/main/java/gitignore/APIConfig.kt
+app/src/main/java/gitignore/APIConfig.kt
