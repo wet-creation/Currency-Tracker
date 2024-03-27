@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.crypto.GetTop100RateUseCase
+import com.mycompany.currencytracker.presentation.common.asUiText
 import com.mycompany.currencytracker.presentation.common.crypto.ICryptoViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -34,9 +35,8 @@ class CryptoListViewModel @Inject constructor(
                     _state.value = CryptoListState(cryptos = result.data ?: emptyList())
                 }
                 is Resource.Error -> {
-                    _state.value = CryptoListState(
-                        error = result.message ?: "an unexpected error occured"
-                    )
+                    val msg = result.error.asUiText()
+                    _state.value = CryptoListState(error = msg)
                 }
                 is Resource.Loading -> {
                     _state.value = CryptoListState(isLoading = true)

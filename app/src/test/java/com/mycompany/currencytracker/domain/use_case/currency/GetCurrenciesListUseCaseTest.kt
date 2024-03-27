@@ -1,7 +1,9 @@
 package com.mycompany.currencytracker.domain.use_case.currency
 
+import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.remote.dto.currency.fiat.CurrencyDto
+import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.domain.model.currency.fiat.toCurrency
 import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
 import io.mockk.coEvery
@@ -45,6 +47,7 @@ class GetCurrenciesListUseCaseTest {
 
     @Test
     fun `invoke returns error on IOException`() = runTest {
+        val error = Resource.Error<List<FiatDetails>, DataError.Network>(DataError.Network.NO_INTERNET)
         // Given
         coEvery { mockRepository.getLatest(any()) } throws IOException()
 
@@ -55,13 +58,13 @@ class GetCurrenciesListUseCaseTest {
         assertEquals(2, result.size)
         assert(result[0] is Resource.Loading)
         assert(result[1] is Resource.Error)
-        assertEquals("Check your internet connection", (result[1] as Resource.Error).message)
+        assertEquals(error, (result[1] as Resource.Error))
     }
 
     @Test
     fun `invoke returns error on HttpException`() = runTest {
         // Given
-        val errorMessage = "404"
+        val error = Resource.Error<List<FiatDetails>, DataError.Network>(DataError.Network.NOT_FOUND)
         coEvery { mockRepository.getLatest(any()) } throws HttpException(Response.error<Any>(404, ResponseBody.create(null, "")))
 
         // When
@@ -71,6 +74,6 @@ class GetCurrenciesListUseCaseTest {
         assertEquals(2, result.size)
         assert(result[0] is Resource.Loading)
         assert(result[1] is Resource.Error)
-        assertEquals(errorMessage, (result[1].message))
+        assertEquals(error, (result[1]))
     }
 }

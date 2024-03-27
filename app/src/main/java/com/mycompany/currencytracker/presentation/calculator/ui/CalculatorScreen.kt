@@ -38,7 +38,7 @@ import com.mycompany.currencytracker.presentation.calculator.ui.elements.Convert
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.CryptoListItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.FiatListItem
 import com.mycompany.currencytracker.presentation.common.ListScreen
-import com.mycompany.currencytracker.presentation.common.SearchPosition
+import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.common.StateListScreen
 import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
 import com.mycompany.currencytracker.presentation.common.crypto.CryptoSearchListViewModel

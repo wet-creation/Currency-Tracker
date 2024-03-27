@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.domain.model.user.UserRegister
+import com.mycompany.currencytracker.presentation.common.emptyUiString
 
 @Preview
 @Composable
@@ -138,9 +139,9 @@ fun RegisterScreen() {
                 Text(text = "Register")
             }
         }
-        if (state.error.isNotBlank()) {
+        if (state.error != emptyUiString) {
             Text(
-                text = state.error,
+                text = state.error.asString(),
                 color = Color.Black
 
             )

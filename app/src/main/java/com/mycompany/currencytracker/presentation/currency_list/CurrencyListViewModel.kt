@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
+import com.mycompany.currencytracker.presentation.common.asUiText
 import com.mycompany.currencytracker.presentation.common.fiat.IFiatViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -29,13 +30,12 @@ class CurrencyListViewModel @Inject constructor(
         getCurrenciesListUseCase(userSettings.getCurrency()).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = CurrencyListState(currencies = result.data ?: emptyList())
+                    _state.value = CurrencyListState(currencies = result.data)
                 }
 
                 is Resource.Error -> {
-                    _state.value = CurrencyListState(
-                        error = result.message ?: "an unexpected error occurred"
-                    )
+                    val msg = result.error.asUiText()
+                    _state.value = CurrencyListState(error = msg)
                 }
 
                 is Resource.Loading -> {

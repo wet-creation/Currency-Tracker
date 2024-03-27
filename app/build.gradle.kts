@@ -69,10 +69,10 @@ android {
 
 
 dependencies {
-    implementation("androidx.compose.ui:ui-android:1.6.3")
+    implementation("androidx.compose.ui:ui-android:1.6.4")
     implementation("com.android.car.ui:car-ui-lib:2.6.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     val coroutinesVer = "1.7.3"
     val coroutineLifecycleScopeVer = "2.7.0"
     val daggerHiltVer = "2.49"

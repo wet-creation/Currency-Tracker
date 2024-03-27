@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.domain.model.currency.IChangeRates
-import com.mycompany.currencytracker.presentation.common.ChangeRate
+import com.mycompany.currencytracker.presentation.common.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 
 @Composable

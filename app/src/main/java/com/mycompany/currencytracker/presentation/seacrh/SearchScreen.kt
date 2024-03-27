@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.presentation.common.ListScreen
-import com.mycompany.currencytracker.presentation.common.SearchPosition
+import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.common.StateListScreen
 import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
 import com.mycompany.currencytracker.presentation.common.crypto.CryptoSearchListViewModel
@@ -43,7 +43,7 @@ fun SearchScreen() {
         },
         cryptoListScreen = {
             CryptoListScreen(haveHeader = true, viewModel = cryptoSearchListViewModel) { crypto ->
-                CryptoListItem (crypto = crypto) {
+                CryptoListItem (crypto = crypto, number = crypto.rank) {
 
                 }
             }

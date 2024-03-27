@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.common.ListScreen
-import com.mycompany.currencytracker.presentation.common.SearchPosition
+import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.common.StateListScreen
 import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
 import com.mycompany.currencytracker.presentation.common.crypto.CryptoSearchListViewModel

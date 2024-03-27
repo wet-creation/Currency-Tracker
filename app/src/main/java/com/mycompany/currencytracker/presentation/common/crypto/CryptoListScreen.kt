@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
+import com.mycompany.currencytracker.presentation.common.emptyUiString
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListViewModel
 import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
 import eu.bambooapps.material3.pullrefresh.pullRefresh
@@ -104,9 +105,9 @@ fun CryptoListScreen(
             modifier = Modifier
                 .align(Alignment.TopCenter)
         )
-        if (state.error.isNotBlank()) {
+        if (state.error != emptyUiString) {
             Text(
-                text = state.error
+                text = state.error.asString()
             )
             PullRefreshIndicator(
                 refreshing = state.isLoading,

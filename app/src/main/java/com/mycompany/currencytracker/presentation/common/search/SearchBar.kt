@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common
+package com.mycompany.currencytracker.presentation.common.search
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
+import com.mycompany.currencytracker.presentation.common.asUiText
 import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -31,14 +32,13 @@ class FiatSearchListViewModel @Inject constructor(
         getCurrenciesListUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    val currencies = result.data ?: emptyList()
+                    val currencies = result.data
                     _state.value = CurrencyListState(currencies = currencies)
                     _searchResult.value = currencies
                 }
                 is Resource.Error -> {
-                    _state.value = CurrencyListState(
-                        error = result.message ?: "an unexpected error occurred"
-                    )
+                    val msg = result.error.asUiText()
+                    _state.value = CurrencyListState(error = msg)
                 }
                 is Resource.Loading -> {
                     _state.value = CurrencyListState(isLoading = true)

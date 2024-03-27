@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
-import com.mycompany.currencytracker.presentation.common.ChangeRate
+import com.mycompany.currencytracker.presentation.common.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.common.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
