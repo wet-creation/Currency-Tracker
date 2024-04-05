@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
-import com.mycompany.currencytracker.presentation.common.emptyUiString
+import com.mycompany.currencytracker.presentation.common.emptyUiText
 import com.mycompany.currencytracker.presentation.currency_list.CurrencyListViewModel
 import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
 import eu.bambooapps.material3.pullrefresh.pullRefresh
@@ -114,7 +114,7 @@ fun FiatListScreen(
             modifier = Modifier
                 .align(Alignment.TopCenter)
         )
-        if (state.error != emptyUiString) {
+        if (state.error != emptyUiText) {
             Text(
                 text = state.error.asString()
             )

@@ -1,6 +1,9 @@
 package com.mycompany.currencytracker.domain.model.user
 
-data class User (
+import com.mycompany.currencytracker.data.remote.dto.user.UserDto
+
+
+data class User(
     val id: String = "",
     val name: String,
     val surname: String,
@@ -8,7 +11,10 @@ data class User (
     val password: String
 ) {
     constructor() : this("", "", "", "", "")
+
 }
+
+fun UserDto.toUser() = User(id, name, surname, email, password)
 
 
 

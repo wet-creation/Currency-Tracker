@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.domain.use_case.crypto.GetTop100RateUseCase
-import com.mycompany.currencytracker.presentation.common.asUiText
+import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -38,7 +38,7 @@ class CryptoSearchListViewModel @Inject constructor(
                     _searchResult.value = cryptos
                 }
                 is Resource.Error -> {
-                    val msg = result.error.asUiText()
+                    val msg = result.asErrorUiText()
                     _state.value = CryptoListState(error = msg)
 
                 }

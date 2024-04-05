@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
-import com.mycompany.currencytracker.presentation.common.asUiText
+import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -37,7 +37,7 @@ class FiatSearchListViewModel @Inject constructor(
                     _searchResult.value = currencies
                 }
                 is Resource.Error -> {
-                    val msg = result.error.asUiText()
+                    val msg = result.asErrorUiText()
                     _state.value = CurrencyListState(error = msg)
                 }
                 is Resource.Loading -> {

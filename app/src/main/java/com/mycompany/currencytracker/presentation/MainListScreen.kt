@@ -10,6 +10,7 @@ import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
 import com.mycompany.currencytracker.presentation.common.fiat.FiatListScreen
 import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
 import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
+import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable

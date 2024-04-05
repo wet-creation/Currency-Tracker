@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation
+package com.mycompany.currencytracker.presentation.navigation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically

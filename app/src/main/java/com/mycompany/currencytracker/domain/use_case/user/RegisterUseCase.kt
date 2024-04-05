@@ -3,6 +3,7 @@ package com.mycompany.currencytracker.domain.use_case.user
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.common.UserRegisterError
+import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.data.remote.dto.user.toUserDto
 import com.mycompany.currencytracker.domain.model.user.UserRegister
 import com.mycompany.currencytracker.domain.repository.UserRepository
@@ -31,8 +32,12 @@ class RegisterUseCase @Inject constructor(
             emit(Resource.Loading())
             val validator = Validate()
             val validation = validator.validateUser(user)
-            if (validation is Resource.Error)
+
+            if (validation is Resource.Error) {
                 emit(validation)
+                debugLog(validation.toString())
+                return@flow
+            }
             userRepository.register(user.toUserDto())
             emit(validation)
 

@@ -1,6 +1,5 @@
 package com.mycompany.currencytracker.domain.use_case.user
 
-import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.remote.dto.user.toUserDto
 import com.mycompany.currencytracker.domain.model.user.UserRegister

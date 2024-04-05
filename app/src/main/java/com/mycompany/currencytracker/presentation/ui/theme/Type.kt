@@ -21,6 +21,12 @@ val Typography = Typography(
         fontWeight = FontWeight(400),
         color = mainTextColor
     ),
+    labelMedium = TextStyle(
+        fontSize = 16.sp,
+        lineHeight = 22.sp,
+        fontWeight = FontWeight(400),
+        color = mainTextColor
+    ),
     displayMedium = TextStyle(
         fontSize = 20.sp,
         lineHeight = 22.sp,
@@ -44,7 +50,7 @@ val Typography = Typography(
         lineHeight = 22.sp,
         fontWeight = FontWeight(600),
         color = mainTextColor
-    ),
+    )
 
     /* Other default text styles to override
     titleLarge = TextStyle(

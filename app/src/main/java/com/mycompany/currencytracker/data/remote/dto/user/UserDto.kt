@@ -20,3 +20,6 @@ fun User.toUserDto() = UserDto(
 fun UserRegister.toUserDto() = UserDto(
     id, name, surname, email, password
 )
+
+
+

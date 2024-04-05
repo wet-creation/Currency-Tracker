@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.presentation.Screen
+import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 
 @Composable
@@ -29,6 +29,8 @@ fun SettingScreen(navController: NavHostController) {
     ) {
         Row(
             modifier = Modifier.padding(start = 18.dp, top = 16.dp, bottom = 16.dp)
+                .clickable { navController.navigate(Screen.ProfileScreen.route) }
+
         ) {
             Text(
                 text = stringResource(id = R.string.setting_my_account),

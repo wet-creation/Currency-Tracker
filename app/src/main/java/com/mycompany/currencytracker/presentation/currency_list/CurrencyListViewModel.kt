@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
-import com.mycompany.currencytracker.presentation.common.asUiText
+import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.common.fiat.IFiatViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -34,7 +34,7 @@ class CurrencyListViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    val msg = result.error.asUiText()
+                    val msg = result.asErrorUiText()
                     _state.value = CurrencyListState(error = msg)
                 }
 

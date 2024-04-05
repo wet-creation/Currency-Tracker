@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation
+package com.mycompany.currencytracker.presentation.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,12 +11,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.mycompany.currencytracker.common.Constants.coin_detail_screen
-import com.mycompany.currencytracker.common.Constants.favorite
-import com.mycompany.currencytracker.common.Constants.fiat_detail_screen
-import com.mycompany.currencytracker.common.Constants.home
-import com.mycompany.currencytracker.common.Constants.search
-import com.mycompany.currencytracker.common.Constants.setting_screen
+import com.mycompany.currencytracker.common.Constants.COIN_DETAILS_SCREEN
+import com.mycompany.currencytracker.common.Constants.FAVORITE_SCREEN
+import com.mycompany.currencytracker.common.Constants.FIAT_DETAILS_SCREEN
+import com.mycompany.currencytracker.common.Constants.HOME_SCREEN
+import com.mycompany.currencytracker.common.Constants.LOGIN_SCREEN
+import com.mycompany.currencytracker.common.Constants.REGISTER_SCREEN
+import com.mycompany.currencytracker.common.Constants.SEARCH_SCREEN
+import com.mycompany.currencytracker.common.Constants.SETTINGS_SCREEN
 
 
 @Composable
@@ -29,37 +31,47 @@ fun MainScreen() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     when (navBackStackEntry?.destination?.route) {
-        home -> {
+        HOME_SCREEN -> {
             bottomBarState.value = true
             topBarState.value = true
         }
 
-        search -> {
+        SEARCH_SCREEN -> {
             bottomBarState.value = true
             topBarState.value = false
         }
 
-        favorite -> {
+        FAVORITE_SCREEN -> {
             bottomBarState.value = true
             topBarState.value = true
         }
 
-        setting_screen -> {
+        SETTINGS_SCREEN -> {
             bottomBarState.value = false
             topBarState.value = true
         }
 
-        fiat_detail_screen -> {
+        FIAT_DETAILS_SCREEN -> {
             bottomBarState.value = false
             topBarState.value = true
         }
 
-        "$fiat_detail_screen/{currencyId}" -> {
+        REGISTER_SCREEN -> {
             bottomBarState.value = false
             topBarState.value = true
         }
 
-        "${coin_detail_screen}/{coinId}" -> {
+        LOGIN_SCREEN -> {
+            bottomBarState.value = false
+            topBarState.value = true
+        }
+
+        "$FIAT_DETAILS_SCREEN/{currencyId}" -> {
+            bottomBarState.value = false
+            topBarState.value = true
+        }
+
+        "${COIN_DETAILS_SCREEN}/{coinId}" -> {
             bottomBarState.value = false
             topBarState.value = true
         }

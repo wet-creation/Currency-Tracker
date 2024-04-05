@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.crypto.GetTop100RateUseCase
-import com.mycompany.currencytracker.presentation.common.asUiText
+import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.common.crypto.ICryptoViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -32,10 +32,10 @@ class CryptoListViewModel @Inject constructor(
         getTop100RateUseCase(userSettings.getCrypto()).onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _state.value = CryptoListState(cryptos = result.data ?: emptyList())
+                    _state.value = CryptoListState(cryptos = result.data)
                 }
                 is Resource.Error -> {
-                    val msg = result.error.asUiText()
+                    val msg = result.asErrorUiText()
                     _state.value = CryptoListState(error = msg)
                 }
                 is Resource.Loading -> {

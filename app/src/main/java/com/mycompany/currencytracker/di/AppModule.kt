@@ -13,8 +13,8 @@ import com.mycompany.currencytracker.data.repository.ConvertIml
 import com.mycompany.currencytracker.data.repository.CryptosIml
 import com.mycompany.currencytracker.data.repository.CurrenciesImp
 import com.mycompany.currencytracker.data.repository.UserFollowedImpl
-import com.mycompany.currencytracker.data.repository.UserNotificationImpl
 import com.mycompany.currencytracker.data.repository.UserImpl
+import com.mycompany.currencytracker.data.repository.UserNotificationImpl
 import com.mycompany.currencytracker.domain.repository.ConvertRepository
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import com.mycompany.currencytracker.domain.repository.CurrenciesRepository

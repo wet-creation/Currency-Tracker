@@ -36,7 +36,9 @@ fun TextInput(
     onValueChange: (String) -> Unit = {},
     placeholder: String = "",
     image: ImageVector = Icons.Default.Email,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    hasError: Boolean = false,
+    errorMessage: String = ""
 ) {
     TextField(
         value = input,
@@ -46,7 +48,7 @@ fun TextInput(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .height(55.dp),
+            .height(70.dp),
         leadingIcon = {
             Icon(
                 imageVector = image,
@@ -66,7 +68,9 @@ fun TextInput(
         ),
         singleLine = true,
         textStyle = MaterialTheme.typography.labelMedium,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        supportingText = { if (hasError) Text(text = errorMessage, color = Color.Red) }
+
     )
 }
 
@@ -74,6 +78,8 @@ fun TextInput(
 fun PasswordInput(
     text: String = "",
     onValueChange: (String) -> Unit = {},
+    hasError: Boolean = false,
+    errorMessage: String = ""
 ) {
     var isPasswordShown by remember {
         mutableStateOf(false)
@@ -87,7 +93,7 @@ fun PasswordInput(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .height(55.dp),
+            .height(70.dp),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Lock,
@@ -107,16 +113,22 @@ fun PasswordInput(
         ),
         singleLine = true,
         textStyle = MaterialTheme.typography.labelMedium,
+        supportingText = {
+            if (hasError)
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                )
+        },
         visualTransformation = if (!isPasswordShown) {
             PasswordVisualTransformation()
         } else VisualTransformation.None,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         trailingIcon = {
-            var image = if (isPasswordShown)
+            val image = if (isPasswordShown)
                 R.drawable.visibility_off_icon
             else R.drawable.visibility_on_icon
 
-            image =  R.drawable.visibility_off_icon
             val description = if (isPasswordShown) "Hide password" else "Show password"
 
             IconButton(onClick = { isPasswordShown = !isPasswordShown }) {

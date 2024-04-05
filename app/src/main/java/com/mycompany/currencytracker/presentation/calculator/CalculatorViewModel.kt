@@ -108,7 +108,7 @@ class CalculatorViewModel @Inject constructor(
         cryptoDetailsUseCase(symbol).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    cryptoDetails = result.data ?: CryptoDetails()
+                    cryptoDetails = result.data
                     if (isFirstRow)
                         _calculatorRowState1.value = _calculatorRowState1.value.copy(
                             image = cryptoDetails.image,

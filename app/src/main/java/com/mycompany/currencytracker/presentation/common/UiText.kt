@@ -7,8 +7,9 @@ import androidx.compose.ui.platform.LocalContext
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
+import com.mycompany.currencytracker.common.UserRegisterError
 
-val emptyUiString = UiText.DynamicString("")
+val emptyUiText = UiText.DynamicString("")
 
 sealed class UiText {
     data class DynamicString(val value: String) : UiText()
@@ -71,10 +72,32 @@ fun DataError.asUiText(): UiText {
             R.string.not_found
         )
         DataError.Network.CONFLICT -> UiText.StringResource(
-            R.string.the_request_timed_out
+            R.string.the_conflict_occured
         )
-        else -> UiText.StringResource(
-            R.string.unknown_error
+
+        UserRegisterError.Email.NOT_VALID -> UiText.StringResource(
+            R.string.email_wrong_enter
+        )
+        UserRegisterError.Password.TOO_SHORT -> UiText.StringResource(
+            R.string.password_too_short
+        )
+        UserRegisterError.Password.NO_UPPERCASE -> UiText.StringResource(
+            R.string.password_no_uppercase
+        )
+        UserRegisterError.Password.NO_DIGIT -> UiText.StringResource(
+            R.string.password_no_digits
+        )
+        UserRegisterError.Password.NO_LOWERCASE -> UiText.StringResource(
+            R.string.password_no_lowercase
+        )
+        UserRegisterError.Password.NOT_SAME -> UiText.StringResource(
+            R.string.paswords_not_same
+        )
+        UserRegisterError.TextInput.EMPTY -> UiText.StringResource(
+            R.string.text_input_empty
+        )
+        UserRegisterError.TextInput.TOO_LONG -> UiText.StringResource(
+            R.string.text_input_too_long
         )
     }
 }

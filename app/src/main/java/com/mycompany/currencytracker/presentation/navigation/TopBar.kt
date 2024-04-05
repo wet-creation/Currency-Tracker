@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation
+package com.mycompany.currencytracker.presentation.navigation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -32,13 +32,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.common.Constants.calculator_screen
-import com.mycompany.currencytracker.common.Constants.coin_detail_screen
-import com.mycompany.currencytracker.common.Constants.fiat_detail_screen
-import com.mycompany.currencytracker.common.Constants.home
-import com.mycompany.currencytracker.common.Constants.my_account_screen
-import com.mycompany.currencytracker.common.Constants.select_main_currency_screen
-import com.mycompany.currencytracker.common.Constants.setting_screen
+import com.mycompany.currencytracker.common.Constants.CALCULATOR_SCREEN
+import com.mycompany.currencytracker.common.Constants.COIN_DETAILS_SCREEN
+import com.mycompany.currencytracker.common.Constants.FIAT_DETAILS_SCREEN
+import com.mycompany.currencytracker.common.Constants.HOME_SCREEN
+import com.mycompany.currencytracker.common.Constants.LOGIN_SCREEN
+import com.mycompany.currencytracker.common.Constants.MY_ACCOUNT_SCREEN
+import com.mycompany.currencytracker.common.Constants.PROFILE_SCREEN
+import com.mycompany.currencytracker.common.Constants.REGISTER_SCREEN
+import com.mycompany.currencytracker.common.Constants.SELECT_MAIN_CURRENCY_SCREEN
+import com.mycompany.currencytracker.common.Constants.SETTINGS_SCREEN
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 
 
@@ -49,10 +52,11 @@ fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boole
     val currencyId = navBackStackEntry?.arguments?.getString("currencyId")
     val cryptoId = navBackStackEntry?.arguments?.getString("coinId")
 
-    val title: String = when (navBackStackEntry?.destination?.route ?: home) {
-        my_account_screen -> stringResource(id = R.string.account_top_bar)
-        calculator_screen -> stringResource(id = R.string.converter_top_bar)
-        select_main_currency_screen -> stringResource(id = R.string.select_currency_top_bar)
+    val title: String = when (navBackStackEntry?.destination?.route ?: HOME_SCREEN) {
+        MY_ACCOUNT_SCREEN -> stringResource(id = R.string.account_top_bar)
+        CALCULATOR_SCREEN -> stringResource(id = R.string.converter_top_bar)
+        SELECT_MAIN_CURRENCY_SCREEN -> stringResource(id = R.string.select_currency_top_bar)
+        PROFILE_SCREEN -> stringResource(id = R.string.profile_screen_title)
         else -> stringResource(id = R.string.app_name)
     }
 
@@ -60,22 +64,29 @@ fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boole
         enter = slideInVertically(initialOffsetY = { -it }),
         exit = slideOutVertically(targetOffsetY = { -it }),
         content = {
-            when (navBackStackEntry?.destination?.route ?: home) {
-                home -> MainTopBar(navHostController = navHostController)
-                setting_screen -> SettingTopBar(navController = navHostController)
-                my_account_screen -> SubTopAppBar(navController = navHostController, title = title)
-                calculator_screen -> SubTopAppBar(navController = navHostController, title = title)
-                select_main_currency_screen -> SubTopAppBar(
+            when (navBackStackEntry?.destination?.route ?: HOME_SCREEN) {
+                HOME_SCREEN -> MainTopBar(navHostController = navHostController)
+                SETTINGS_SCREEN -> SettingTopBar(navController = navHostController)
+                MY_ACCOUNT_SCREEN -> SubTopAppBar(navController = navHostController, title = title)
+                CALCULATOR_SCREEN -> SubTopAppBar(navController = navHostController, title = title)
+                SELECT_MAIN_CURRENCY_SCREEN -> SubTopAppBar(
                     navController = navHostController, title = title
                 )
 
-                "$fiat_detail_screen/{currencyId}" -> DetailTopBar(
+                "$FIAT_DETAILS_SCREEN/{currencyId}" -> DetailTopBar(
                     navController = navHostController, title = currencyId ?: "Coin"
                 )
 
-                "$coin_detail_screen/{coinId}" -> DetailTopBar(
+                "$COIN_DETAILS_SCREEN/{coinId}" -> DetailTopBar(
                     navController = navHostController, title = cryptoId ?: "Coin"
                 )
+
+                LOGIN_SCREEN -> AuthTopBar()
+
+                REGISTER_SCREEN -> AuthTopBar()
+
+                PROFILE_SCREEN -> SubTopAppBar(navController = navHostController, title = title)
+
 
                 else -> MainTopBar(navHostController = navHostController)
             }
@@ -160,6 +171,31 @@ fun SettingTopBar(navController: NavHostController) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                 contentDescription = "Back"
+            )
+        }
+    })
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AuthTopBar() {
+    CenterAlignedTopAppBar(title = {
+        Row {
+            Image(
+                modifier = Modifier
+                    .padding(top = 3.dp, end = 5.dp)
+                    .width(23.dp)
+                    .height(23.dp),
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "logo"
+            )
+            Text(
+                text = "Currency Tracker", style = TextStyle(
+                    fontSize = 20.sp,
+                    lineHeight = 22.sp,
+                    fontWeight = FontWeight(600),
+                    color = mainTextColor
+                )
             )
         }
     })

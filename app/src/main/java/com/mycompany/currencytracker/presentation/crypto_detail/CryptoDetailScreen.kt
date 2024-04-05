@@ -26,10 +26,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
-import com.mycompany.currencytracker.presentation.common.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.common.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
+import com.mycompany.currencytracker.presentation.common.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.crypto_detail.components.CryptoDetailInfo
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
@@ -48,8 +48,8 @@ fun CryptoDetailScreen(
     val savedCurrency = dataStore.getCurrency.collectAsState(initial = "")
 
     val selectedCurrency = savedCrypto
-    var mainCurrency: CryptoDetails?
-    var secondRate = ""
+    val mainCurrency: CryptoDetails?
+    val secondRate: String
 
     if (selectedCurrency == savedCrypto){
         mainCurrency = state.crypto
