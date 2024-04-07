@@ -1,7 +1,5 @@
 package com.mycompany.currencytracker.data.remote.dto.currency.crypto
 
-import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
-
 data class CryptoDto(
     val current_price: Double,
     val id: String,
@@ -21,25 +19,4 @@ data class CryptoDto(
     val _24h: Double?,
     val _7d: Double?,
     val _30d: Double?,
-) {
-    fun toCrypto() = CryptoDetails(
-        current_price,
-        id,
-        image,
-        last_updated,
-        market_cap_rank,
-        name,
-        symbol,
-        market_cap,
-        max_supply,
-        total_supply,
-        ath,
-        ath_timestamp,
-        atl,
-        atl_timestamp,
-        circulating_supply,
-        _24h,
-        _7d,
-        _30d
-    )
-}
+)

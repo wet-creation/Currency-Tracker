@@ -1,6 +1,8 @@
 package com.mycompany.currencytracker.di
 
+import android.content.Context
 import com.mycompany.currencytracker.common.Constants
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerConvertService
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCryptoService
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCurrencyService
@@ -11,8 +13,8 @@ import com.mycompany.currencytracker.data.repository.ConvertIml
 import com.mycompany.currencytracker.data.repository.CryptosIml
 import com.mycompany.currencytracker.data.repository.CurrenciesImp
 import com.mycompany.currencytracker.data.repository.UserFollowedImpl
+import com.mycompany.currencytracker.data.repository.UserImpl
 import com.mycompany.currencytracker.data.repository.UserNotificationImpl
-import com.mycompany.currencytracker.data.repository.Userimpl
 import com.mycompany.currencytracker.domain.repository.ConvertRepository
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
@@ -22,6 +24,7 @@ import com.mycompany.currencytracker.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -88,7 +91,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideUserRepository(api: UserService): UserRepository {
-        return Userimpl(api)
+        return UserImpl(api)
     }
 
     @Provides
@@ -113,6 +116,12 @@ object AppModule {
     @Singleton
     fun provideUserNotificationRepository(api: UserServiceNotification): UserNotificationRepository {
         return UserNotificationImpl(api)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserSettings(@ApplicationContext appContext: Context): StoreUserSetting {
+        return StoreUserSetting(appContext)
     }
 
 }

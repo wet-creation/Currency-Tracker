@@ -9,7 +9,14 @@ interface CurrencyTrackerCryptoService {
     @GET("latest/crypto")
     suspend fun getLatest(@Query("baseCurrency") baseCurrency: String): List<CryptoDto>
 
-    @GET("latest/{symbol}/crypto")
+    @GET("period/crypto")
+    suspend fun getPeriod(
+        @Query("timestamp") timestamp: Long,
+        @Query("symbol") symbol: String,
+        @Query("baseCurrency") baseCurrency: String
+    ): List<CryptoDto>
+
+    @GET("latest/crypto/{symbol}")
     suspend fun getLatestBySymbol(
         @Path("symbol") symbol: String,
         @Query("baseCurrency") baseCurrency: String

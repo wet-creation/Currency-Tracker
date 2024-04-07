@@ -1,7 +1,7 @@
 package com.mycompany.currencytracker.data.repository
 
-import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCryptoService
 import com.mycompany.currencytracker.data.remote.dto.currency.crypto.CryptoDto
+import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCryptoService
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import javax.inject.Inject
 
@@ -14,6 +14,14 @@ class CryptosIml @Inject constructor(
 
     override suspend fun getLatestBySymbol(symbol: String, baseCurrency: String): CryptoDto {
         return api.getLatestBySymbol(symbol, baseCurrency)
+    }
+
+    override suspend fun getPeriod(
+        timestamp: Long,
+        symbol: String,
+        baseCurrency: String
+    ): List<CryptoDto> {
+        return api.getPeriod(timestamp, symbol, baseCurrency)
     }
 
     override suspend fun getHistoricalByOneDate(
