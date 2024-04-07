@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.presentation.common.fiat.ChangeRate
+import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
 import com.mycompany.currencytracker.presentation.currency_detail.components.FiatDetailInfo

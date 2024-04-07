@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common
+package com.mycompany.currencytracker.presentation.common.currency
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +28,7 @@ import com.mycompany.currencytracker.presentation.common.search.SearchPosition
  *
  * @param searchPosition Specifies the position of the search bar on the screen. It can be at the top,
  *                       in between the tabs and content, or not present at all. Defaults to None if not specified.
- * @param stateListScreen Holds the state for the list screen, including the current text in the search bar and
+ * @param currencyListsScreenState Holds the state for the list screen, including the current text in the search bar and
  *                        an action to be performed when the text changes. Defaults to an empty state if not specified.
  * @param fiatListScreen A composable function to render the list of fiat currencies. This is displayed when the fiat tab is selected.
  * @param cryptoListScreen A composable function to render the list of crypto currencies. This is displayed when the crypto tab is selected.
@@ -50,9 +50,9 @@ import com.mycompany.currencytracker.presentation.common.search.SearchPosition
  * A horizontal divider separates the tabs (and optional search bar) from the content of the selected tab.
  */
 @Composable
-fun ListScreen(
+fun CurrencyListsScreen(
     searchPosition: SearchPosition = SearchPosition.None,
-    stateListScreen: StateListScreen = StateListScreen(),
+    currencyListsScreenState: CurrencyListsScreenState = CurrencyListsScreenState(),
     fiatListScreen: @Composable () -> Unit,
     cryptoListScreen: @Composable () -> Unit,
     tabContent: @Composable (title: String) -> Unit,
@@ -65,8 +65,8 @@ fun ListScreen(
             Row(
                 modifier = Modifier.padding(20.dp)
             ) {
-                SearchBar(searchText = stateListScreen.inputText) {
-                    stateListScreen.inputTextAction(it)
+                SearchBar(searchText = currencyListsScreenState.inputText) {
+                    currencyListsScreenState.inputTextAction(it)
                 }
             }
 
@@ -95,8 +95,8 @@ fun ListScreen(
             Row(
                 modifier = Modifier.padding(20.dp)
             ) {
-                SearchBar(searchText = stateListScreen.inputText) {
-                    stateListScreen.inputTextAction(it)
+                SearchBar(searchText = currencyListsScreenState.inputText) {
+                    currencyListsScreenState.inputTextAction(it)
                 }
             }
         }

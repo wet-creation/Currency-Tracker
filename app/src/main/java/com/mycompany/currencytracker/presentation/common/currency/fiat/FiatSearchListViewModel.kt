@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common.fiat
+package com.mycompany.currencytracker.presentation.common.currency.fiat
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,6 +8,7 @@ import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
 import com.mycompany.currencytracker.presentation.common.asErrorUiText
+import com.mycompany.currencytracker.presentation.common.list.IListViewModel
 import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FiatSearchListViewModel @Inject constructor(
     private val getCurrenciesListUseCase: GetCurrenciesListUseCase
-) : ViewModel(), IFiatViewModel {
+) : ViewModel(), IListViewModel<FiatDetails> {
 
     private val _state = mutableStateOf(CurrencyListState())
     override val state: State<CurrencyListState> = _state
@@ -26,9 +27,9 @@ class FiatSearchListViewModel @Inject constructor(
     val searchResult: State<List<FiatDetails>> = _searchResult
 
     init {
-        getCurrencies()
+        getItems()
     }
-     override fun getCurrencies(){
+     override fun getItems(){
         getCurrenciesListUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {

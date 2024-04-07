@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.common.Constants.image_url
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
-import com.mycompany.currencytracker.presentation.common.fiat.ChangeRate
+import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
 
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor

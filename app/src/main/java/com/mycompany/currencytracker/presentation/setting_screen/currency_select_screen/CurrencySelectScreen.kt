@@ -14,13 +14,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.presentation.common.ListScreen
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
+import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
+import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
-import com.mycompany.currencytracker.presentation.common.StateListScreen
-import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
-import com.mycompany.currencytracker.presentation.common.crypto.CryptoSearchListViewModel
-import com.mycompany.currencytracker.presentation.common.fiat.FiatListScreen
-import com.mycompany.currencytracker.presentation.common.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.crypto.CryptoSelectListItem
 import com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.сurrency.CurrencySelectListItem
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
@@ -28,21 +27,21 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CurrencySelectScreen() {
-    val currencySearchListViewModel = hiltViewModel<FiatSearchListViewModel>()
+    val fiatSearchListViewModel = hiltViewModel<FiatSearchListViewModel>()
     val cryptoSearchListViewModel = hiltViewModel<CryptoSearchListViewModel>()
     val scope = rememberCoroutineScope()
     val dataStore = StoreUserSetting(LocalContext.current)
     var searchQuery by remember { mutableStateOf("") }
 
-    ListScreen(
+    CurrencyListsScreen(
         searchPosition = SearchPosition.InBetween,
-        stateListScreen = StateListScreen(searchQuery) {
+        currencyListsScreenState = CurrencyListsScreenState(searchQuery) {
             searchQuery = it
         },
         fiatListScreen = {
-            FiatListScreen(
-                haveHeader = false,
-                viewModel = currencySearchListViewModel
+            ItemsListScreen(
+                viewModel = fiatSearchListViewModel,
+                list = fiatSearchListViewModel.searchResult.value
             ) { currencyItem, _ ->
                 CurrencySelectListItem(currencyItem) {
                     scope.launch {
@@ -51,10 +50,10 @@ fun CurrencySelectScreen() {
                 }
             }
         }, cryptoListScreen = {
-            CryptoListScreen(
-                haveHeader = false,
-                viewModel = cryptoSearchListViewModel
-            ) { crypto ->
+            ItemsListScreen(
+                viewModel = cryptoSearchListViewModel,
+                list = cryptoSearchListViewModel.searchResult.value
+            ) { crypto, _ ->
                 CryptoSelectListItem(crypto = crypto) {
                     scope.launch {
                         dataStore.saveCrypto(crypto.symbol)
@@ -74,7 +73,7 @@ fun CurrencySelectScreen() {
     }
     LaunchedEffect(key1 = searchQuery) {
         debugLog("search $searchQuery")
-        currencySearchListViewModel.search(searchQuery)
+        fiatSearchListViewModel.search(searchQuery)
         cryptoSearchListViewModel.search(searchQuery)
     }
 }

@@ -43,7 +43,7 @@
     <string name="unknown_error">Unexpected error happened</string>
     <string name="bad_request">Client bad request</string>
     <string name="not_found">Not found</string>
-    <string name="the_conflict_occured">Conflict occured</string>
+    <string name="the_conflict_occured">Conflict occurred</string>
     <string name="email_wrong_enter">Not valid email was enter</string>
     <string name="password_too_short">Password too short</string>
     <string name="password_no_uppercase">Password must have uppercase</string>

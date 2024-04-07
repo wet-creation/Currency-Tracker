@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common.crypto
+package com.mycompany.currencytracker.presentation.common.currency.crypto
 
 import kotlin.math.floor
 

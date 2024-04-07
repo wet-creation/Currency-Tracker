@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
-import com.mycompany.currencytracker.presentation.common.fiat.ChangeRate
-import com.mycompany.currencytracker.presentation.common.crypto.calculateDecimalPlaces
-import com.mycompany.currencytracker.presentation.common.crypto.calculateDigit
+import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
+import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
+import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDigit
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 

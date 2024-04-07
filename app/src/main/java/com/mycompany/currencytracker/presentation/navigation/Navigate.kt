@@ -10,7 +10,7 @@ import com.mycompany.currencytracker.presentation.auth.register.RegisterScreen
 import com.mycompany.currencytracker.presentation.calculator.ui.CalculatorScreen
 import com.mycompany.currencytracker.presentation.crypto_detail.CryptoDetailScreen
 import com.mycompany.currencytracker.presentation.currency_detail.CurrencyDetailScreen
-import com.mycompany.currencytracker.presentation.fav_list.FavoriteListScreen
+import com.mycompany.currencytracker.presentation.favorite_list.FavoriteListScreen
 import com.mycompany.currencytracker.presentation.notification_screen.NotificatiionScreen
 import com.mycompany.currencytracker.presentation.profile.ProfileScreen
 import com.mycompany.currencytracker.presentation.seacrh.SearchScreen
@@ -27,10 +27,10 @@ fun Navigate(navController: NavHostController) {
             MainListScreen(navController = navController)
         }
         composable(BottomBarScreen.Search.route) {
-            SearchScreen()
+            SearchScreen(navController)
         }
         composable(BottomBarScreen.Favorite.route) {
-            FavoriteListScreen()
+            FavoriteListScreen(navController)
         }
         composable(Screen.NotificationScreen.route){
             NotificatiionScreen()

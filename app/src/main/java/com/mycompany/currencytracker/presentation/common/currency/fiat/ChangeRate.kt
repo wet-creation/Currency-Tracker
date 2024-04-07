@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common.fiat
+package com.mycompany.currencytracker.presentation.common.currency.fiat
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

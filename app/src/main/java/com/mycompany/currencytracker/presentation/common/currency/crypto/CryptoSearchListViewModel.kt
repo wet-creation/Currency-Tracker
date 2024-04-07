@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.common.crypto
+package com.mycompany.currencytracker.presentation.common.currency.crypto
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,6 +8,7 @@ import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.domain.use_case.crypto.GetTop100RateUseCase
 import com.mycompany.currencytracker.presentation.common.asErrorUiText
+import com.mycompany.currencytracker.presentation.common.list.IListViewModel
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CryptoSearchListViewModel @Inject constructor(
     private val getTop100RateUseCase: GetTop100RateUseCase
-) : ViewModel(), ICryptoViewModel {
+) : ViewModel(), IListViewModel<CryptoGeneralInfo> {
 
     private val _state = mutableStateOf(CryptoListState())
     override val state: State<CryptoListState> = _state
@@ -26,15 +27,15 @@ class CryptoSearchListViewModel @Inject constructor(
     val searchResult: State<List<CryptoGeneralInfo>> = _searchResult
 
     init {
-        getCrypto()
+        getItems()
     }
 
-    override fun getCrypto(){
+    override fun getItems(){
         getTop100RateUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     val cryptos = result.data
-                    _state.value = CryptoListState(cryptos = cryptos)
+                    _state.value = CryptoListState(currencies = cryptos)
                     _searchResult.value = cryptos
                 }
                 is Resource.Error -> {
@@ -50,7 +51,7 @@ class CryptoSearchListViewModel @Inject constructor(
     }
 
     fun search(query: String) {
-        val filteredList = _state.value.cryptos.filter { crypto ->
+        val filteredList = _state.value.currencies.filter { crypto ->
             crypto.name.contains(query, ignoreCase = true) || crypto.symbol.contains(query, ignoreCase = true)
         }
         _searchResult.value = filteredList

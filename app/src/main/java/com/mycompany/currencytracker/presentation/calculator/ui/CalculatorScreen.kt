@@ -37,13 +37,12 @@ import com.mycompany.currencytracker.presentation.calculator.ui.elements.Convert
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.CryptoListItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.FiatListItem
-import com.mycompany.currencytracker.presentation.common.ListScreen
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
+import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
+import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
-import com.mycompany.currencytracker.presentation.common.StateListScreen
-import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
-import com.mycompany.currencytracker.presentation.common.crypto.CryptoSearchListViewModel
-import com.mycompany.currencytracker.presentation.common.fiat.FiatListScreen
-import com.mycompany.currencytracker.presentation.common.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import kotlinx.coroutines.launch
 
@@ -71,15 +70,15 @@ fun CalculatorScreen() {
 
     BottomSheetScaffold(
         sheetContent = {
-            ListScreen(
+            CurrencyListsScreen(
                 searchPosition = SearchPosition.InBetween,
-                stateListScreen = StateListScreen(searchQuery) {
+                currencyListsScreenState = CurrencyListsScreenState(searchQuery) {
                     searchQuery = it
                 },
                 fiatListScreen = {
-                    FiatListScreen(
-                        haveHeader = false,
+                    ItemsListScreen(
                         viewModel = fiatSearchListViewModel,
+                        list = fiatSearchListViewModel.searchResult.value,
                         itemContent = { currencyItem, _ ->
                             FiatListItem(currencyItem) {
                                 if (isFistRowOpen) {
@@ -103,10 +102,10 @@ fun CalculatorScreen() {
                         })
                 },
                 cryptoListScreen = {
-                    CryptoListScreen(
-                        haveHeader = false,
+                    ItemsListScreen(
                         viewModel = cryptoSearchListViewModel,
-                        itemContent = { crypto ->
+                        list = cryptoSearchListViewModel.searchResult.value,
+                        itemContent = { crypto, _ ->
                             CryptoListItem(crypto = crypto) {
                                 if (isFistRowOpen) {
                                     viewModel.getRate(
