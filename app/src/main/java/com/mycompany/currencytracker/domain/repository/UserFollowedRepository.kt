@@ -7,10 +7,10 @@ import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedDto
 
 interface UserFollowedRepository {
     suspend fun followedCrypto( cryptoFollowedListDto: CryptoFollowedListDto)
-    suspend fun deleteCryptoFollowed(userId: String, symbol: String)
     suspend fun followedFiat( fiatFollowedList: CurrencyFollowedList)
+    suspend fun deleteCryptoFollowed(userId: String, symbol: String)
     suspend fun deleteFiatFollowed(userId: String,  symbol: String)
-    suspend fun getFollowedCrypto( id: String): List<CryptoFollowedDto>
-    suspend fun getFollowedFiat(id: String): List<FiatFollowedDto>
+    suspend fun getFollowedCrypto(userID: String): List<CryptoFollowedDto>
+    suspend fun getFollowedFiat(userID: String): List<FiatFollowedDto>
 
 }
