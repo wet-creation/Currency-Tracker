@@ -58,7 +58,7 @@ fun CurrencyDetailScreen(
                     }
                 }
                 item {
-                    Chart()
+                    Chart(viewModel.graphInfo.value ?: emptyList())
                 }
                 item {
                     ChangeRatesItem(currency = currency)

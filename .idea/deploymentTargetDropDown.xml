@@ -2,10 +2,35 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="RegisterScreen">
+      <entry key="CryptoDetailScreenTest">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="RFCN90TBN7P" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-22T15:05:47.476322800Z" />
+        </State>
+      </entry>
+      <entry key="CryptoListScreenTest">
+        <State />
+      </entry>
+      <entry key="Tests in 'com.mycompany.currencytracker'">
         <State />
       </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="cryptoList_DisplayedSuccessfully()">
+        <State />
+      </entry>
+      <entry key="list_RefreshesOnPullToRefresh()">
         <State />
       </entry>
     </value>

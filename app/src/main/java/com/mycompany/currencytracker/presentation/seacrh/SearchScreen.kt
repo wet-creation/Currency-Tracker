@@ -43,7 +43,7 @@ fun SearchScreen() {
         },
         cryptoListScreen = {
             CryptoListScreen(haveHeader = true, viewModel = cryptoSearchListViewModel) { crypto ->
-                CryptoListItem (crypto = crypto) {
+                CryptoListItem (crypto = crypto, number = crypto.rank) {
 
                 }
             }

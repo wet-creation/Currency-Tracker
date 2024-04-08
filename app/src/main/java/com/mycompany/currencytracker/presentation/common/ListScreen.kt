@@ -43,7 +43,7 @@ fun ListScreen(
         }
         TabRow(
             modifier = Modifier
-                .size(height = 22.dp, width = 106.dp)
+                .size(height = 22.dp, width = 180.dp)
                 .padding(start = 20.dp),
             selectedTabIndex = tabIndex
         ) {
