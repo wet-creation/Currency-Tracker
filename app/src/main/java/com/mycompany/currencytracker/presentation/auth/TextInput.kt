@@ -14,10 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -76,17 +72,15 @@ fun TextInput(
 
 @Composable
 fun PasswordInput(
-    text: String = "",
+    input: String = "",
     onValueChange: (String) -> Unit = {},
     hasError: Boolean = false,
-    errorMessage: String = ""
+    errorMessage: String = "",
+    isPasswordShown: Boolean,
+    changePasswordVisibility: () -> Unit
 ) {
-    var isPasswordShown by remember {
-        mutableStateOf(false)
-    }
-
     TextField(
-        value = text,
+        value = input,
         onValueChange = onValueChange,
         placeholder = {
             Text(text = stringResource(id = R.string.enter_password))
@@ -131,7 +125,7 @@ fun PasswordInput(
 
             val description = if (isPasswordShown) "Hide password" else "Show password"
 
-            IconButton(onClick = { isPasswordShown = !isPasswordShown }) {
+            IconButton(onClick = { changePasswordVisibility() }) {
                 Icon(painter = painterResource(image), description)
             }
 

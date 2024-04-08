@@ -72,7 +72,7 @@ fun DataError.asUiText(): UiText {
             R.string.not_found
         )
         DataError.Network.CONFLICT -> UiText.StringResource(
-            R.string.the_conflict_occured
+            R.string.the_conflict_occurred
         )
 
         UserRegisterError.Email.NOT_VALID -> UiText.StringResource(
@@ -91,7 +91,7 @@ fun DataError.asUiText(): UiText {
             R.string.password_no_lowercase
         )
         UserRegisterError.Password.NOT_SAME -> UiText.StringResource(
-            R.string.paswords_not_same
+            R.string.passwords_not_same
         )
         UserRegisterError.TextInput.EMPTY -> UiText.StringResource(
             R.string.text_input_empty

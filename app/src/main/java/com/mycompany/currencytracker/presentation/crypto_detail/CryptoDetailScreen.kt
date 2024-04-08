@@ -27,9 +27,9 @@ import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
+import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
-import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.crypto_detail.components.CryptoDetailInfo
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
@@ -51,13 +51,16 @@ fun CryptoDetailScreen(
     val mainCurrency: CryptoDetails?
     val secondRate: String
 
-    if (selectedCurrency == savedCrypto){
+    if (selectedCurrency == savedCrypto) {
         mainCurrency = state.crypto
-        secondRate = (savedCurrency.value + " " + calculateDecimalPlaces(viewModel.fiatRate.value?.rate ?: 0.0))
-    }
-    else{
+        secondRate = (savedCurrency.value + " " + calculateDecimalPlaces(
+            viewModel.fiatRate.value?.rate ?: 0.0
+        ))
+    } else {
         mainCurrency = viewModel.fiatRate.value
-        secondRate = (savedCrypto.value.uppercase() + " " + calculateDecimalPlaces(state.crypto?.rate ?: 0.0))
+        secondRate = (savedCrypto.value.uppercase() + " " + calculateDecimalPlaces(
+            state.crypto?.rate ?: 0.0
+        ))
     }
 
     Box(
@@ -75,7 +78,9 @@ fun CryptoDetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = selectedCurrency.value.uppercase() + " " + calculateDecimalPlaces(crypto.rate),
+                            text = selectedCurrency.value.uppercase() + " " + calculateDecimalPlaces(
+                                crypto.rate
+                            ),
                             style = MaterialTheme.typography.displayLarge
                         )
                         Row(modifier = Modifier.padding(start = 5.dp, top = 5.dp)) {

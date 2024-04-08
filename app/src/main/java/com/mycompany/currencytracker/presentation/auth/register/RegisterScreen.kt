@@ -18,10 +18,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,10 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.domain.model.user.UserRegister
 import com.mycompany.currencytracker.presentation.auth.PasswordInput
 import com.mycompany.currencytracker.presentation.auth.TextInput
+import com.mycompany.currencytracker.presentation.common.ConnectionErrorDialog
 import com.mycompany.currencytracker.presentation.common.emptyUiText
 import com.mycompany.currencytracker.presentation.navigation.Screen
 
@@ -47,23 +43,19 @@ fun RegisterScreen(
 
     val registerViewModel = hiltViewModel<RegisterViewModel>()
     val state = registerViewModel.state.value
+    val stateUserInput = registerViewModel.stateUserInput.value
     val context = LocalContext.current
-
-
-    var emailInput by remember {
-        mutableStateOf("")
-    }
-    var nameInput by remember {
-        mutableStateOf("")
-    }
-    var surnameInput by remember {
-        mutableStateOf("")
-    }
-    var passwordInput by remember {
-        mutableStateOf("")
-    }
-    var repeatPasswordInput by remember {
-        mutableStateOf("")
+    val sendForm = {
+        registerViewModel.sendRegistrationForm(
+            UserRegister(
+                id = "",
+                email = stateUserInput.emailInput,
+                password = stateUserInput.passwordInput,
+                name = stateUserInput.nameInput,
+                surname = stateUserInput.surnameInput,
+                passwordRepeat = stateUserInput.repeatPasswordInput,
+            )
+        )
     }
 
     Column(
@@ -73,9 +65,9 @@ fun RegisterScreen(
             .padding(8.dp)
     ) {
         TextInput(
-            input = nameInput,
+            input = stateUserInput.nameInput,
             placeholder = stringResource(id = R.string.enter_name),
-            onValueChange = { nameInput = it },
+            onValueChange = { registerViewModel.onNameChange(it) },
             image = Icons.Default.Create,
             keyboardType = KeyboardType.Text,
             hasError = state.textInputNotValid,
@@ -86,9 +78,9 @@ fun RegisterScreen(
             thickness = 16.dp
         )
         TextInput(
-            input = surnameInput,
+            input = stateUserInput.surnameInput,
             placeholder = stringResource(id = R.string.enter_surname),
-            onValueChange = { surnameInput = it },
+            onValueChange = { registerViewModel.onSurnameChange(it) },
             image = Icons.Default.Create,
             keyboardType = KeyboardType.Text,
             hasError = state.textInputNotValid,
@@ -99,9 +91,9 @@ fun RegisterScreen(
             thickness = 16.dp
         )
         TextInput(
-            input = emailInput,
+            input = stateUserInput.emailInput,
             onValueChange = {
-                emailInput = it
+                registerViewModel.onEmailChange(it)
             },
             placeholder = stringResource(id = R.string.enter_email),
             image = Icons.Default.Email,
@@ -114,24 +106,28 @@ fun RegisterScreen(
             thickness = 16.dp
         )
         PasswordInput(
-            text = passwordInput,
+            input = stateUserInput.passwordInput,
             onValueChange = {
-                passwordInput = it
+                registerViewModel.onPasswordChange(it)
             },
             hasError = state.passwordNotValid,
-            errorMessage = state.formError.asString()
+            errorMessage = state.formError.asString(),
+            isPasswordShown = stateUserInput.isPasswordVisible,
+            changePasswordVisibility = registerViewModel::changePasswordVisibility
         )
         HorizontalDivider(
             color = Color.Transparent,
             thickness = 16.dp
         )
         PasswordInput(
-            text = repeatPasswordInput,
+            input = stateUserInput.repeatPasswordInput,
             onValueChange = {
-                repeatPasswordInput = it
+                registerViewModel.onRepeatPasswordChange(it)
             },
             hasError = state.repeatPasswordNotValid,
-            errorMessage = state.formError.asString()
+            errorMessage = state.formError.asString(),
+            isPasswordShown = stateUserInput.isPasswordVisible,
+            changePasswordVisibility = registerViewModel::changePasswordVisibility
         )
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -141,30 +137,20 @@ fun RegisterScreen(
         ) {
             Button(
                 onClick = {
-                    registerViewModel.sendRegistrationForm(
-                        UserRegister(
-                            id = "",
-                            email = emailInput,
-                            password = passwordInput,
-                            name = nameInput,
-                            surname = surnameInput,
-                            passwordRepeat = repeatPasswordInput,
-                        )
-                    )
-
-                    debugLog("Validation $state")
-
+                    sendForm()
                 },
                 modifier = Modifier.width(150.dp)
             ) {
-                Text(text = "Register")
+                Text(text = stringResource(id = R.string.register_text))
             }
         }
         if (state.httpError != emptyUiText) {
-            Text(
-                text = state.httpError.asString(),
-                color = Color.Black
-
+            ConnectionErrorDialog(
+                onDismissRequest = registerViewModel::dismissDialog,
+                onConfirmation = {
+                    sendForm()
+                },
+                dialogText = state.httpError.asString()
             )
         }
         Box(modifier = Modifier.fillMaxSize()) {
@@ -179,7 +165,9 @@ fun RegisterScreen(
     LaunchedEffect(key1 = state.isRegistry) {
         if (state.isRegistry) {
             navController.navigate(Screen.LoginScreen.route)
-            Toast.makeText(context, R.string.succes_register, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, R.string.success_register, Toast.LENGTH_LONG).show()
         }
     }
 }
+
+

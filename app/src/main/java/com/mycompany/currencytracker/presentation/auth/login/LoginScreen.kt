@@ -14,10 +14,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,16 +37,10 @@ fun LoginScreen(navController: NavHostController) {
 
     val viewModel = hiltViewModel<LoginViewModel>()
     val stateValue = viewModel.state.value
-
-    var emailInput by remember {
-        mutableStateOf("")
-    }
-    var passwordInput by remember {
-        mutableStateOf("")
-    }
+    val stateInput = viewModel.stateUserInput.value
 
     val sendForm = {
-        viewModel.sendLoginForm(UserLogin(emailInput, passwordInput))
+        viewModel.sendLoginForm(UserLogin(stateInput.emailInput, stateInput.passwordInput))
     }
 
     Column(
@@ -61,9 +51,9 @@ fun LoginScreen(navController: NavHostController) {
             .fillMaxSize()
     ) {
         TextInput(
-            input = emailInput,
+            input = stateInput.emailInput,
             onValueChange = {
-                emailInput = it
+                viewModel.emailOnChange(it)
             },
             placeholder = stringResource(id = R.string.enter_email),
             image = Icons.Default.Email,
@@ -76,10 +66,12 @@ fun LoginScreen(navController: NavHostController) {
             thickness = 16.dp
         )
         PasswordInput(
-            text = passwordInput,
+            input = stateInput.passwordInput,
             onValueChange = {
-                passwordInput = it
-            }
+                viewModel.passwordOnChange(it)
+            },
+            isPasswordShown = stateInput.isPasswordShown,
+            changePasswordVisibility = viewModel::changePasswordVisibility
         )
         HorizontalDivider(
             color = Color.Transparent,
@@ -109,6 +101,7 @@ fun LoginScreen(navController: NavHostController) {
     }
     if (stateValue.httpError != emptyUiText)
         ConnectionErrorDialog(
+            onDismissRequest = viewModel::dismissDialog,
             onConfirmation = {
                 sendForm()
             },

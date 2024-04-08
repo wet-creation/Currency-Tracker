@@ -11,7 +11,7 @@ import com.mycompany.currencytracker.presentation.calculator.ui.CalculatorScreen
 import com.mycompany.currencytracker.presentation.crypto_detail.CryptoDetailScreen
 import com.mycompany.currencytracker.presentation.currency_detail.CurrencyDetailScreen
 import com.mycompany.currencytracker.presentation.favorite_list.FavoriteListScreen
-import com.mycompany.currencytracker.presentation.notification_screen.NotificatiionScreen
+import com.mycompany.currencytracker.presentation.notification_screen.NotificationScreen
 import com.mycompany.currencytracker.presentation.profile.ProfileScreen
 import com.mycompany.currencytracker.presentation.seacrh.SearchScreen
 import com.mycompany.currencytracker.presentation.setting_screen.SettingScreen
@@ -33,7 +33,7 @@ fun Navigate(navController: NavHostController) {
             FavoriteListScreen(navController)
         }
         composable(Screen.NotificationScreen.route){
-            NotificatiionScreen()
+            NotificationScreen()
         }
         composable(Screen.SettingScreen.route){
             SettingScreen(navController = navController)
