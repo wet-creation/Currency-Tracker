@@ -13,8 +13,8 @@ import com.mycompany.currencytracker.data.repository.ConvertIml
 import com.mycompany.currencytracker.data.repository.CryptosIml
 import com.mycompany.currencytracker.data.repository.CurrenciesImp
 import com.mycompany.currencytracker.data.repository.UserFollowedImpl
+import com.mycompany.currencytracker.data.repository.UserImpl
 import com.mycompany.currencytracker.data.repository.UserNotificationImpl
-import com.mycompany.currencytracker.data.repository.Userimpl
 import com.mycompany.currencytracker.domain.repository.ConvertRepository
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
@@ -91,7 +91,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideUserRepository(api: UserService): UserRepository {
-        return Userimpl(api)
+        return UserImpl(api)
     }
 
     @Provides

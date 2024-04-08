@@ -27,12 +27,12 @@ class UserFollowedImpl @Inject constructor(
         api.deleteFiatFollowed(userId, symbol)
     }
 
-    override suspend fun getFollowedCrypto(id: String): List<CryptoFollowedDto> {
-        return api.getFollowedCrypto(id)
+    override suspend fun getFollowedCrypto(userID: String): List<CryptoFollowedDto> {
+        return api.getFollowedCrypto(userID)
     }
 
-    override suspend fun getFollowedFiat(id: String): List<FiatFollowedDto> {
-        return api.getFollowedFiat(id)
+    override suspend fun getFollowedFiat(userID: String): List<FiatFollowedDto> {
+        return api.getFollowedFiat(userID)
     }
 
 }

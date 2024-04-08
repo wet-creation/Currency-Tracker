@@ -1,8 +1,8 @@
 package com.mycompany.currencytracker.common
 
 object Constants {
-    const val CURRENCY_TRACKER_REST_API_URL = Links.CURRENCY_TRACKER_REST_API_URL
-    const val image_url = Links.IMAGE_URL
+    const val CURRENCY_TRACKER_REST_API_URL = "http://109.196.179.233:56260"
+    const val image_url = "https://www.agroswit.com.ua/flags/"
 
 
     const val PARAM_CURRENCY_ID = "currencyId"

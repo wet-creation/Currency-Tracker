@@ -58,7 +58,7 @@ class CalculatorViewModel @Inject constructor(
         convertor(fromSymbol, toSymbol).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    convertResult = result.data ?: Convert()
+                    convertResult = result.data
                     rate = convertResult.rate
                 }
 
@@ -78,7 +78,7 @@ class CalculatorViewModel @Inject constructor(
         currencyDetailsUseCase(symbol).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    fiatDetails = result.data ?: FiatDetails()
+                    fiatDetails = result.data
                     if (isFirstRow)
                         _calculatorRowState1.value = _calculatorRowState1.value.copy(
                             image = image_url + fiatDetails.symbol.lowercase() + ".png",
@@ -108,7 +108,7 @@ class CalculatorViewModel @Inject constructor(
         cryptoDetailsUseCase(symbol).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    cryptoDetails = result.data ?: CryptoDetails()
+                    cryptoDetails = result.data
                     if (isFirstRow)
                         _calculatorRowState1.value = _calculatorRowState1.value.copy(
                             image = cryptoDetails.image,

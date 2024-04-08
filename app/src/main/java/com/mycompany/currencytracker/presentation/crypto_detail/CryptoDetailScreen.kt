@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -30,6 +29,7 @@ import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
 import com.mycompany.currencytracker.presentation.common.ChangeRate
 import com.mycompany.currencytracker.presentation.common.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
+import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
 import com.mycompany.currencytracker.presentation.crypto_detail.components.CryptoDetailInfo
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
@@ -47,7 +47,7 @@ fun CryptoDetailScreen(
     val savedCrypto = dataStore.getCrypto.collectAsState(initial = "")
     val savedCurrency = dataStore.getCurrency.collectAsState(initial = "")
 
-    val selectedCurrency = savedCrypto //this feature in progress
+    val selectedCurrency = savedCrypto
     var mainCurrency: CryptoDetails?
     var secondRate = ""
 
@@ -71,7 +71,7 @@ fun CryptoDetailScreen(
             ) {
                 item {
                     Row(
-                        modifier = Modifier.fillMaxWidth().testTag("CryptoElement"),
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
@@ -101,7 +101,7 @@ fun CryptoDetailScreen(
                     }
                 }
                 item {
-                    //Chart()
+                    Chart()
                 }
                 item {
                     ChangeRatesItem(crypto)
@@ -125,7 +125,7 @@ fun CryptoDetailScreen(
             )
         }
         if (state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center).testTag("LoadingIndicator"))
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
 }

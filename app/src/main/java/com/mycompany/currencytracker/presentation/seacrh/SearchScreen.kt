@@ -10,41 +10,53 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
-import com.mycompany.currencytracker.presentation.common.ListScreen
-import com.mycompany.currencytracker.presentation.common.SearchPosition
-import com.mycompany.currencytracker.presentation.common.StateListScreen
-import com.mycompany.currencytracker.presentation.common.crypto.CryptoListScreen
-import com.mycompany.currencytracker.presentation.common.crypto.CryptoSearchListViewModel
-import com.mycompany.currencytracker.presentation.common.fiat.FiatListScreen
-import com.mycompany.currencytracker.presentation.common.fiat.FiatSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
+import com.mycompany.currencytracker.presentation.common.currency.CurrenciesListHeader
+import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
+import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
 import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
+import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(
+    navController: NavController
+) {
     val fiatSearchListViewModel = hiltViewModel<FiatSearchListViewModel>()
     val cryptoSearchListViewModel = hiltViewModel<CryptoSearchListViewModel>()
     var stateQuery by remember {
         mutableStateOf("")
     }
-    ListScreen(
+    CurrencyListsScreen(
         searchPosition = SearchPosition.Top,
-        StateListScreen(stateQuery) {
+        CurrencyListsScreenState(stateQuery) {
             stateQuery = it
         },
         fiatListScreen = {
-            FiatListScreen(haveHeader = true, viewModel = fiatSearchListViewModel) { currencyItem: FiatDetails, currNumber: Int ->
-                CurrencyListItem (fiatDetails = currencyItem, currNumber = currNumber) {
-
+            ItemsListScreen(
+                header = { CurrenciesListHeader() },
+                viewModel = fiatSearchListViewModel,
+                list = fiatSearchListViewModel.searchResult.value
+            ) { currencyItem: FiatDetails, currNumber: Int ->
+                CurrencyListItem(fiatDetails = currencyItem, currNumber = currNumber) {
+                    navController.navigate(Screen.CurrencyDetailScreen.route + "/${currencyItem.symbol}")
                 }
             }
         },
         cryptoListScreen = {
-            CryptoListScreen(haveHeader = true, viewModel = cryptoSearchListViewModel) { crypto ->
-                CryptoListItem (crypto = crypto, number = crypto.rank) {
-
+            ItemsListScreen(
+                header = { CurrenciesListHeader() },
+                viewModel = cryptoSearchListViewModel,
+                list = cryptoSearchListViewModel.searchResult.value
+            ) { crypto, _ ->
+                CryptoListItem(crypto = crypto, number = crypto.rank) {
+                    navController.navigate(Screen.CryptoDetailScreen.route + "/${crypto.symbol}")
                 }
             }
         }) {

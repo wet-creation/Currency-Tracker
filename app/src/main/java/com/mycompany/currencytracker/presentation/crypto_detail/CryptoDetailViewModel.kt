@@ -41,9 +41,7 @@ class CryptoDetailViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _state.value = CryptoDetailState(
-                        error = result.message ?: "an unexpected error occurred"
-                    )
+
                 }
 
                 is Resource.Loading -> {
@@ -59,9 +57,7 @@ class CryptoDetailViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _state.value = CryptoDetailState(
-                        error = result.message ?: "an unexpected error occurred"
-                    )
+
                 }
 
                 is Resource.Loading -> {
