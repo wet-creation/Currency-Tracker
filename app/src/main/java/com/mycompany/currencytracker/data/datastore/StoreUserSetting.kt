@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mycompany.currencytracker.domain.model.user.User
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -13,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class StoreUserSetting
-@Inject constructor(private val context: Context) {
+@Inject constructor( @ApplicationContext private val context: Context) {
     companion object {
         private val Context.dataStore by preferencesDataStore("UserSetting")
         val USER_MAIN_CURRENCY_KEY = stringPreferencesKey("user_main_currency")
@@ -26,7 +27,7 @@ class StoreUserSetting
         val USER_PASSWORD = stringPreferencesKey("user_password")
     }
 
-    val getCurrency: Flow<String> = context.dataStore.data
+    val getFiat: Flow<String> = context.dataStore.data
         .map { preferences ->
             preferences[USER_MAIN_CURRENCY_KEY] ?: "USD"
         }
@@ -37,12 +38,12 @@ class StoreUserSetting
         }
 
 
-    fun getCurrency(): String {
-        var currency: String
+    fun getFiat(): String {
+        var fiat: String
         runBlocking(Dispatchers.IO) {
-            currency = getCurrency.first()
+            fiat = getFiat.first()
         }
-        return currency
+        return fiat
     }
 
     fun getCrypto(): String {

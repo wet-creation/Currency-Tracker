@@ -25,7 +25,7 @@ fun FavoriteListScreen(navController: NavHostController) {
             ItemsListScreen(
                 header = { CurrenciesListHeader() },
                 viewModel = fiatListViewModel,
-                list = fiatListViewModel.state.value.currencies
+                list = fiatListViewModel.state.value.items
             ) { currencyItem, currNumber ->
                 CurrencyListItem(currencyItem, currNumber) {
                     navController.navigate(Screen.CurrencyDetailScreen.route + "/${currencyItem.symbol}")
@@ -35,7 +35,7 @@ fun FavoriteListScreen(navController: NavHostController) {
             ItemsListScreen(
                 header = { CurrenciesListHeader() },
                 viewModel = cryptoListViewModel,
-                list = cryptoListViewModel.state.value.currencies
+                list = cryptoListViewModel.state.value.items
             ) { crypto, _ ->
                 CryptoListItem(crypto = crypto, number = crypto.rank) {
                     navController.navigate(Screen.CryptoDetailScreen.route + "/${crypto.symbol}")

@@ -6,133 +6,111 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Constants.image_url
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.domain.model.currency.Convert
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
+import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
-import com.mycompany.currencytracker.domain.use_case.convert.ConvertUseCase
 import com.mycompany.currencytracker.domain.use_case.crypto.GetCryptoDetailsUseCase
-import com.mycompany.currencytracker.domain.use_case.currency.GetCurrencyDetailsUseCase
+import com.mycompany.currencytracker.domain.use_case.currency.GetFiatDetailsUseCase
 import com.mycompany.currencytracker.presentation.calculator.states.ActionInput
+import com.mycompany.currencytracker.presentation.calculator.states.CalculatorScreenState
 import com.mycompany.currencytracker.presentation.calculator.states.RowStateCalculator
+import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CalculatorViewModel @Inject constructor(
-    private val convertor: ConvertUseCase,
-    private val currencyDetailsUseCase: GetCurrencyDetailsUseCase,
+    private val fiatDetailsUseCase: GetFiatDetailsUseCase,
     private val cryptoDetailsUseCase: GetCryptoDetailsUseCase,
-    private val userSetting: StoreUserSetting
+    private val userSetting: StoreUserSetting,
 ) : ViewModel() {
 
-    private var _calculatorRowState1 = mutableStateOf(RowStateCalculator())
-    val calculatorState1: State<RowStateCalculator> = _calculatorRowState1
-    private var _calculatorRowState2 = mutableStateOf(RowStateCalculator())
-    val calculatorState2: State<RowStateCalculator> = _calculatorRowState2
-    private var convertResult = Convert()
-    private var rate: Double = 0.0
+
+    private var _screenState = mutableStateOf(CalculatorScreenState())
+    val screenState: State<CalculatorScreenState> = _screenState
 
 
     init {
         initStates()
     }
 
-    fun convert(sum: Double) {
-        val result = rate * sum
-        _calculatorRowState2.value =
-            _calculatorRowState2.value.copy(sum = String.format("%.4f", result).replace(",", "."))
-    }
+    fun initStates() {
+        val flowFiat = fiatDetailsUseCase(userSetting.getFiat())
+        val flowCrypto = cryptoDetailsUseCase(userSetting.getCrypto())
 
-    private fun initStates() {
-        getFiat(userSetting.getCurrency())
-        getCrypto(userSetting.getCrypto())
-        getRate(userSetting.getCurrency(), userSetting.getCrypto())
-
-    }
-
-    fun getRate(fromSymbol: String, toSymbol: String) {
-        convertor(fromSymbol, toSymbol).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    convertResult = result.data
-                    rate = convertResult.rate
+        viewModelScope.launch {
+            combine(flowFiat, flowCrypto) { fiat, crypto ->
+                listOf(fiat, crypto)
+            }.collect { list ->
+                val updatedState = list.fold(_screenState.value) { acc, resource ->
+                    when (resource) {
+                        is Resource.Error -> acc.copy(error = resource.asErrorUiText())
+                        is Resource.Loading -> acc.copy(isLoading = true)
+                        is Resource.Success -> updateRowState(acc, resource.data)
+                    }
                 }
-
-                is Resource.Error -> {
-
-                }
-
-                is Resource.Loading -> {
-
-                }
+                _screenState.value = updatedState.calculateExchangeRate()
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
-    fun getFiat(symbol: String, isFirstRow: Boolean = true) {
-        var fiatDetails: FiatDetails
-        currencyDetailsUseCase(symbol).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    fiatDetails = result.data
-                    if (isFirstRow)
-                        _calculatorRowState1.value = _calculatorRowState1.value.copy(
-                            image = image_url + fiatDetails.symbol.lowercase() + ".png",
-                            symbol = fiatDetails.symbol,
-                            name = fiatDetails.name
-                        )
-                    else
-                        _calculatorRowState2.value = _calculatorRowState2.value.copy(
-                            image = image_url + fiatDetails.symbol.lowercase() + ".png",
-                            symbol = fiatDetails.symbol,
-                            name = fiatDetails.name
-                        )
-                    convert(_calculatorRowState1.value.sum.toDouble())
-                }
-
-                is Resource.Error -> {
-                }
-
-                is Resource.Loading -> {
-                }
-            }
-        }.launchIn(viewModelScope)
+    private fun updateRowState(state: CalculatorScreenState, data: Any): CalculatorScreenState {
+        return when (data) {
+            is CryptoDetails, is CryptoGeneralInfo -> state.copy(
+                secondRowState = convertToRowState(data)
+            )
+            is FiatDetails -> state.copy(
+                firstRowState = convertToRowState(data),
+                isLoading = false
+            )
+            else -> state
+        }
     }
 
-    fun getCrypto(symbol: String, isFirstRow: Boolean = false) {
-        var cryptoDetails: CryptoDetails
-        cryptoDetailsUseCase(symbol).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    cryptoDetails = result.data
-                    if (isFirstRow)
-                        _calculatorRowState1.value = _calculatorRowState1.value.copy(
-                            image = cryptoDetails.image,
-                            symbol = cryptoDetails.symbol.uppercase(),
-                            name = cryptoDetails.name
-                        )
-                    else
-                        _calculatorRowState2.value = _calculatorRowState2.value.copy(
-                            image = cryptoDetails.image,
-                            symbol = cryptoDetails.symbol.uppercase(),
-                            name = cryptoDetails.name
-                        )
-                    convert(_calculatorRowState1.value.sum.toDouble())
-
-                }
-
-                is Resource.Error -> {
-                }
-
-                is Resource.Loading -> {
-                }
-            }
-        }.launchIn(viewModelScope)
+    private fun CalculatorScreenState.calculateExchangeRate(): CalculatorScreenState {
+        return this.copy(rate = this.firstRowState.rate / this.secondRowState.rate)
     }
+
+    private fun convertToRowState(data: Any): RowStateCalculator {
+        return when (data) {
+            is CryptoDetails -> RowStateCalculator(
+                image = data.image,
+                symbol = data.symbol.uppercase(),
+                name = data.name,
+                rate = data.rate
+            )
+            is CryptoGeneralInfo -> RowStateCalculator(
+                image = data.image,
+                symbol = data.symbol.uppercase(),
+                name = data.name,
+                rate = data.rate
+            )
+            is FiatDetails -> RowStateCalculator(
+                image = "$image_url/${data.symbol.lowercase()}.png",
+                symbol = data.symbol,
+                name = data.name,
+                rate = data.rate
+            )
+            else -> throw IllegalArgumentException("Unsupported data type")
+        }
+    }
+
+    fun setRowState(data: Any, isSecondRow: Boolean = false) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val updatedState = if (isSecondRow) {
+                _screenState.value.copy(secondRowState = convertToRowState(data))
+            } else {
+                _screenState.value.copy(firstRowState = convertToRowState(data))
+            }.calculateExchangeRate()
+
+            _screenState.value = updatedState
+        }
+    }
+
 
     fun readInput(input: ActionInput) {
         when (input) {
@@ -148,48 +126,73 @@ class CalculatorViewModel @Inject constructor(
                 writeDecimal()
             }
         }
-        debugLog("input ${_calculatorRowState1.value.symbol} ${_calculatorRowState1.value.sum}")
 
+    }
+
+    fun convert(sum: Double) {
+        val result = _screenState.value.rate * sum
+        _screenState.value =
+            _screenState.value.copy(
+                secondRowState = _screenState.value.secondRowState.copy(
+                    sum = String.format("%.4f", result).replace(",", ".")
+                )
+            )
     }
 
     private fun writeDecimal() {
-        if (!_calculatorRowState1.value.sum.contains("."))
-            _calculatorRowState1.value =
-                _calculatorRowState1.value.copy(sum = _calculatorRowState1.value.sum + ".")
+        if (!_screenState.value.firstRowState.sum.contains("."))
+            _screenState.value =
+                _screenState.value.copy(
+                    firstRowState = _screenState.value.firstRowState.copy(
+                        sum = _screenState.value.firstRowState.sum + "."
+                    )
+                )
     }
 
     private fun erase() {
-        if (_calculatorRowState1.value.sum == "0") return
+        if (_screenState.value.firstRowState.sum == "0") return
 
-        _calculatorRowState1.value =
-            _calculatorRowState1.value.copy(sum = _calculatorRowState1.value.sum.dropLast(1))
-        if (_calculatorRowState1.value.sum.isEmpty()) {
-            _calculatorRowState1.value = _calculatorRowState1.value.copy(sum = "0")
+        _screenState.value =
+            _screenState.value.copy(
+                firstRowState = _screenState.value.firstRowState.copy
+                    (sum = _screenState.value.firstRowState.sum.dropLast(1))
+            )
+        if (_screenState.value.firstRowState.sum.isEmpty()) {
+            _screenState.value =
+                _screenState.value.copy(
+                    firstRowState = _screenState.value.firstRowState.copy
+                        (sum = "0")
+                )
         }
-
-
     }
 
     private fun writeNumber(number: Int) {
-        if (countDigitsAfterDecimalPoint(_calculatorRowState1.value.sum) > 3)
+        if (countDigitsAfterDecimalPoint(_screenState.value.firstRowState.sum) > 3)
             return
-
-        if (_calculatorRowState1.value.sum == "0")
-            _calculatorRowState1.value =
-                _calculatorRowState1.value.copy(sum = number.toString())
+        if (_screenState.value.firstRowState.sum == "0")
+            _screenState.value = _screenState.value.copy(
+                firstRowState = _screenState.value.firstRowState.copy(sum = number.toString())
+            )
         else
-            _calculatorRowState1.value =
-                _calculatorRowState1.value.copy(sum = _calculatorRowState1.value.sum + number.toString())
+            _screenState.value = _screenState.value.copy(
+                firstRowState = _screenState.value.firstRowState.copy(sum = _screenState.value.firstRowState.sum + number.toString())
+            )
     }
 
     fun swapRows() {
-        val tmp = _calculatorRowState1.value
-        if (_calculatorRowState2.value.sum == "0.0000") _calculatorRowState1.value =
-            _calculatorRowState2.value.copy(sum = "0")
-        else _calculatorRowState1.value = _calculatorRowState2.value
-        _calculatorRowState2.value = tmp
-        rate = 1 / rate
-
+        val tmp = _screenState.value.firstRowState
+        if (_screenState.value.secondRowState.sum == "0.0000") _screenState.value =
+            _screenState.value.copy(
+                firstRowState = _screenState.value.secondRowState.copy(sum = "0"),
+                secondRowState = tmp,
+                rate = 1 / _screenState.value.rate
+            )
+        else _screenState.value =
+            _screenState.value.copy(
+                firstRowState = _screenState.value.secondRowState,
+                secondRowState = tmp,
+                rate = 1 / _screenState.value.rate
+            )
     }
 
     private fun countDigitsAfterDecimalPoint(number: String): Int {
@@ -198,4 +201,7 @@ class CalculatorViewModel @Inject constructor(
         return parts[1].length
     }
 
+    fun dismissDialog() {
+        _screenState.value = CalculatorScreenState(isLoading = false)
+    }
 }

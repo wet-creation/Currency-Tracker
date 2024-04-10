@@ -35,7 +35,7 @@ class CryptoSearchListViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     val cryptos = result.data
-                    _state.value = CryptoListState(currencies = cryptos)
+                    _state.value = CryptoListState(items = cryptos)
                     _searchResult.value = cryptos
                 }
                 is Resource.Error -> {
@@ -51,7 +51,7 @@ class CryptoSearchListViewModel @Inject constructor(
     }
 
     fun search(query: String) {
-        val filteredList = _state.value.currencies.filter { crypto ->
+        val filteredList = _state.value.items.filter { crypto ->
             crypto.name.contains(query, ignoreCase = true) || crypto.symbol.contains(query, ignoreCase = true)
         }
         _searchResult.value = filteredList

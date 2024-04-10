@@ -4,6 +4,6 @@ data class RowStateCalculator(
     val image: Any = "",
     val symbol: String = "",
     val name: String = "",
-    val isOpen: Boolean = false,
-    val sum: String = "0"
+    val sum: String = "0",
+    val rate: Double = 1.0
 )

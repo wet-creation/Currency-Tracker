@@ -8,7 +8,7 @@ import com.mycompany.currencytracker.presentation.common.emptyUiText
 
 data class CurrencyListState(
     override val isLoading: Boolean = false,
-    override val currencies: List<FiatDetails> = emptyList(),
+    override val items: List<FiatDetails> = emptyList(),
     override val error: UiText = emptyUiText
 
 ): IListState<FiatDetails>

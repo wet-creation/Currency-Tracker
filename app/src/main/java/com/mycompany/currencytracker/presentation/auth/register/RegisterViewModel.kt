@@ -138,7 +138,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun dismissDialog() {
-        _state.value = RegistrationState(httpError = emptyUiText)
+        _state.value = RegistrationState(httpError = emptyUiText    )
     }
 
 

@@ -4,6 +4,6 @@ import com.mycompany.currencytracker.presentation.common.UiText
 
 interface IListState<T> {
     val isLoading: Boolean
-    val currencies: List<T>
+    val items: List<T>
     val error: UiText
 }

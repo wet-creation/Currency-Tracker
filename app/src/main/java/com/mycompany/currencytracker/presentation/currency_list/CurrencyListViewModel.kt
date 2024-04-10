@@ -28,10 +28,10 @@ class CurrencyListViewModel @Inject constructor(
     }
 
     override fun getItems() {
-        getCurrenciesListUseCase(userSettings.getCurrency()).onEach { result ->
+        getCurrenciesListUseCase(userSettings.getFiat()).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = CurrencyListState(currencies = result.data)
+                    _state.value = CurrencyListState(items = result.data)
                 }
 
                 is Resource.Error -> {

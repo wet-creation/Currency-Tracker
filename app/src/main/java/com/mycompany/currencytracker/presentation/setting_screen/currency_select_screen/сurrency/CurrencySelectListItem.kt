@@ -33,7 +33,7 @@ fun CurrencySelectListItem(
     val context = LocalContext.current
     val dataStore = StoreUserSetting(context)
 
-    val savedCurrency = dataStore.getCurrency.collectAsState(initial = "")
+    val savedCurrency = dataStore.getFiat.collectAsState(initial = "")
 
     val color = if (savedCurrency.value == fiatDetails.symbol) {
         selectTextColor

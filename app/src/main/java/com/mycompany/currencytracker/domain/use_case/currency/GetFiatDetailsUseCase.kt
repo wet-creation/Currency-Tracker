@@ -11,7 +11,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetCurrencyDetailsUseCase @Inject constructor(
+class GetFiatDetailsUseCase @Inject constructor(
     private val repository: CurrenciesRepository
 ) {
     operator fun invoke(

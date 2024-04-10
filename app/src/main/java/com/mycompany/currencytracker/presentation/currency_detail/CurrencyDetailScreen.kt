@@ -33,7 +33,7 @@ fun CurrencyDetailScreen(
     val context = LocalContext.current
     val dataStore = StoreUserSetting(context)
 
-    val savedCurrency = dataStore.getCurrency.collectAsState(initial = "")
+    val savedCurrency = dataStore.getFiat.collectAsState(initial = "")
 
     Box(
         modifier = Modifier.fillMaxSize()

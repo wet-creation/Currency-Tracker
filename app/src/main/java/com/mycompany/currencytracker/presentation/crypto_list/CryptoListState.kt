@@ -7,7 +7,7 @@ import com.mycompany.currencytracker.presentation.common.list.IListState
 
 data class CryptoListState(
     override val isLoading: Boolean = false,
-    override val currencies: List<CryptoGeneralInfo> = emptyList(),
+    override val items: List<CryptoGeneralInfo> = emptyList(),
     override val error: UiText = emptyUiText
 
 ): IListState<CryptoGeneralInfo>

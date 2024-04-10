@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -37,11 +38,13 @@ import com.mycompany.currencytracker.presentation.calculator.ui.elements.Convert
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.CryptoListItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.FiatListItem
+import com.mycompany.currencytracker.presentation.common.ConnectionErrorDialog
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
-import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.emptyUiText
+import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import kotlinx.coroutines.launch
@@ -53,20 +56,21 @@ fun CalculatorScreen() {
     val viewModel = hiltViewModel<CalculatorViewModel>()
     val fiatSearchListViewModel = hiltViewModel<FiatSearchListViewModel>()
     val cryptoSearchListViewModel = hiltViewModel<CryptoSearchListViewModel>()
-    val rowState1 = viewModel.calculatorState1.value
-    val rowState2 = viewModel.calculatorState2.value
+    val state = viewModel.screenState.value
+    val firstRowState = state.firstRowState
+    val secondRowState = state.secondRowState
     val sheetScaffoldState = rememberModalBottomSheetState()
-    var searchQuery by remember {
-        mutableStateOf("")
-    }
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = sheetScaffoldState
     )
+    var searchQuery by remember {
+        mutableStateOf("")
+    }
     val scope = rememberCoroutineScope()
 
-    var isFistRowOpen = false
-
-
+    var isFistRowOpen by remember {
+        mutableStateOf(false)
+    }
 
     BottomSheetScaffold(
         sheetContent = {
@@ -81,20 +85,7 @@ fun CalculatorScreen() {
                         list = fiatSearchListViewModel.searchResult.value,
                         itemContent = { currencyItem, _ ->
                             FiatListItem(currencyItem) {
-                                if (isFistRowOpen) {
-                                    viewModel.getRate(
-                                        currencyItem.symbol,
-                                        viewModel.calculatorState2.value.symbol
-                                    )
-                                    viewModel.getFiat(currencyItem.symbol, true)
-                                }
-                                else {
-                                    viewModel.getRate(
-                                        viewModel.calculatorState1.value.symbol,
-                                        currencyItem.symbol
-                                    )
-                                    viewModel.getFiat(currencyItem.symbol, false)
-                                }
+                                    viewModel.setRowState(currencyItem, !isFistRowOpen)
                                 scope.launch {
                                     scaffoldState.bottomSheetState.hide()
                                 }
@@ -106,21 +97,8 @@ fun CalculatorScreen() {
                         viewModel = cryptoSearchListViewModel,
                         list = cryptoSearchListViewModel.searchResult.value,
                         itemContent = { crypto, _ ->
-                            CryptoListItem(crypto = crypto) {
-                                if (isFistRowOpen) {
-                                    viewModel.getRate(
-                                        crypto.symbol,
-                                        viewModel.calculatorState2.value.symbol
-                                    )
-                                    viewModel.getCrypto(crypto.symbol, true)
-                                }
-                                else {
-                                    viewModel.getRate(
-                                        viewModel.calculatorState1.value.symbol,
-                                        crypto.symbol
-                                    )
-                                    viewModel.getCrypto(crypto.symbol, false)
-                                }
+                            CryptoListItem(crypto) {
+                                viewModel.setRowState(crypto, !isFistRowOpen)
                                 scope.launch {
                                     scaffoldState.bottomSheetState.hide()
                                 }
@@ -149,31 +127,47 @@ fun CalculatorScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
+            if (state.error != emptyUiText) {
+                ConnectionErrorDialog(
+                    onDismissRequest = viewModel::dismissDialog,
+                    onConfirmation = viewModel::initStates,
+                    dialogText = state.error.asString()
+                )
+            } else if (state.isLoading) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
             ConvertItem(
-                rowState1,
-                contentDescription = "img ${rowState1.symbol}"
+                firstRowState,
+                contentDescription = "img ${firstRowState.symbol}"
             ) {
                 scope.launch {
                     scaffoldState.bottomSheetState.expand()
                     isFistRowOpen = true
                 }
             }
-            Row(horizontalArrangement = Arrangement.Absolute.Left, modifier = Modifier.fillMaxWidth().
-            padding(start = 20.dp, bottom = 20.dp)) {
+            Row(
+                horizontalArrangement = Arrangement.Absolute.Left,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, bottom = 20.dp)
+            ) {
                 Button(onClick = {
                     viewModel.swapRows()
                 }) {
                     Box(modifier = Modifier) {
-                        Icon(painter = painterResource(id = R.drawable.change_values_icon), contentDescription = "change_values")
+                        Icon(
+                            painter = painterResource(id = R.drawable.change_values_icon),
+                            contentDescription = "change_values"
+                        )
                     }
 
                 }
             }
-
-
             ConvertItem(
-                rowState2,
-                contentDescription = "img ${rowState2.symbol}"
+                secondRowState,
+                contentDescription = "img ${secondRowState.symbol}"
             ) {
                 scope.launch {
                     scaffoldState.bottomSheetState.expand()
@@ -227,7 +221,10 @@ fun CalculatorScreen() {
                     ConvertButton(text = "0", modifier = Modifier.weight(1f)) {
                         viewModel.readInput(ActionInput.Number(0))
                     }
-                    ConvertButton(icon = R.drawable.eraser_icon, modifier = Modifier.weight(1f)) {
+                    ConvertButton(
+                        icon = R.drawable.eraser_icon,
+                        modifier = Modifier.weight(1f)
+                    ) {
                         viewModel.readInput(ActionInput.Erase)
                     }
                 }
@@ -238,9 +235,12 @@ fun CalculatorScreen() {
         fiatSearchListViewModel.search(searchQuery)
         cryptoSearchListViewModel.search(searchQuery)
     }
-    LaunchedEffect(key1 = rowState1.sum) {
-
-        viewModel.convert(rowState1.sum.replace(",",".").toDouble())
+    LaunchedEffect(
+        key1 = firstRowState.sum,
+        key2 = firstRowState,
+        key3 = secondRowState
+    ) {
+        viewModel.convert(firstRowState.sum.replace(",", ".").toDouble())
     }
 }
 

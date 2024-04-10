@@ -30,7 +30,7 @@ class CurrencyDetailViewModel @Inject constructor(
     }
 
     private fun getCurrency(currencySym: String) {
-        getCurrencyAdditionalInfo(currencySym, userSettings.getCurrency()).onEach { result ->
+        getCurrencyAdditionalInfo(currencySym, userSettings.getFiat()).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = CurrencyDetailState(currency = result.data)

@@ -45,7 +45,7 @@ fun CryptoDetailScreen(
     val dataStore = StoreUserSetting(context)
 
     val savedCrypto = dataStore.getCrypto.collectAsState(initial = "")
-    val savedCurrency = dataStore.getCurrency.collectAsState(initial = "")
+    val savedCurrency = dataStore.getFiat.collectAsState(initial = "")
 
     val selectedCurrency = savedCrypto
     val mainCurrency: CryptoDetails?

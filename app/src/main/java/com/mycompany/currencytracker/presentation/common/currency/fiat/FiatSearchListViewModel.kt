@@ -34,7 +34,7 @@ class FiatSearchListViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     val currencies = result.data
-                    _state.value = CurrencyListState(currencies = currencies)
+                    _state.value = CurrencyListState(items = currencies)
                     _searchResult.value = currencies
                 }
                 is Resource.Error -> {
@@ -49,7 +49,7 @@ class FiatSearchListViewModel @Inject constructor(
     }
 
     fun search(query: String) {
-        val filteredList = _state.value.currencies.filter { currency ->
+        val filteredList = _state.value.items.filter { currency ->
             currency.name.contains(query, ignoreCase = true) || currency.symbol.contains(query, ignoreCase = true)
         }
         _searchResult.value = filteredList

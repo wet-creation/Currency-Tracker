@@ -6,8 +6,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.currency.CurrenciesListHeader
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListViewModel
 import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
@@ -27,7 +27,7 @@ fun MainListScreen(
             ItemsListScreen(
                 header = { CurrenciesListHeader() },
                 viewModel = fiatSearchListViewModel,
-                list = fiatSearchListViewModel.state.value.currencies
+                list = fiatSearchListViewModel.state.value.items
             ) { currencyItem, currNumber ->
                 CurrencyListItem(currencyItem, currNumber) {
                     navController.navigate(Screen.CurrencyDetailScreen.route + "/${currencyItem.symbol}")
@@ -36,7 +36,7 @@ fun MainListScreen(
         }, cryptoListScreen = {
             ItemsListScreen(
                 header = { CurrenciesListHeader() },
-                list = cryptoSearchListViewModel.state.value.currencies,
+                list = cryptoSearchListViewModel.state.value.items,
                 viewModel = cryptoSearchListViewModel,
             ) { crypto, _->
                 CryptoListItem(crypto = crypto, number = crypto.rank) {

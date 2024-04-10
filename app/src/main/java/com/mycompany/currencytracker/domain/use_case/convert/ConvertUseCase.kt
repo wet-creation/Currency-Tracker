@@ -2,6 +2,7 @@ package com.mycompany.currencytracker.domain.use_case.convert
 
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
+import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.domain.model.currency.Convert
 import com.mycompany.currencytracker.domain.repository.ConvertRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,7 @@ class ConvertUseCase @Inject constructor(
     ): Flow<Resource<Convert, DataError>> = flow {
         try {
             emit(Resource.Loading())
+            debugLog("Convert $from to $to")
             val converted = repository.convert(value, from, to).toConvert()
             emit(Resource.Success(converted))
         } catch (e: HttpException) {

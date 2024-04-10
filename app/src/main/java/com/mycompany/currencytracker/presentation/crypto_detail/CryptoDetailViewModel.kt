@@ -50,7 +50,7 @@ class CryptoDetailViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
 
-        getCryptoDetailsUseCase(coinSym, userSettings.getCurrency()).onEach { result ->
+        getCryptoDetailsUseCase(coinSym, userSettings.getFiat()).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _fiatRate.value = result.data

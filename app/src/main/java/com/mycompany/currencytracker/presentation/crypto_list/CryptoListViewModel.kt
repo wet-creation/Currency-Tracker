@@ -34,7 +34,7 @@ class  CryptoListViewModel @Inject constructor(
         getTop100RateUseCase(userSettings.getCrypto()).onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _state.value = CryptoListState(currencies = result.data)
+                    _state.value = CryptoListState(items = result.data)
                 }
                 is Resource.Error -> {
                     val msg = result.asErrorUiText()
