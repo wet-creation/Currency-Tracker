@@ -55,7 +55,7 @@ fun CurrencySelectListItem(
                 .width(24.dp)
                 .height(24.dp)
                 .clip(CircleShape),
-            model = Constants.image_url + fiatDetails.symbol.lowercase() + ".png",
+            model = Constants.IMAGE_URL + fiatDetails.symbol.lowercase() + ".png",
             contentDescription = "image description",
             contentScale = ContentScale.Crop
         )

@@ -26,8 +26,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
-import com.mycompany.currencytracker.presentation.common.ChangeRate
-import com.mycompany.currencytracker.presentation.common.crypto.calculateDecimalPlaces
+import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
+import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
+import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeChartTimeButtons
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
 import com.mycompany.currencytracker.presentation.crypto_detail.components.CryptoDetailInfo
@@ -101,7 +102,11 @@ fun CryptoDetailScreen(
                     }
                 }
                 item {
-                    Chart()
+                    Chart(viewModel.graphInfo.value)
+                    ChangeChartTimeButtons(dataStore.getChartTime()
+                    ) { time ->
+                        viewModel.changeChartTime(time)
+                    }
                 }
                 item {
                     ChangeRatesItem(crypto)

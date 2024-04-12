@@ -1,9 +1,9 @@
-package com.mycompany.currencytracker.domain.use_case.currency
+package com.mycompany.currencytracker.domain.use_case.crypto
 
 import co.yml.charts.common.model.Point
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.repository.CurrenciesRepository
+import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -12,11 +12,11 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import javax.inject.Inject
 
-class GetFiatGraphInfoUseCase @Inject constructor(
-    private val repository: CurrenciesRepository
+class GetCryptoGraphInfoUseCase @Inject constructor(
+    private val repository: CryptosRepository
 ) {
     operator fun invoke(
-        timestamp : Int,
+        timestamp : Int = 24,
         symbol: String,
         baseCurrency: String = "USD"
     ): Flow<Resource<Map<Point, Long>, DataError.Network>> = flow {
@@ -44,8 +44,8 @@ class GetFiatGraphInfoUseCase @Inject constructor(
                 val toIndex = Math.min(fromIndex + partSize, currencyResponse.size)
 
                 if (fromIndex < toIndex) {
-                    val average = currencyResponse.subList(fromIndex, toIndex).map { it.rate }.average()
-                    val time = currencyResponse[toIndex - 1].timestamp
+                    val average = currencyResponse.subList(fromIndex, toIndex).map { it.current_price }.average()
+                    val time = currencyResponse[toIndex - 1].last_updated.toLong()
                     val point = Point(i.toFloat(), average.toFloat())
 
                     ratesAverageArray[point] = time

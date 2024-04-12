@@ -1,9 +1,12 @@
 package com.mycompany.currencytracker.presentation.common.detail_screen
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,38 +23,34 @@ import co.yml.charts.ui.linechart.model.LineStyle
 import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
 import co.yml.charts.ui.linechart.model.SelectionHighlightPopUp
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
+import com.mycompany.currencytracker.presentation.ui.theme.borderColor
+import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
+import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun Chart(currencies: List<Point>){
-    val steps = 7
-    val maxValue = currencies.maxBy { it.y }
-    val minValue = currencies.minBy { it.y }
+fun Chart(currencies: Map<Point, Long>){
+    val steps = 6
+
+    val dataPoints : List<Point> = currencies.keys.toList()
+
+    val maxValue = dataPoints.maxBy { it.y }
+    val minValue = dataPoints.minBy { it.y }
     val difference = maxValue.y - minValue.y
 
-    val startValueX = currencies[0].x.toLong()
-    val endValueX = currencies[currencies.size - 1].x.toLong()
 
-    val differenceX = endValueX - startValueX
-
-    val formatter = DateTimeFormatter.ofPattern("MM-dd HH:mm").withZone(ZoneId.systemDefault())
+    val formatter = DateTimeFormatter.ofPattern("MM.dd HH:mm").withZone(ZoneId.systemDefault())
 
     Log.d("Point", "${currencies}")
 
     val xAxisData = AxisData.Builder()
-        .axisStepSize(1.dp)
+        .axisStepSize(22.dp)
         .backgroundColor(Color.Transparent)
         .steps(currencies.size - 1)
-        //.labelData { i -> Instant.ofEpochSecond(i.toLong()).atZone(ZoneId.systemDefault()).toLocalDateTime().format(formatter) }
-        .labelData { i ->
-            val xScale = differenceX / 10
-            (startValueX + (i * xScale)).toString()
-        }
         .labelAndAxisLinePadding(15.dp)
-        .axisLineColor(MaterialTheme.colorScheme.tertiary)
-        .axisLabelColor(MaterialTheme.colorScheme.tertiary)
+        .axisLineColor(Color.Transparent)
         .build()
 
     val yAxisData = AxisData.Builder()
@@ -62,26 +61,35 @@ fun Chart(currencies: List<Point>){
             val yScale = difference / steps
             (minValue.y + (i * yScale)).toString()
         }
-        .axisLineColor(MaterialTheme.colorScheme.tertiary)
-        .axisLabelColor(MaterialTheme.colorScheme.tertiary)
+        .axisLineColor(Color.Transparent)
+        .axisLabelColor(borderColor)
         .build()
 
     val lineChartData = LineChartData(
         linePlotData = LinePlotData(
             lines = listOf(
                 Line(
-                    dataPoints = currencies,
+                    dataPoints = dataPoints,
                     LineStyle(
-                        color = Color.Blue
+                        color = selectTextColor
                     ),
-                    IntersectionPoint(),
-                    SelectionHighlightPoint(),
+                    IntersectionPoint(
+                        color = selectTextColor,
+                        radius = 4.dp
+                    ),
+                    SelectionHighlightPoint(
+                        color = secondTextColor,
+                        radius = 4.dp
+                    ),
                     ShadowUnderLine(),
                     SelectionHighlightPopUp(
                         popUpLabel = { x, y ->
-                            Log.d("Point ${x}", "${y}")
-                            val date = Instant.ofEpochSecond(x.toLong()).atZone(ZoneId.systemDefault()).toLocalDateTime().format(formatter)
-                            "${date} - ${y}"
+                            val currentPoint = Point(x, y)
+
+                            val timestamp = currencies[currentPoint] ?: 1
+
+                            val date = Instant.ofEpochSecond(timestamp).atZone(ZoneId.systemDefault()).toLocalDateTime().format(formatter)
+                            "${date}\n${y}"
                         }
                     )
                 )
@@ -89,7 +97,10 @@ fun Chart(currencies: List<Point>){
         ),
         xAxisData = xAxisData,
         yAxisData = yAxisData,
-        gridLines = GridLines(),
+        gridLines = GridLines(
+            enableVerticalLines = false,
+            color = borderColor
+        ),
         backgroundColor = Color.Transparent
     )
 
@@ -99,4 +110,29 @@ fun Chart(currencies: List<Point>){
             .height(300.dp),
         lineChartData = lineChartData
     )
+}
+
+@Composable
+fun ChangeChartTimeButtons(
+    selectedTime: Int,
+    onItemClick: (Int)->Unit
+){
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(20.dp)
+    ){
+        listOf(24, 7, 30).forEach { time ->
+            FilterChip(
+                onClick = { onItemClick(time) },
+                label = {
+                    if (time == 24){
+                        Text("${time}h")
+                    }
+                    else{
+                        Text("${time}d")
+                    }
+                },
+                selected = time == selectedTime
+            )
+        }
+    }
 }

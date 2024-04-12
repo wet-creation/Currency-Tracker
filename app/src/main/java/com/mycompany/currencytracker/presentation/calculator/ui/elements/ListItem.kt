@@ -100,7 +100,7 @@ fun FiatListItem(
                 .width(24.dp)
                 .height(24.dp)
                 .clip(CircleShape),
-            model = Constants.image_url + fiat.symbol.lowercase() + ".png",
+            model = Constants.IMAGE_URL + fiat.symbol.lowercase() + ".png",
             contentDescription = "image description",
             contentScale = ContentScale.Crop
         )

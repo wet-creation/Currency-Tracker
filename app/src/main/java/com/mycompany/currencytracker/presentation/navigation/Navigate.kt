@@ -9,7 +9,7 @@ import com.mycompany.currencytracker.presentation.auth.login.LoginScreen
 import com.mycompany.currencytracker.presentation.auth.register.RegisterScreen
 import com.mycompany.currencytracker.presentation.calculator.ui.CalculatorScreen
 import com.mycompany.currencytracker.presentation.crypto_detail.CryptoDetailScreen
-import com.mycompany.currencytracker.presentation.currency_detail.CurrencyDetailScreen
+import com.mycompany.currencytracker.presentation.fiat_detail.CurrencyDetailScreen
 import com.mycompany.currencytracker.presentation.favorite_list.FavoriteListScreen
 import com.mycompany.currencytracker.presentation.notification_screen.NotificationScreen
 import com.mycompany.currencytracker.presentation.profile.ProfileScreen

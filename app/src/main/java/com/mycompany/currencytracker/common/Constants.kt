@@ -1,21 +1,23 @@
 package com.mycompany.currencytracker.common
 
 object Constants {
-    const val CURRENCY_TRACKER_REST_API_URL = "http://109.196.179.233:56260"
-    const val image_url = "https://www.agroswit.com.ua/flags/"
-
+    const val CURRENCY_TRACKER_REST_API_URL = Links.CURRENCY_TRACKER_REST_API_URL
+    const val IMAGE_URL = Links.IMAGE_URL
 
     const val PARAM_CURRENCY_ID = "currencyId"
     const val PARAM_COIN_ID = "coinId"
 
-    const val home = "home"
-    const val search = "search"
-    const val favorite = "favorite"
-    const val notification_screen = "notification_screen"
-    const val setting_screen = "setting_screen"
-    const val my_account_screen = "my_account_screen"
-    const val calculator_screen = "calculator_screen"
-    const val select_main_currency_screen = "select_main_currency_screen"
-    const val fiat_detail_screen = "fiat_detail_screen"
-    const val coin_detail_screen = "coin_detail_screen"
+    const val HOME_SCREEN = "home"
+    const val SEARCH_SCREEN = "search"
+    const val FAVORITE_SCREEN = "favorite"
+    const val NOTIFICATION_SCREEN = "notification_screen"
+    const val SETTINGS_SCREEN = "setting_screen"
+    const val MY_ACCOUNT_SCREEN = "my_account_screen"
+    const val CALCULATOR_SCREEN = "calculator_screen"
+    const val SELECT_MAIN_CURRENCY_SCREEN = "select_main_currency_screen"
+    const val FIAT_DETAILS_SCREEN = "fiat_detail_screen"
+    const val COIN_DETAILS_SCREEN = "coin_detail_screen"
+    const val REGISTER_SCREEN = "register_screen"
+    const val LOGIN_SCREEN = "login_screen"
+    const val PROFILE_SCREEN = "profile_screen"
 }

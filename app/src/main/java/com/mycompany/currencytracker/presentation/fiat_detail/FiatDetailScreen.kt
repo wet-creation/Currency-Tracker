@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.currency_detail
+package com.mycompany.currencytracker.presentation.fiat_detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,13 +20,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
+import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeChartTimeButtons
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
-import com.mycompany.currencytracker.presentation.currency_detail.components.FiatDetailInfo
+import com.mycompany.currencytracker.presentation.fiat_detail.components.FiatDetailInfo
 
 @Composable
 fun CurrencyDetailScreen(
-    viewModel: CurrencyDetailViewModel = hiltViewModel(),
+    viewModel: FiatDetailViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
 
@@ -40,7 +41,9 @@ fun CurrencyDetailScreen(
     ) {
         state.currency?.let { currency ->
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(start = 20.dp, end = 20.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 20.dp, end = 20.dp)
             ) {
                 item {
                     Row(
@@ -58,7 +61,11 @@ fun CurrencyDetailScreen(
                     }
                 }
                 item {
-                    Chart(viewModel.graphInfo.value ?: emptyList())
+                    Chart(viewModel.graphInfo.value)
+                    ChangeChartTimeButtons(dataStore.getChartTime()
+                    ) { time ->
+                        viewModel.changeChartTime(time)
+                    }
                 }
                 item {
                     ChangeRatesItem(currency = currency)

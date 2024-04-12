@@ -18,10 +18,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.mycompany.currencytracker.common.Constants.image_url
+import com.mycompany.currencytracker.common.Constants.IMAGE_URL
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
-
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
@@ -64,7 +63,7 @@ fun CurrencyListItem(
                     .width(24.dp)
                     .height(24.dp)
                     .clip(CircleShape),
-                model = image_url + fiatDetails.symbol.lowercase() + ".png",
+                model = IMAGE_URL + fiatDetails.symbol.lowercase() + ".png",
                 contentDescription = "image description",
                 contentScale = ContentScale.Crop
             )
