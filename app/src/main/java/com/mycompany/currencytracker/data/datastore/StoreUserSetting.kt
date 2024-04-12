@@ -2,6 +2,7 @@ package com.mycompany.currencytracker.data.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mycompany.currencytracker.domain.model.user.User
@@ -25,6 +26,8 @@ class StoreUserSetting
         val USER_SURNAME = stringPreferencesKey("user_surname")
         val USER_EMAIL = stringPreferencesKey("user_email")
         val USER_PASSWORD = stringPreferencesKey("user_password")
+
+        val USER_SELECTED_CHART_TIME = intPreferencesKey("user_chart_time")
     }
 
     val getFiat: Flow<String> = context.dataStore.data
@@ -35,6 +38,11 @@ class StoreUserSetting
     val getCrypto: Flow<String> = context.dataStore.data
         .map { preferences ->
             preferences[USER_MAIN_CRYPTO_KEY] ?: "btc"
+        }
+
+    val getChartTime: Flow<Int> = context.dataStore.data
+        .map { preferences ->
+            preferences[USER_SELECTED_CHART_TIME] ?: 24
         }
 
 
@@ -52,6 +60,14 @@ class StoreUserSetting
             crypto = getCrypto.first()
         }
         return crypto
+    }
+
+    fun getChartTime(): Int {
+        var time: Int
+        runBlocking(Dispatchers.IO) {
+            time = getChartTime.first()
+        }
+        return time
     }
 
     fun getUser(): User {
@@ -107,6 +123,12 @@ class StoreUserSetting
     suspend fun saveCrypto(sym: String) {
         context.dataStore.edit { preferences ->
             preferences[USER_MAIN_CRYPTO_KEY] = sym
+        }
+    }
+
+    suspend fun saveChartTime(time: Int) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_SELECTED_CHART_TIME] = time
         }
     }
 }
