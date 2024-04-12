@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.seacrh
+    package com.mycompany.currencytracker.presentation.seacrh
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,19 +12,19 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
+import com.mycompany.currencytracker.presentation.common.currency.CurrenciesListHeader
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
-import com.mycompany.currencytracker.presentation.common.currency.CurrenciesListHeader
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
-import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
 import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
 import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
-@Composable
+    @Composable
 fun SearchScreen(
     navController: NavController
 ) {

@@ -1,12 +1,8 @@
 package com.mycompany.currencytracker.common
 
-import gitignore.APIConfig.IMAGE_URL
-import gitignore.APIConfig.REST_API_URL
-
 object Constants {
-    const val CURRENCY_TRACKER_REST_API_URL = REST_API_URL
-    const val image_url = IMAGE_URL
-
+    const val CURRENCY_TRACKER_REST_API_URL = Links.CURRENCY_TRACKER_REST_API_URL
+    const val IMAGE_URL = Links.IMAGE_URL
 
     const val PARAM_CURRENCY_ID = "currencyId"
     const val PARAM_COIN_ID = "coinId"

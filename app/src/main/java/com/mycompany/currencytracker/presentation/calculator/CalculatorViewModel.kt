@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mycompany.currencytracker.common.Constants.image_url
+import com.mycompany.currencytracker.common.Constants.IMAGE_URL
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
@@ -81,13 +81,13 @@ class CalculatorViewModel @Inject constructor(
                     fiatDetails = result.data
                     if (isFirstRow)
                         _calculatorRowState1.value = _calculatorRowState1.value.copy(
-                            image = image_url + fiatDetails.symbol.lowercase() + ".png",
+                            image = IMAGE_URL + fiatDetails.symbol.lowercase() + ".png",
                             symbol = fiatDetails.symbol,
                             name = fiatDetails.name
                         )
                     else
                         _calculatorRowState2.value = _calculatorRowState2.value.copy(
-                            image = image_url + fiatDetails.symbol.lowercase() + ".png",
+                            image = IMAGE_URL + fiatDetails.symbol.lowercase() + ".png",
                             symbol = fiatDetails.symbol,
                             name = fiatDetails.name
                         )
