@@ -1,5 +1,6 @@
-package com.mycompany.currencytracker.presentation.crypto_list.components
+package com.mycompany.currencytracker.presentation.common.currency.crypto
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,19 +24,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
+import coil.compose.rememberAsyncImagePainter
+import com.mycompany.currencytracker.domain.model.currency.ICrypto
 import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
-import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
-import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDigit
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
 @Composable
 fun CryptoListItem(
-    crypto: CryptoGeneralInfo,
+    crypto: ICrypto,
     number: Int = 1,
-    onItemClick: (crypto: CryptoGeneralInfo) -> Unit
+    onItemClick: (crypto: ICrypto) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -54,12 +53,12 @@ fun CryptoListItem(
             color = secondTextColor
         )
         Row(modifier = Modifier.weight(2.4f)) {
-            AsyncImage(
+            Image(
                 modifier = Modifier
                     .width(24.dp)
                     .height(24.dp)
                     .clip(CircleShape),
-                model = crypto.image,
+                painter = rememberAsyncImagePainter(model = crypto.image),
                 contentDescription = "image description",
                 contentScale = ContentScale.Crop
             )
@@ -75,7 +74,7 @@ fun CryptoListItem(
                 )
                 Text(
                     modifier = Modifier.padding(start = 12.dp),
-                    text = calculateDigit(crypto.marketCap),
+                    text = calculateDigit(crypto.market_cap!!),
                     style = TextStyle(
                         fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(300),

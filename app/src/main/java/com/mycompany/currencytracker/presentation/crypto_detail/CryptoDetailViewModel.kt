@@ -76,7 +76,7 @@ class CryptoDetailViewModel @Inject constructor(
         updateGraphInfo(userSettings.getChartTime(), coinSym)
     }
     private fun updateGraphInfo(chartTime: Int, coinSym: String) {
-        getCryptoGraphInfo(chartTime, coinSym, userSettings.getCurrency()).onEach { result ->
+        getCryptoGraphInfo(chartTime, coinSym, userSettings.getFiat()).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _graphInfo.value = result.data

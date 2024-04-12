@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.yml.charts.common.model.Point
-import com.mycompany.currencytracker.common.Constants
+import com.mycompany.currencytracker.common.Constants.PARAM_CURRENCY_ID
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.use_case.currency.GetFiatAdditionalInfoUseCase
@@ -30,13 +30,13 @@ class FiatDetailViewModel @Inject constructor(
     private val _graphInfo = mutableStateOf<Map<Point, Long>>(mutableMapOf())
     val graphInfo: State<Map<Point, Long>> = _graphInfo
     init {
-        savedStateHandle.get<String>(Constants.PARAM_CURRENCY_ID)?.let {currencyId ->
+        savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let {currencyId ->
             getCurrency(currencyId)
         }
     }
 
     private fun getCurrency(currencySym: String) {
-        getFiatAdditionalInfo(currencySym, userSettings.getCurrency()).onEach { result ->
+        getFiatAdditionalInfo(currencySym, userSettings.getFiat()).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = FiatDetailState(currency = result.data)
@@ -53,10 +53,10 @@ class FiatDetailViewModel @Inject constructor(
         updateGraphInfo(userSettings.getChartTime(), currencySym)
     }
     private fun updateGraphInfo(chartTime: Int, currencySym: String) {
-        getFiatGraphInfo(chartTime, currencySym, userSettings.getCurrency()).onEach { result ->
-            when (result) {
+        getFiatGraphInfo(chartTime, currencySym, userSettings.getFiat()).onEach {
+            when (it) {
                 is Resource.Success -> {
-                    _graphInfo.value = result.data
+                    _graphInfo.value = it.data
                 }
                 is Resource.Error -> {
 
@@ -70,7 +70,7 @@ class FiatDetailViewModel @Inject constructor(
     fun changeChartTime(newTime: Int) {
         viewModelScope.launch {
             userSettings.saveChartTime(newTime)
-            savedStateHandle.get<String>(Constants.PARAM_CURRENCY_ID)?.let {currencyId ->
+            savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let {currencyId ->
                 updateGraphInfo(userSettings.getChartTime(), currencyId)
             }
         }

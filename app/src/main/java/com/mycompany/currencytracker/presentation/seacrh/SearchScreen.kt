@@ -1,4 +1,4 @@
-    package com.mycompany.currencytracker.presentation.seacrh
+package com.mycompany.currencytracker.presentation.seacrh
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,16 +15,16 @@ import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.presentation.common.currency.CurrenciesListHeader
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
+import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoListItem
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatListItem
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
-import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
-import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
 import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
-    @Composable
+@Composable
 fun SearchScreen(
     navController: NavController
 ) {
@@ -41,10 +41,11 @@ fun SearchScreen(
         fiatListScreen = {
             ItemsListScreen(
                 header = { CurrenciesListHeader() },
-                viewModel = fiatSearchListViewModel,
-                list = fiatSearchListViewModel.searchResult.value
+                stateValue = fiatSearchListViewModel.state.value,
+                list = fiatSearchListViewModel.searchResult.value,
+                onListRefresh = fiatSearchListViewModel::getItems
             ) { currencyItem: FiatDetails, currNumber: Int ->
-                CurrencyListItem(fiatDetails = currencyItem, currNumber = currNumber) {
+                FiatListItem(fiatDetails = currencyItem, currNumber = currNumber) {
                     navController.navigate(Screen.CurrencyDetailScreen.route + "/${currencyItem.symbol}")
                 }
             }
@@ -52,8 +53,9 @@ fun SearchScreen(
         cryptoListScreen = {
             ItemsListScreen(
                 header = { CurrenciesListHeader() },
-                viewModel = cryptoSearchListViewModel,
-                list = cryptoSearchListViewModel.searchResult.value
+                stateValue = cryptoSearchListViewModel.state.value,
+                list = cryptoSearchListViewModel.searchResult.value,
+                onListRefresh = cryptoSearchListViewModel::getItems
             ) { crypto, _ ->
                 CryptoListItem(crypto = crypto, number = crypto.rank) {
                     navController.navigate(Screen.CryptoDetailScreen.route + "/${crypto.symbol}")

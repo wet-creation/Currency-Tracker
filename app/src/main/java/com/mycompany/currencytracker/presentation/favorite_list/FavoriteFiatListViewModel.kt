@@ -3,21 +3,48 @@ package com.mycompany.currencytracker.presentation.favorite_list
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
+import androidx.lifecycle.viewModelScope
+import com.mycompany.currencytracker.common.Resource
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
+import com.mycompany.currencytracker.domain.model.user.FollowedFiat
+import com.mycompany.currencytracker.domain.use_case.user.GetFavoriteFiatListUseCase
+import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.common.list.IListViewModel
-import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
+import com.mycompany.currencytracker.presentation.favorite_list.ui.states.FiatFollowedState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteFiatListViewModel @Inject constructor(
+    private val getFavoriteFiatUseCase: GetFavoriteFiatListUseCase,
+    private val userSetting: StoreUserSetting
+) : ViewModel(), IListViewModel<FollowedFiat> {
 
-) : ViewModel(), IListViewModel<FiatDetails> {
+    val _state = mutableStateOf(FiatFollowedState())
+    override val state: State<FiatFollowedState> = _state
 
-    val _state = mutableStateOf(CurrencyListState())
-    override val state: State<CurrencyListState> = _state
 
-    override fun getItems() {
-        TODO("Not yet implemented")
+    init {
+        getItems()
+    }
+    override fun getItems(vararg args: Any) {
+        getFavoriteFiatUseCase(
+            userId = userSetting.getUser().id
+        ).onEach {
+            when (it) {
+                is Resource.Error -> {
+                    _state.value = FiatFollowedState(error = it.asErrorUiText())
+                }
+
+                is Resource.Loading -> {
+                    _state.value = FiatFollowedState(isLoading = true)
+                }
+                is Resource.Success -> {
+                    _state.value = FiatFollowedState(items = it.data)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }

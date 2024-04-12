@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.common.Constants.HOME_SCREEN
 import com.mycompany.currencytracker.domain.model.user.User
 import com.mycompany.currencytracker.domain.model.user.UserLogin
 import com.mycompany.currencytracker.presentation.auth.PasswordInput
 import com.mycompany.currencytracker.presentation.auth.TextInput
 import com.mycompany.currencytracker.presentation.common.ConnectionErrorDialog
 import com.mycompany.currencytracker.presentation.common.emptyUiText
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.HOME_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.Screen
 
 @Composable

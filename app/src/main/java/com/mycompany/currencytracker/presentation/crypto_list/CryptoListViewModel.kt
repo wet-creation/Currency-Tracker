@@ -30,7 +30,7 @@ class  CryptoListViewModel @Inject constructor(
         getItems()
     }
 
-    override fun getItems(){
+    override fun getItems(vararg args: Any) {
         getTop100RateUseCase(userSettings.getCrypto()).onEach { result ->
             when(result) {
                 is Resource.Success -> {

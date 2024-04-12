@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mycompany.currencytracker.common.Constants.image_url
+import com.mycompany.currencytracker.common.Constants.IMAGE_URL
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
@@ -90,7 +90,7 @@ class CalculatorViewModel @Inject constructor(
                 rate = data.rate
             )
             is FiatDetails -> RowStateCalculator(
-                image = "$image_url/${data.symbol.lowercase()}.png",
+                image = "$IMAGE_URL/${data.symbol.lowercase()}.png",
                 symbol = data.symbol,
                 name = data.name,
                 rate = data.rate

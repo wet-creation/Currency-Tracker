@@ -65,7 +65,7 @@ fun CryptoListItem(
 }
 
 @Composable
-fun FiatListItem(
+fun SimpleFiatListItem(
     fiat: FiatDetails,
     onItemClick: ()->Unit
 ){

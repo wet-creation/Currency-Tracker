@@ -30,7 +30,7 @@ class CryptoSearchListViewModel @Inject constructor(
         getItems()
     }
 
-    override fun getItems(){
+    override fun getItems(vararg args: Any) {
         getTop100RateUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {

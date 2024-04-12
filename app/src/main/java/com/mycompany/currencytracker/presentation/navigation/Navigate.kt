@@ -9,13 +9,13 @@ import com.mycompany.currencytracker.presentation.auth.login.LoginScreen
 import com.mycompany.currencytracker.presentation.auth.register.RegisterScreen
 import com.mycompany.currencytracker.presentation.calculator.ui.CalculatorScreen
 import com.mycompany.currencytracker.presentation.crypto_detail.CryptoDetailScreen
+import com.mycompany.currencytracker.presentation.favorite_list.ui.FavoriteListScreen
 import com.mycompany.currencytracker.presentation.fiat_detail.CurrencyDetailScreen
-import com.mycompany.currencytracker.presentation.favorite_list.FavoriteListScreen
 import com.mycompany.currencytracker.presentation.notification_screen.NotificationScreen
-import com.mycompany.currencytracker.presentation.profile.ProfileScreen
 import com.mycompany.currencytracker.presentation.seacrh.SearchScreen
 import com.mycompany.currencytracker.presentation.setting_screen.SettingScreen
 import com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.CurrencySelectScreen
+import com.mycompany.currencytracker.presentation.setting_screen.profile.ProfileScreen
 
 @Composable
 fun Navigate(navController: NavHostController) {

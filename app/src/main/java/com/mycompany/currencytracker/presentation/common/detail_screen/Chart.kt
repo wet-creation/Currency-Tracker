@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.common.detail_screen
 
+
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

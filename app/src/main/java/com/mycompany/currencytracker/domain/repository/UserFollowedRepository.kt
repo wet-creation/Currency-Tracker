@@ -10,7 +10,7 @@ interface UserFollowedRepository {
     suspend fun followedFiat( fiatFollowedList: CurrencyFollowedList)
     suspend fun deleteCryptoFollowed(userId: String, symbol: String)
     suspend fun deleteFiatFollowed(userId: String,  symbol: String)
-    suspend fun getFollowedCrypto(userID: String): List<CryptoFollowedDto>
-    suspend fun getFollowedFiat(userID: String): List<FiatFollowedDto>
+    suspend fun getFollowedCrypto(userID: String, baseCurrency: String = "USD"): List<CryptoFollowedDto>
+    suspend fun getFollowedFiat(userID: String, baseCurrency: String = "USD"): List<FiatFollowedDto>
 
 }

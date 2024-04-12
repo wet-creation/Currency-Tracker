@@ -1,7 +1,6 @@
 package com.mycompany.currencytracker.presentation.navigation
 
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.common.Constants
 
 sealed class BottomBarScreen(
     val route: String,
@@ -9,19 +8,19 @@ sealed class BottomBarScreen(
     val icon: Int
 ) {
     object Home: BottomBarScreen(
-        route = Constants.HOME_SCREEN,
+        route = NavigationRoutes.HOME_SCREEN,
         //title = Resources.getSystem().getString(R.string.home_screen_name),
         title = "Home",
         icon = R.drawable.home_icon
     )
     object Search: BottomBarScreen(
-        route = Constants.SEARCH_SCREEN,
+        route = NavigationRoutes.SEARCH_SCREEN,
         //title = Resources.getSystem().getString(R.string.search_screen_name),
         title = "Search",
         icon = R.drawable.search_icon
     )
     object Favorite: BottomBarScreen(
-        route = Constants.FAVORITE_SCREEN,
+        route = NavigationRoutes.FAVORITE_SCREEN,
         //title = Resources.getSystem().getString(R.string.favorite_screen_name),
         title = "Favorite",
         icon = R.drawable.favorite_icon

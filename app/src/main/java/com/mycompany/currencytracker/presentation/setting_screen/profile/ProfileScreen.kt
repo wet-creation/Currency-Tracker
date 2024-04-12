@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.profile
+package com.mycompany.currencytracker.presentation.setting_screen.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

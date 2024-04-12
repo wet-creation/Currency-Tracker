@@ -32,16 +32,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.common.Constants.CALCULATOR_SCREEN
-import com.mycompany.currencytracker.common.Constants.COIN_DETAILS_SCREEN
-import com.mycompany.currencytracker.common.Constants.FIAT_DETAILS_SCREEN
-import com.mycompany.currencytracker.common.Constants.HOME_SCREEN
-import com.mycompany.currencytracker.common.Constants.LOGIN_SCREEN
-import com.mycompany.currencytracker.common.Constants.MY_ACCOUNT_SCREEN
-import com.mycompany.currencytracker.common.Constants.PROFILE_SCREEN
-import com.mycompany.currencytracker.common.Constants.REGISTER_SCREEN
-import com.mycompany.currencytracker.common.Constants.SELECT_MAIN_CURRENCY_SCREEN
-import com.mycompany.currencytracker.common.Constants.SETTINGS_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.CALCULATOR_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.COIN_DETAILS_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.FIAT_DETAILS_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.HOME_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.LOGIN_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.MY_ACCOUNT_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.PROFILE_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.REGISTER_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SELECT_MAIN_CURRENCY_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SETTINGS_SCREEN
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 
 

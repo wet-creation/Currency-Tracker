@@ -19,18 +19,19 @@ import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 @Composable
 fun <T> ItemsListScreen(
     header: @Composable () -> Unit = {},
-    viewModel: IListViewModel<T>,
+    stateValue: IListState<T>,
     list: List<T>,
+    key: ((index: Int, item: T) -> Any)? = null,
+    onListRefresh: () -> Unit,
     itemContent: @Composable (
-        currencyItem: T,
+        item: T,
         currentNumber: Int
     ) -> Unit
 ) {
-    val state = viewModel.state.value
     val pullRefreshState =
         rememberPullRefreshState(
-            refreshing = state.isLoading,
-            onRefresh = { viewModel.getItems() }
+            refreshing = stateValue.isLoading,
+            onRefresh = { onListRefresh() }
         )
     Box(
         modifier = Modifier
@@ -40,25 +41,25 @@ fun <T> ItemsListScreen(
         Column {
             header()
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(list) { index, crypto ->
+                itemsIndexed(list, key = key) { index, crypto ->
                     itemContent(crypto, index + 1)
                 }
             }
 
         }
         PullRefreshIndicator(
-            refreshing = state.isLoading,
+            refreshing = stateValue.isLoading,
             state = pullRefreshState,
             modifier = Modifier
                 .align(Alignment.TopCenter)
 
         )
-        if (state.error != emptyUiText) {
+        if (stateValue.error != emptyUiText) {
             Text(
-                text = state.error.asString()
+                text = stateValue.error.asString()
             )
             PullRefreshIndicator(
-                refreshing = state.isLoading,
+                refreshing = stateValue.isLoading,
                 state = pullRefreshState,
                 modifier = Modifier
                     .align(Alignment.TopCenter)

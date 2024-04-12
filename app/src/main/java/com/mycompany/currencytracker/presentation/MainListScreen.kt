@@ -8,11 +8,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mycompany.currencytracker.presentation.common.currency.CurrenciesListHeader
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
+import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoListItem
+import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatListItem
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListViewModel
-import com.mycompany.currencytracker.presentation.crypto_list.components.CryptoListItem
-import com.mycompany.currencytracker.presentation.currency_list.CurrencyListViewModel
-import com.mycompany.currencytracker.presentation.currency_list.components.CurrencyListItem
+import com.mycompany.currencytracker.presentation.fiat_list.CurrencyListViewModel
 import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
@@ -26,10 +26,12 @@ fun MainListScreen(
         fiatListScreen = {
             ItemsListScreen(
                 header = { CurrenciesListHeader() },
-                viewModel = fiatSearchListViewModel,
-                list = fiatSearchListViewModel.state.value.items
+                stateValue = fiatSearchListViewModel.state.value,
+                list = fiatSearchListViewModel.state.value.items,
+                key = {_, item -> item.id},
+                onListRefresh = fiatSearchListViewModel::getItems
             ) { currencyItem, currNumber ->
-                CurrencyListItem(currencyItem, currNumber) {
+                FiatListItem(currencyItem, currNumber) {
                     navController.navigate(Screen.CurrencyDetailScreen.route + "/${currencyItem.symbol}")
                 }
             }
@@ -37,7 +39,9 @@ fun MainListScreen(
             ItemsListScreen(
                 header = { CurrenciesListHeader() },
                 list = cryptoSearchListViewModel.state.value.items,
-                viewModel = cryptoSearchListViewModel,
+                stateValue = cryptoSearchListViewModel.state.value,
+                key = {_, item -> item.id},
+                onListRefresh = cryptoSearchListViewModel::getItems
             ) { crypto, _->
                 CryptoListItem(crypto = crypto, number = crypto.rank) {
                     navController.navigate(Screen.CryptoDetailScreen.route + "/${crypto.symbol}")

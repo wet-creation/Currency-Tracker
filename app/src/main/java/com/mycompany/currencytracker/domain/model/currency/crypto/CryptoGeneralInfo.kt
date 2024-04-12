@@ -1,19 +1,20 @@
 package com.mycompany.currencytracker.domain.model.currency.crypto
 
 import com.mycompany.currencytracker.data.remote.dto.currency.crypto.CryptoDto
-import com.mycompany.currencytracker.domain.model.currency.IChangeRates
+import com.mycompany.currencytracker.domain.model.currency.ICrypto
 
 data class CryptoGeneralInfo(
     override val rate: Double,
-    val image: String,
+    override val image: String,
     val rank: Int,
     val name: String,
-    val symbol: String,
-    val marketCap: Long,
+    override val symbol: String,
+    override val market_cap: Long,
     override val _24h: Double?,
     override val _7d: Double?,
-    override val _30d: Double?
-): IChangeRates {
+    override val _30d: Double?,
+    val id: String
+): ICrypto {
     constructor() : this(
         0.0,
         "",
@@ -24,6 +25,7 @@ data class CryptoGeneralInfo(
         null,
         null,
         null,
+        ""
     )
 }
 
@@ -37,5 +39,6 @@ fun CryptoDto.toCryptoGeneralInfo() = CryptoGeneralInfo(
     market_cap,
     _24h,
     _7d,
-    _30d
+    _30d,
+    id
 )

@@ -37,7 +37,7 @@ import com.mycompany.currencytracker.presentation.calculator.states.ActionInput
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertButton
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.CryptoListItem
-import com.mycompany.currencytracker.presentation.calculator.ui.elements.FiatListItem
+import com.mycompany.currencytracker.presentation.calculator.ui.elements.SimpleFiatListItem
 import com.mycompany.currencytracker.presentation.common.ConnectionErrorDialog
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
@@ -81,10 +81,11 @@ fun CalculatorScreen() {
                 },
                 fiatListScreen = {
                     ItemsListScreen(
-                        viewModel = fiatSearchListViewModel,
+                        stateValue = fiatSearchListViewModel.state.value,
                         list = fiatSearchListViewModel.searchResult.value,
+                        onListRefresh = fiatSearchListViewModel::getItems,
                         itemContent = { currencyItem, _ ->
-                            FiatListItem(currencyItem) {
+                            SimpleFiatListItem(currencyItem) {
                                     viewModel.setRowState(currencyItem, !isFistRowOpen)
                                 scope.launch {
                                     scaffoldState.bottomSheetState.hide()
@@ -94,8 +95,9 @@ fun CalculatorScreen() {
                 },
                 cryptoListScreen = {
                     ItemsListScreen(
-                        viewModel = cryptoSearchListViewModel,
+                        stateValue = cryptoSearchListViewModel.state.value,
                         list = cryptoSearchListViewModel.searchResult.value,
+                        onListRefresh = cryptoSearchListViewModel::getItems,
                         itemContent = { crypto, _ ->
                             CryptoListItem(crypto) {
                                 viewModel.setRowState(crypto, !isFistRowOpen)

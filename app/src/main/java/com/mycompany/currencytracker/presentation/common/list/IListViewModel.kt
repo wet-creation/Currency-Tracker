@@ -4,6 +4,6 @@ import androidx.compose.runtime.State
 
 interface IListViewModel<T> {
     val state: State<IListState<T>>
-    fun getItems()
+    fun getItems(vararg args: Any = emptyArray())
 }
 

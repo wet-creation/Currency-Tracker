@@ -27,12 +27,20 @@ class UserFollowedImpl @Inject constructor(
         api.deleteFiatFollowed(userId, symbol)
     }
 
-    override suspend fun getFollowedCrypto(userID: String): List<CryptoFollowedDto> {
+    override suspend fun getFollowedCrypto(
+        userID: String,
+        baseCurrency: String
+    ): List<CryptoFollowedDto> {
         return api.getFollowedCrypto(userID)
     }
 
-    override suspend fun getFollowedFiat(userID: String): List<FiatFollowedDto> {
+    override suspend fun getFollowedFiat(
+        userID: String,
+        baseCurrency: String
+    ): List<FiatFollowedDto> {
         return api.getFollowedFiat(userID)
     }
+
+   // TODO() добавить на сервер получение по айди продукта добавлен ли он в список желаемого
 
 }

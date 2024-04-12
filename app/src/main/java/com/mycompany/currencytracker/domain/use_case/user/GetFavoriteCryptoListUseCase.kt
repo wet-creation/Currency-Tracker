@@ -2,23 +2,23 @@ package com.mycompany.currencytracker.domain.use_case.user
 
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.user.FollowedFiat
-import com.mycompany.currencytracker.domain.model.user.toFiatFollowed
+import com.mycompany.currencytracker.domain.model.user.FollowedCrypto
+import com.mycompany.currencytracker.domain.model.user.toCryptoFollowed
 import com.mycompany.currencytracker.domain.repository.UserFollowedRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-
-class GetFavoriteFiatListUseCase @Inject constructor(
-    val userFollowedRepository: UserFollowedRepository
+class GetFavoriteCryptoListUseCase @Inject constructor(
+    private val userFollowedRepository: UserFollowedRepository
 ) {
-    operator fun invoke(userId: String, baseCurrency : String = "USD") = flow<Resource<List<FollowedFiat>, DataError.Network>> {
+    operator fun invoke(userId: String, baseCurrency : String = "USD"): Flow<Resource<List<FollowedCrypto>, DataError.Network>> = flow {
         try {
             emit(Resource.Loading())
-            val fiat = userFollowedRepository.getFollowedFiat(userId, baseCurrency)
-            emit(Resource.Success(fiat.map { it.toFiatFollowed() }.sortedBy { it.numberInList }))
+            val cryptos = userFollowedRepository.getFollowedCrypto(userId, baseCurrency)
+            emit(Resource.Success(cryptos.map { it.toCryptoFollowed() }.sortedBy { it.numberInList }))
         } catch (e: HttpException) {
             when (e.code()) {
                 408 -> emit(Resource.Error(DataError.Network.REQUEST_TIMEOUT))
@@ -35,3 +35,6 @@ class GetFavoriteFiatListUseCase @Inject constructor(
         }
     }
 }
+
+
+

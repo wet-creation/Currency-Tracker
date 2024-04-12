@@ -11,14 +11,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.mycompany.currencytracker.common.Constants.COIN_DETAILS_SCREEN
-import com.mycompany.currencytracker.common.Constants.FAVORITE_SCREEN
-import com.mycompany.currencytracker.common.Constants.FIAT_DETAILS_SCREEN
-import com.mycompany.currencytracker.common.Constants.HOME_SCREEN
-import com.mycompany.currencytracker.common.Constants.LOGIN_SCREEN
-import com.mycompany.currencytracker.common.Constants.REGISTER_SCREEN
-import com.mycompany.currencytracker.common.Constants.SEARCH_SCREEN
-import com.mycompany.currencytracker.common.Constants.SETTINGS_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.COIN_DETAILS_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.FAVORITE_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.FIAT_DETAILS_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.HOME_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.LOGIN_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.REGISTER_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SEARCH_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SETTINGS_SCREEN
 
 
 @Composable

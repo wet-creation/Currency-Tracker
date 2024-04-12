@@ -1,9 +1,9 @@
-package com.mycompany.currencytracker.presentation.currency_list
+package com.mycompany.currencytracker.presentation.fiat_list
 
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.presentation.common.UiText
-import com.mycompany.currencytracker.presentation.common.list.IListState
 import com.mycompany.currencytracker.presentation.common.emptyUiText
+import com.mycompany.currencytracker.presentation.common.list.IListState
 
 
 data class CurrencyListState(

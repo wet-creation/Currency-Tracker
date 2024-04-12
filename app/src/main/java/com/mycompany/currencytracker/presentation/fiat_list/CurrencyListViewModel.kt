@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.presentation.currency_list
+package com.mycompany.currencytracker.presentation.fiat_list
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +27,7 @@ class CurrencyListViewModel @Inject constructor(
         getItems()
     }
 
-    override fun getItems() {
+    override fun getItems(vararg args: Any) {
         getCurrenciesListUseCase(userSettings.getFiat()).onEach { result ->
             when (result) {
                 is Resource.Success -> {

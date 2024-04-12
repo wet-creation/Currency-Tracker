@@ -17,8 +17,8 @@ import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
-import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
+import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.crypto.CryptoSelectListItem
 import com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.сurrency.CurrencySelectListItem
@@ -40,8 +40,9 @@ fun CurrencySelectScreen() {
         },
         fiatListScreen = {
             ItemsListScreen(
-                viewModel = fiatSearchListViewModel,
-                list = fiatSearchListViewModel.searchResult.value
+                stateValue = fiatSearchListViewModel.state.value,
+                list = fiatSearchListViewModel.searchResult.value,
+                onListRefresh = fiatSearchListViewModel::getItems
             ) { currencyItem, _ ->
                 CurrencySelectListItem(currencyItem) {
                     scope.launch {
@@ -51,8 +52,9 @@ fun CurrencySelectScreen() {
             }
         }, cryptoListScreen = {
             ItemsListScreen(
-                viewModel = cryptoSearchListViewModel,
-                list = cryptoSearchListViewModel.searchResult.value
+                stateValue = cryptoSearchListViewModel.state.value,
+                list = cryptoSearchListViewModel.searchResult.value,
+                onListRefresh = cryptoSearchListViewModel::getItems
             ) { crypto, _ ->
                 CryptoSelectListItem(crypto = crypto) {
                     scope.launch {

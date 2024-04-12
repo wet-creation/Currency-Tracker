@@ -9,7 +9,7 @@ import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.domain.use_case.currency.GetCurrenciesListUseCase
 import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.common.list.IListViewModel
-import com.mycompany.currencytracker.presentation.currency_list.CurrencyListState
+import com.mycompany.currencytracker.presentation.fiat_list.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -29,7 +29,7 @@ class FiatSearchListViewModel @Inject constructor(
     init {
         getItems()
     }
-     override fun getItems(){
+     override fun getItems(vararg args: Any) {
         getCurrenciesListUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
