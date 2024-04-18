@@ -14,7 +14,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeChartTimeButtons
@@ -39,32 +37,16 @@ import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 fun CryptoDetailScreen(
     viewModel: CryptoDetailViewModel = hiltViewModel(),
 ) {
-
     val state = viewModel.state.value
 
     val context = LocalContext.current
     val dataStore = StoreUserSetting(context)
 
-    val savedCrypto = dataStore.getCrypto.collectAsState(initial = "")
-    val savedCurrency = dataStore.getFiat.collectAsState(initial = "")
-
-    val selectedCurrency = savedCrypto
-    var mainCurrency: CryptoDetails?
-    var secondRate = ""
-
-    if (selectedCurrency == savedCrypto){
-        mainCurrency = state.crypto
-        secondRate = (savedCurrency.value + " " + calculateDecimalPlaces(viewModel.fiatRate.value?.rate ?: 0.0))
-    }
-    else{
-        mainCurrency = viewModel.fiatRate.value
-        secondRate = (savedCrypto.value.uppercase() + " " + calculateDecimalPlaces(state.crypto?.rate ?: 0.0))
-    }
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        mainCurrency?.let { crypto ->
+        state.cryptoSelected?.let { crypto ->
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -76,11 +58,15 @@ fun CryptoDetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = selectedCurrency.value.uppercase() + " " + calculateDecimalPlaces(crypto.rate),
+                            text = "${dataStore.getSelectViewCurrency().uppercase()} ${
+                                calculateDecimalPlaces(
+                                    crypto.rate
+                                )
+                            }",
                             style = MaterialTheme.typography.displayLarge
                         )
                         Row(modifier = Modifier.padding(start = 5.dp, top = 5.dp)) {
-                            ChangeRate(crypto)
+                            ChangeRate(crypto, dataStore.getChartTime())
                         }
                     }
                     Row(modifier = Modifier.padding(top = 8.dp)) {
@@ -95,7 +81,9 @@ fun CryptoDetailScreen(
                             tint = mainTextColor
                         )
                         Text(
-                            text = secondRate,
+                            text = "${
+                                dataStore.getSecondViewCurrency().uppercase()
+                            } ${calculateDecimalPlaces(viewModel.secondRate.value)}",
                             style = MaterialTheme.typography.displaySmall,
                             color = secondTextColor
                         )
@@ -103,7 +91,8 @@ fun CryptoDetailScreen(
                 }
                 item {
                     Chart(viewModel.graphInfo.value)
-                    ChangeChartTimeButtons(dataStore.getChartTime()
+                    ChangeChartTimeButtons(
+                        dataStore.getChartTime()
                     ) { time ->
                         viewModel.changeChartTime(time)
                     }
@@ -112,7 +101,7 @@ fun CryptoDetailScreen(
                     ChangeRatesItem(crypto)
                 }
                 item {
-                    CryptoDetailInfo(crypto, selectedCurrency.value.uppercase())
+                    CryptoDetailInfo(crypto, dataStore.getSelectViewCurrency().uppercase())
                 }
 
             }

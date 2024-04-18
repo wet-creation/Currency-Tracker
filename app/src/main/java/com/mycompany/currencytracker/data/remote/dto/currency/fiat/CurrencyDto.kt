@@ -8,7 +8,7 @@ data class CurrencyDto(
     val name: String,
     val _24h: Double?,
     val _7d: Double?,
-    val _30d: Double?,
+    val _1m: Double?,
 ) {
     constructor() : this(0,"",0,0.0,"", null, null, null)
 }

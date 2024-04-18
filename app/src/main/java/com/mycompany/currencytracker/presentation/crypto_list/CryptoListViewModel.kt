@@ -31,7 +31,7 @@ class  CryptoListViewModel @Inject constructor(
     }
 
     override fun getItems(vararg args: Any) {
-        getTop100RateUseCase(userSettings.getCrypto()).onEach { result ->
+        getTop100RateUseCase(userSettings.getSelectViewCurrency()).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = CryptoListState(items = result.data)

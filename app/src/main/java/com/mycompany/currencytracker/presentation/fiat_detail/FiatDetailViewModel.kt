@@ -52,7 +52,7 @@ class FiatDetailViewModel @Inject constructor(
 
         updateGraphInfo(userSettings.getChartTime(), currencySym)
     }
-    private fun updateGraphInfo(chartTime: Int, currencySym: String) {
+    private fun updateGraphInfo(chartTime: String, currencySym: String) {
         getFiatGraphInfo(chartTime, currencySym, userSettings.getFiat()).onEach {
             when (it) {
                 is Resource.Success -> {
@@ -67,7 +67,7 @@ class FiatDetailViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-    fun changeChartTime(newTime: Int) {
+    fun changeChartTime(newTime: String) {
         viewModelScope.launch {
             userSettings.saveChartTime(newTime)
             savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let {currencyId ->

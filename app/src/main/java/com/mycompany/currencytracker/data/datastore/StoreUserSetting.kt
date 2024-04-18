@@ -1,8 +1,8 @@
 package com.mycompany.currencytracker.data.datastore
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mycompany.currencytracker.domain.model.user.User
@@ -15,7 +15,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class StoreUserSetting
-@Inject constructor( @ApplicationContext private val context: Context) {
+@Inject constructor(@ApplicationContext private val context: Context) {
     companion object {
         private val Context.dataStore by preferencesDataStore("UserSetting")
         val USER_MAIN_CURRENCY_KEY = stringPreferencesKey("user_main_currency")
@@ -27,7 +27,8 @@ class StoreUserSetting
         val USER_EMAIL = stringPreferencesKey("user_email")
         val USER_PASSWORD = stringPreferencesKey("user_password")
 
-        val USER_SELECTED_CHART_TIME = intPreferencesKey("user_chart_time")
+        val USER_SELECTED_CHART_TIME = stringPreferencesKey("user_chart_time")
+        val USER_IS_FIAT_SELECTED = booleanPreferencesKey("isFiat")
     }
 
     val getFiat: Flow<String> = context.dataStore.data
@@ -40,11 +41,15 @@ class StoreUserSetting
             preferences[USER_MAIN_CRYPTO_KEY] ?: "btc"
         }
 
-    val getChartTime: Flow<Int> = context.dataStore.data
+    private val getChartTime: Flow<String> = context.dataStore.data
         .map { preferences ->
-            preferences[USER_SELECTED_CHART_TIME] ?: 24
+            preferences[USER_SELECTED_CHART_TIME] ?: "24h"
         }
 
+    private val isFiatSelected: Flow<Boolean> = context.dataStore.data
+        .map { preferences ->
+            preferences[USER_IS_FIAT_SELECTED] ?: true
+        }
 
     fun getFiat(): String {
         var fiat: String
@@ -62,12 +67,43 @@ class StoreUserSetting
         return crypto
     }
 
-    fun getChartTime(): Int {
-        var time: Int
+    fun getChartTime(): String {
+        var time: String
         runBlocking(Dispatchers.IO) {
             time = getChartTime.first()
         }
         return time
+    }
+    fun getIsFiatSelected() : Boolean {
+        var isFiat: Boolean
+        runBlocking(Dispatchers.IO) {
+            isFiat = isFiatSelected.first()
+        }
+        return isFiat
+    }
+
+    fun getSelectViewCurrency(): String {
+        var currency: String
+        runBlocking(Dispatchers.IO) {
+            currency = if (isFiatSelected.first()) {
+                getFiat()
+            } else {
+                getCrypto()
+            }
+        }
+        return currency
+    }
+
+    fun getSecondViewCurrency(): String {
+        var currency: String
+        runBlocking(Dispatchers.IO) {
+            currency = if (!isFiatSelected.first()) {
+                getFiat()
+            } else {
+                getCrypto()
+            }
+        }
+        return currency
     }
 
     fun getUser(): User {
@@ -126,9 +162,15 @@ class StoreUserSetting
         }
     }
 
-    suspend fun saveChartTime(time: Int) {
+    suspend fun saveChartTime(time: String) {
         context.dataStore.edit { preferences ->
             preferences[USER_SELECTED_CHART_TIME] = time
+        }
+    }
+
+    suspend fun saveSelectViewCurrency(isFiat: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_IS_FIAT_SELECTED] = isFiat
         }
     }
 }

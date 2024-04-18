@@ -16,7 +16,7 @@ class GetFiatGraphInfoUseCase @Inject constructor(
     private val repository: CurrenciesRepository
 ) {
     operator fun invoke(
-        timestamp : Int,
+        timestamp : String,
         symbol: String,
         baseCurrency: String = "USD"
     ): Flow<Resource<Map<Point, Long>, DataError.Network>> = flow {
@@ -26,9 +26,9 @@ class GetFiatGraphInfoUseCase @Inject constructor(
             val now = LocalDateTime.now()
 
             val period = when (timestamp) {
-                24 -> now.minusHours(24)
-                7 -> now.minusDays(7)
-                30 -> now.minusDays(30)
+                "24h" -> now.minusHours(24)
+                "7d" -> now.minusDays(7)
+                "30d" -> now.minusDays(30)
                 else -> now
             }
 

@@ -39,6 +39,6 @@ fun CryptoDto.toCryptoGeneralInfo() = CryptoGeneralInfo(
     market_cap,
     _24h,
     _7d,
-    _30d,
+    _1m,
     id
 )
