@@ -60,5 +60,5 @@ fun CryptoDto.toCryptoDetails() = CryptoDetails(
     circulating_supply,
     _24h,
     _7d,
-    _30d
+    _1m
 )

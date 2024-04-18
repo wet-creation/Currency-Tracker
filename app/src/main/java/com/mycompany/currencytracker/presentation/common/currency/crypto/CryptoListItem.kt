@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.ICrypto
 import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
@@ -36,6 +38,9 @@ fun CryptoListItem(
     number: Int = 1,
     onItemClick: (crypto: ICrypto) -> Unit
 ) {
+    val context = LocalContext.current
+    val dataStore = StoreUserSetting(context)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,7 +68,7 @@ fun CryptoListItem(
                 contentScale = ContentScale.Crop
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(-1.dp, Alignment.Top),
+                verticalArrangement = Arrangement.spacedBy((-1).dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
@@ -99,7 +104,7 @@ fun CryptoListItem(
         Row(
             horizontalArrangement = Arrangement.End
         ) {
-            ChangeRate(crypto)
+            ChangeRate(crypto, dataStore.getChartTime())
         }
     }
 }

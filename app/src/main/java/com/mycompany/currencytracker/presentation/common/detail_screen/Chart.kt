@@ -1,7 +1,6 @@
 package com.mycompany.currencytracker.presentation.common.detail_screen
 
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,19 +31,22 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun Chart(currencies: Map<Point, Long>){
+fun Chart(currencies: Map<Point, Long>) {
     val steps = 6
 
-    val dataPoints : List<Point> = currencies.keys.toList()
+    val dataPoints: List<Point> = currencies.keys.toList()
 
-    val maxValue = dataPoints.maxBy { it.y }
-    val minValue = dataPoints.minBy { it.y }
-    val difference = maxValue.y - minValue.y
+    var maxValue = dataPoints.maxBy { it.y }.y
+    var minValue = dataPoints.minBy { it.y }.y
+    var difference = maxValue - minValue
 
+    if (difference == 0f){
+        maxValue += (maxValue * 0.15f)
+        minValue -= (minValue * 0.15f)
+        difference = maxValue - minValue
+    }
 
     val formatter = DateTimeFormatter.ofPattern("MM.dd HH:mm").withZone(ZoneId.systemDefault())
-
-    Log.d("Point", "${currencies}")
 
     val xAxisData = AxisData.Builder()
         .axisStepSize(22.dp)
@@ -60,7 +62,7 @@ fun Chart(currencies: Map<Point, Long>){
         .labelAndAxisLinePadding(20.dp)
         .labelData { i ->
             val yScale = difference / steps
-            (minValue.y + (i * yScale)).toString()
+            (minValue + (i * yScale)).toString()
         }
         .axisLineColor(Color.Transparent)
         .axisLabelColor(borderColor)
@@ -89,8 +91,10 @@ fun Chart(currencies: Map<Point, Long>){
 
                             val timestamp = currencies[currentPoint] ?: 1
 
-                            val date = Instant.ofEpochSecond(timestamp).atZone(ZoneId.systemDefault()).toLocalDateTime().format(formatter)
-                            "${date}\n${y}"
+                            val date =
+                                Instant.ofEpochSecond(timestamp).atZone(ZoneId.systemDefault())
+                                    .toLocalDateTime().format(formatter)
+                            "$date - $y"
                         }
                     )
                 )
@@ -115,22 +119,17 @@ fun Chart(currencies: Map<Point, Long>){
 
 @Composable
 fun ChangeChartTimeButtons(
-    selectedTime: Int,
-    onItemClick: (Int)->Unit
-){
+    selectedTime: String,
+    onItemClick: (String) -> Unit
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(20.dp)
-    ){
-        listOf(24, 7, 30).forEach { time ->
+    ) {
+        listOf("24h", "7d", "30d").forEach { time ->
             FilterChip(
                 onClick = { onItemClick(time) },
                 label = {
-                    if (time == 24){
-                        Text("${time}h")
-                    }
-                    else{
-                        Text("${time}d")
-                    }
+                    Text(time)
                 },
                 selected = time == selectedTime
             )

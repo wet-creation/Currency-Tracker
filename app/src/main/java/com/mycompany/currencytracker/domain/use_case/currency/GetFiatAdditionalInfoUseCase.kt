@@ -31,7 +31,7 @@ class GetFiatAdditionalInfoUseCase @Inject constructor(
                 val low24 = fiat24hResponse.minOf { it.rate }
                 val avg = fiat24hResponse.sumOf { it.rate } / fiat24hResponse.count()
 
-                val fiatInfo = FiatAdditionalInfo(high24, low24, avg, open, close, currencyResponse.symbol, currencyResponse.name, currencyResponse.rate, currencyResponse._24h, currencyResponse._7d, currencyResponse._30d)
+                val fiatInfo = FiatAdditionalInfo(high24, low24, avg, open, close, currencyResponse.symbol, currencyResponse.name, currencyResponse.rate, currencyResponse._24h, currencyResponse._7d, currencyResponse._1m)
 
                 emit(Resource.Success(fiatInfo))
             } catch (e: HttpException) {

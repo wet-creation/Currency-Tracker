@@ -37,7 +37,7 @@ fun MainListScreen(
             }
         }, cryptoListScreen = {
             ItemsListScreen(
-                header = { CurrenciesListHeader() },
+                header = { CurrenciesListHeader(true, cryptoSearchListViewModel::getItems) },
                 list = cryptoSearchListViewModel.state.value.items,
                 stateValue = cryptoSearchListViewModel.state.value,
                 key = {_, item -> item.id},

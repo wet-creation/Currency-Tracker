@@ -19,12 +19,12 @@ import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 @Composable
 fun ChangeRate(
     fiatDetails: IChangeRates,
-    time: Int = 24
+    time: String = "24h"
 ) {
     val pastRate: Double? = when (time) {
-        24 -> fiatDetails._24h
-        7 -> fiatDetails._7d
-        30 -> fiatDetails._30d
+        "24h" -> fiatDetails._24h
+        "7d" -> fiatDetails._7d
+        "30d" -> fiatDetails._30d
         else -> null
     }
 

@@ -24,7 +24,7 @@ fun CurrencyDto.toCurrency(): FiatDetails = FiatDetails(
     id,
     _24h,
     _7d,
-    _30d
+    _1m
 )
 
 

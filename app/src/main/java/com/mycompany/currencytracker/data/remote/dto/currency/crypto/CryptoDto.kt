@@ -18,5 +18,5 @@ data class CryptoDto(
     val circulating_supply: Double,
     val _24h: Double?,
     val _7d: Double?,
-    val _30d: Double?,
+    val _1m: Double?,
 )

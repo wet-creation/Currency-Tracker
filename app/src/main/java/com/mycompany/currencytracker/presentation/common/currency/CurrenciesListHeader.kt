@@ -8,13 +8,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.R
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
+import com.mycompany.currencytracker.presentation.common.currency.crypto.FilterButtons
 
 @Composable
-fun CurrenciesListHeader() {
+fun CurrenciesListHeader(
+    hasFilter: Boolean = false,
+    onClick: () -> Unit = {}
+) {
+    val context = LocalContext.current
+    val dataStore = StoreUserSetting(context)
+
+    if (hasFilter){
+        FilterButtons(onClick)
+    }
     Row(
         modifier = Modifier
             .width(349.dp)
@@ -39,7 +51,7 @@ fun CurrenciesListHeader() {
         )
         Text(
             modifier = Modifier.weight(1.8f),
-            text = stringResource(R.string.list_column_change),
+            text = dataStore.getChartTime(),
             textAlign = TextAlign.End,
             style = MaterialTheme.typography.labelSmall
         )
