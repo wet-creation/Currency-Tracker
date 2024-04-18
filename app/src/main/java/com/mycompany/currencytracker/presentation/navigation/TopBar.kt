@@ -49,7 +49,7 @@ import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boolean>) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
-    val currencyId = navBackStackEntry?.arguments?.getString("currencyId")
+    val fiatId = navBackStackEntry?.arguments?.getString("currencyId")
     val cryptoId = navBackStackEntry?.arguments?.getString("coinId")
 
     val title: String = when (navBackStackEntry?.destination?.route ?: HOME_SCREEN) {
@@ -74,7 +74,7 @@ fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boole
                 )
 
                 "$FIAT_DETAILS_SCREEN/{currencyId}" -> DetailTopBar(
-                    navController = navHostController, title = currencyId ?: "Coin"
+                    navController = navHostController, title = fiatId ?: "Coin"
                 )
 
                 "$COIN_DETAILS_SCREEN/{coinId}" -> DetailTopBar(

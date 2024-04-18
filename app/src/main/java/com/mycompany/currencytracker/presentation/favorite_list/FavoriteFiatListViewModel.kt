@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.user.FollowedFiat
+import com.mycompany.currencytracker.domain.use_case.user.DeleteFiatFromFavoriteUseCase
 import com.mycompany.currencytracker.domain.use_case.user.GetFavoriteFiatListUseCase
 import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.common.list.IListViewModel
@@ -19,16 +20,18 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteFiatListViewModel @Inject constructor(
     private val getFavoriteFiatUseCase: GetFavoriteFiatListUseCase,
+    private val deleteFiatFromFavoriteUseCase: DeleteFiatFromFavoriteUseCase,
     private val userSetting: StoreUserSetting
 ) : ViewModel(), IListViewModel<FollowedFiat> {
 
-    val _state = mutableStateOf(FiatFollowedState())
+    private val _state = mutableStateOf(FiatFollowedState())
     override val state: State<FiatFollowedState> = _state
 
 
     init {
         getItems()
     }
+
     override fun getItems(vararg args: Any) {
         getFavoriteFiatUseCase(
             userId = userSetting.getUser().id
@@ -41,10 +44,23 @@ class FavoriteFiatListViewModel @Inject constructor(
                 is Resource.Loading -> {
                     _state.value = FiatFollowedState(isLoading = true)
                 }
+
                 is Resource.Success -> {
                     _state.value = FiatFollowedState(items = it.data)
                 }
             }
         }.launchIn(viewModelScope)
     }
+
+    fun delete(followedFiat: FollowedFiat) {
+        deleteFiatFromFavoriteUseCase(userSetting.getUser().id, followedFiat.symbol).onEach {
+            if (it is Resource.Error) {
+                _state.value = FiatFollowedState(error = (it.asErrorUiText()))
+            }
+        }.launchIn(viewModelScope)
+        val list = _state.value.items.toMutableList()
+        list.remove(followedFiat)
+        _state.value = _state.value.copy(items = list)
+    }
+
 }

@@ -16,6 +16,8 @@ import com.mycompany.currencytracker.presentation.fiat_list.CurrencyListViewMode
 import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
+
+
 @Composable
 fun MainListScreen(
     navController: NavController

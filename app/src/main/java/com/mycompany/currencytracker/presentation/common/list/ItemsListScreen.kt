@@ -15,6 +15,17 @@ import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
 import eu.bambooapps.material3.pullrefresh.pullRefresh
 import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 
+
+/**
+ * A composable function to display a list of items with pull-to-refresh functionality.
+ *
+ * @param header The composable function to display a header for the list.
+ * @param stateValue State value representing the current state of the list.
+ * @param list The list of items to display.
+ * @param key An optional key function to differentiate items in the list.
+ * @param onListRefresh The callback function triggered when the user initiates a refresh action.
+ * @param itemContent The composable function to display each item in the list.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> ItemsListScreen(
@@ -39,7 +50,8 @@ fun <T> ItemsListScreen(
             .pullRefresh(pullRefreshState)
     ) {
         Column {
-            header()
+            if (stateValue.error == emptyUiText)
+                header()
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 itemsIndexed(list, key = key) { index, crypto ->
                     itemContent(crypto, index + 1)

@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("org.jetbrains.dokka")
     //   id("com.google.gms.google-services")
 
 }
@@ -55,13 +56,6 @@ android {
             )
         )
     }
-    testOptions {
-        packagingOptions {
-            jniLibs {
-                useLegacyPackaging = true
-            }
-        }
-    }
 
 }
 
@@ -70,6 +64,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-android:1.6.3")
     implementation("com.android.car.ui:car-ui-lib:2.6.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
     val coroutinesVer = "1.7.3"
     val coroutineLifecycleScopeVer = "2.7.0"
     val daggerHiltVer = "2.49"
@@ -79,7 +74,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
+    implementation(platform("androidx.compose:compose-bom:2024.04.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -92,7 +87,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVer")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.02"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -126,9 +121,12 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.10")
     androidTestImplementation("io.mockk:mockk-android:1.13.10")
     androidTestImplementation("io.mockk:mockk-agent:1.13.10")
+
+    implementation("org.jetbrains.dokka:android-documentation-plugin:1.9.20")
 //    implementation("com.google.firebase:firebase-analytics")
 //    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 
 //YCharts
     implementation("co.yml:ycharts:2.1.0")
+    implementation("de.charlex.compose:revealswipe:1.0.0")
 }

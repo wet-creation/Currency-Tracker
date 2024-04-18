@@ -15,21 +15,37 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+
+/**
+ * ViewModel responsible for managing the state and data related to the cryptocurrency search list screen.
+ * Extends [ViewModel] and implements [IListViewModel] for handling the list functionality.
+ *
+ * @property getTop100RateUseCase The use case responsible for fetching the top 100 cryptocurrency rates.
+ */
 @HiltViewModel
 class CryptoSearchListViewModel @Inject constructor(
     private val getTop100RateUseCase: GetTop100RateUseCase
 ) : ViewModel(), IListViewModel<CryptoGeneralInfo> {
 
+    /** Mutable state for holding the current state of the screen. */
     private val _state = mutableStateOf(CryptoListState())
+    /** The current state of the screen exposed as [State]. */
     override val state: State<CryptoListState> = _state
-
+    /** Mutable state for holding the search result list of cryptocurrencies. */
     private val _searchResult = mutableStateOf<List<CryptoGeneralInfo>>(emptyList())
+    /** The search result list of cryptocurrencies exposed as [State]. */
     val searchResult: State<List<CryptoGeneralInfo>> = _searchResult
 
+    /**
+     * Initializes the ViewModel by fetching the initial list of cryptocurrencies.
+     */
     init {
         getItems()
     }
 
+    /**
+     * Fetches the list of cryptocurrencies using the [getTop100RateUseCase].
+     */
     override fun getItems(vararg args: Any) {
         getTop100RateUseCase().onEach { result ->
             when(result) {
@@ -50,6 +66,12 @@ class CryptoSearchListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Performs a search operation on the list of cryptocurrencies based on the provided [query].
+     * Updates the [_searchResult] with the filtered list.
+     *
+     * @param query The search query to filter the list of cryptocurrencies.
+     */
     fun search(query: String) {
         val filteredList = _state.value.items.filter { crypto ->
             crypto.name.contains(query, ignoreCase = true) || crypto.symbol.contains(query, ignoreCase = true)

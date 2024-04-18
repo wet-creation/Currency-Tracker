@@ -29,90 +29,91 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
-    @Provides
-    @Singleton
-    fun provideRetrofit(url: String): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+abstract class AppModule {
+    companion object {
+        @Provides
+        @Singleton
+        fun provideRetrofit(url: String): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+        @Provides
+        @Singleton
+        inline fun <reified T> provideCurrencyTrackerApi(clazz: Class<T>): T {
+            return provideRetrofit(Constants.CURRENCY_TRACKER_REST_API_URL).create(T::class.java)
+        }
+        @Provides
+        @Singleton
+        fun provideCurrencyTrackerCurrencyService(): CurrencyTrackerCurrencyService {
+            return provideCurrencyTrackerApi(CurrencyTrackerCurrencyService::class.java)
+        }
+        @Provides
+        @Singleton
+        fun provideCurrencyRepository(api: CurrencyTrackerCurrencyService): CurrenciesRepository {
+            return CurrenciesImp(api)
+        }
 
-    @Provides
-    @Singleton
-    inline fun <reified T> provideCurrencyTrackerApi(clazz: Class<T>): T {
-        return provideRetrofit(Constants.CURRENCY_TRACKER_REST_API_URL).create(T::class.java)
-    }
-    @Provides
-    @Singleton
-    fun provideCurrencyTrackerCurrencyService(): CurrencyTrackerCurrencyService {
-        return provideCurrencyTrackerApi(CurrencyTrackerCurrencyService::class.java)
-    }
-    @Provides
-    @Singleton
-    fun provideCurrencyRepository(api: CurrencyTrackerCurrencyService): CurrenciesRepository {
-        return CurrenciesImp(api)
-    }
+        @Provides
+        @Singleton
+        fun provideCurrencyTrackerCryptoService(): CurrencyTrackerCryptoService {
+            return provideCurrencyTrackerApi(CurrencyTrackerCryptoService::class.java)
+        }
 
-    @Provides
-    @Singleton
-    fun provideCurrencyTrackerCryptoService(): CurrencyTrackerCryptoService {
-        return provideCurrencyTrackerApi(CurrencyTrackerCryptoService::class.java)
-    }
+        @Provides
+        @Singleton
+        fun provideCryptoRepository(api: CurrencyTrackerCryptoService): CryptosRepository {
+            return CryptosIml(api)
+        }
 
-    @Provides
-    @Singleton
-    fun provideCryptoRepository(api: CurrencyTrackerCryptoService): CryptosRepository {
-        return CryptosIml(api)
-    }
+        @Provides
+        @Singleton
+        fun provideCurrencyTrackerConvertService(): CurrencyTrackerConvertService {
+            return provideCurrencyTrackerApi(CurrencyTrackerConvertService::class.java)
+        }
 
-    @Provides
-    @Singleton
-    fun provideCurrencyTrackerConvertService(): CurrencyTrackerConvertService {
-        return provideCurrencyTrackerApi(CurrencyTrackerConvertService::class.java)
-    }
+        @Provides
+        @Singleton
+        fun provideConvertRepository(api: CurrencyTrackerConvertService): ConvertRepository {
+            return ConvertIml(api)
+        }
 
-    @Provides
-    @Singleton
-    fun provideConvertRepository(api: CurrencyTrackerConvertService): ConvertRepository {
-        return ConvertIml(api)
-    }
+        @Provides
+        @Singleton
+        fun provideUserService(): UserService {
+            return provideCurrencyTrackerApi(UserService::class.java)
+        }
 
-    @Provides
-    @Singleton
-    fun provideUserService(): UserService {
-        return provideCurrencyTrackerApi(UserService::class.java)
-    }
+        @Provides
+        @Singleton
+        fun provideUserRepository(api: UserService): UserRepository {
+            return UserImpl(api)
+        }
 
-    @Provides
-    @Singleton
-    fun provideUserRepository(api: UserService): UserRepository {
-        return UserImpl(api)
-    }
+        @Provides
+        @Singleton
+        fun provideUserFollowedService(): UserServiceFollowed {
+            return provideCurrencyTrackerApi(UserServiceFollowed::class.java)
+        }
 
-    @Provides
-    @Singleton
-    fun provideUserFollowedService(): UserServiceFollowed {
-        return provideCurrencyTrackerApi(UserServiceFollowed::class.java)
-    }
+        @Provides
+        @Singleton
+        fun provideUserFollowedRepository(api: UserServiceFollowed): UserFollowedRepository {
+            return UserFollowedImpl(api)
+        }
 
-    @Provides
-    @Singleton
-    fun provideUserFollowedRepository(api: UserServiceFollowed): UserFollowedRepository {
-        return UserFollowedImpl(api)
-    }
+        @Provides
+        @Singleton
+        fun provideUserNotificationService(): UserServiceNotification {
+            return provideCurrencyTrackerApi(UserServiceNotification::class.java)
+        }
 
-    @Provides
-    @Singleton
-    fun provideUserNotificationService(): UserServiceNotification {
-        return provideCurrencyTrackerApi(UserServiceNotification::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserNotificationRepository(api: UserServiceNotification): UserNotificationRepository {
-        return UserNotificationImpl(api)
+        @Provides
+        @Singleton
+        fun provideUserNotificationRepository(api: UserServiceNotification): UserNotificationRepository {
+            return UserNotificationImpl(api)
+        }
     }
 
 }

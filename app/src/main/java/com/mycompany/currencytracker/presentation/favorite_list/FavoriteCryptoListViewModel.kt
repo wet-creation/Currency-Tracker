@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.user.FollowedCrypto
+import com.mycompany.currencytracker.domain.use_case.user.DeleteCryptoFromFavoriteUseCase
 import com.mycompany.currencytracker.domain.use_case.user.GetFavoriteCryptoListUseCase
 import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.common.list.IListViewModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteCryptoListViewModel @Inject constructor(
     private val getFavoriteCryptoUseCase: GetFavoriteCryptoListUseCase,
+    private val deleteCryptoFromFavoriteUseCase: DeleteCryptoFromFavoriteUseCase,
     private val userSetting: StoreUserSetting
 ) : ViewModel(), IListViewModel<FollowedCrypto> {
 
@@ -44,6 +46,11 @@ class FavoriteCryptoListViewModel @Inject constructor(
     }
 
     fun delete(followedCrypto: FollowedCrypto) {
+        deleteCryptoFromFavoriteUseCase(userSetting.getUser().id, followedCrypto.symbol).onEach {
+            if (it is Resource.Error) {
+                _state.value = CryptoFollowedState(error = (it.asErrorUiText()))
+            }
+        }.launchIn(viewModelScope)
         val list = _state.value.items.toMutableList()
         list.remove(followedCrypto)
         _state.value = _state.value.copy(items = list)
