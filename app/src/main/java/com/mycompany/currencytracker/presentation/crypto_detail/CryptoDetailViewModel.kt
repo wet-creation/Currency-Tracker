@@ -62,37 +62,17 @@ class CryptoDetailViewModel @Inject constructor(
             coinSym,
             userSettings.getSelectViewCurrency()
         ).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _graphInfo.value = result.data
-                }
-
-                is Resource.Error -> {
-
-                }
-
-                is Resource.Loading -> {
-
-                }
+            if (result is Resource.Success) {
+                _graphInfo.value = result.data
             }
         }.launchIn(viewModelScope)
 
         getCryptoDetailsUseCase(coinSym, userSettings.getSecondViewCurrency()).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _secondRate.doubleValue = result.data.rate
-                }
+            if (result is Resource.Success) {
+                _secondRate.doubleValue = result.data.rate
 
-                is Resource.Error -> {
-
-                }
-
-                is Resource.Loading -> {
-
-                }
             }
         }.launchIn(viewModelScope)
-
     }
 
     private fun updateGraphInfo(coinSym: String) {
@@ -101,18 +81,8 @@ class CryptoDetailViewModel @Inject constructor(
             coinSym,
             userSettings.getSelectViewCurrency()
         ).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _graphInfo.value = result.data
-                }
-
-                is Resource.Error -> {
-
-                }
-
-                is Resource.Loading -> {
-
-                }
+            if (result is Resource.Success) {
+                _graphInfo.value = result.data
             }
         }.launchIn(viewModelScope)
     }

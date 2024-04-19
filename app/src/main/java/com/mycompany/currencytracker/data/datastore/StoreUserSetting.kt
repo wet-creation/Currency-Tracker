@@ -27,7 +27,7 @@ class StoreUserSetting
         val USER_EMAIL = stringPreferencesKey("user_email")
         val USER_PASSWORD = stringPreferencesKey("user_password")
 
-        val USER_SELECTED_CHART_TIME = stringPreferencesKey("user_chart_time")
+        val USER_SELECTED_CHART_TIME = stringPreferencesKey("user_chart_time_string")
         val USER_IS_FIAT_SELECTED = booleanPreferencesKey("isFiat")
     }
 

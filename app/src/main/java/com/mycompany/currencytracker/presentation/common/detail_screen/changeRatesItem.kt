@@ -37,7 +37,6 @@ fun ChangeRatesItem(currency: IChangeRates) {
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)) {
                 ChangeRate(fiatDetails = currency, "24h")
-
             }
         }
         Column(modifier = Modifier.weight(1f)) {

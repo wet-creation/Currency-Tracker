@@ -33,7 +33,6 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun Chart(currencies: Map<Point, Long>) {
     val steps = 6
-
     val dataPoints: List<Point> = currencies.keys.toList()
 
     var maxValue = dataPoints.maxBy { it.y }.y

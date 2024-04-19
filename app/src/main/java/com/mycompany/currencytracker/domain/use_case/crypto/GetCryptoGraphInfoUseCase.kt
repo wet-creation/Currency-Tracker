@@ -3,6 +3,7 @@ package com.mycompany.currencytracker.domain.use_case.crypto
 import co.yml.charts.common.model.Point
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
+import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.domain.repository.CryptosRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -22,7 +23,6 @@ class GetCryptoGraphInfoUseCase @Inject constructor(
     ): Flow<Resource<Map<Point, Long>, DataError.Network>> = flow {
         try {
             emit(Resource.Loading())
-
             val now = LocalDateTime.now()
 
             val period = when (timestamp) {
@@ -51,7 +51,7 @@ class GetCryptoGraphInfoUseCase @Inject constructor(
                     ratesAverageArray[point] = time
                 }
             }
-
+            debugLog(ratesAverageArray.toString())
             emit(Resource.Success(ratesAverageArray))
 
         } catch (e: HttpException) {
