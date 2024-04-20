@@ -46,7 +46,6 @@ fun CryptoDetailScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        if (viewModel.graphInfo.value.isNotEmpty())
             state.cryptoSelected?.let { crypto ->
                 LazyColumn(
                     modifier = Modifier

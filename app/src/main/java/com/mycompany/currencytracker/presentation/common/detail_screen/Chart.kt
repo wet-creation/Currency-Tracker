@@ -32,6 +32,8 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun Chart(currencies: Map<Point, Long>) {
+    if (currencies.isEmpty())
+        return
     val steps = 6
     val dataPoints: List<Point> = currencies.keys.toList()
 

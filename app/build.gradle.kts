@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.dokka")
-    //   id("com.google.gms.google-services")
+    id("com.google.gms.google-services")
 
 }
 
@@ -61,9 +61,9 @@ android {
 
 
 dependencies {
-    implementation("androidx.compose.ui:ui-android:1.6.3")
+    implementation("androidx.compose.ui:ui-android:1.6.6")
     implementation("com.android.car.ui:car-ui-lib:2.6.0")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
     val coroutinesVer = "1.7.3"
     val coroutineLifecycleScopeVer = "2.7.0"
@@ -71,10 +71,10 @@ dependencies {
     val retrofitVer = "2.9.0"
     val okhttpVer = "5.0.0-alpha.2"
     val hiltCompilerVer = "1.2.0"
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2024.04.00"))
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation(platform("androidx.compose:compose-bom:2024.04.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -87,7 +87,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVer")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -116,15 +116,17 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVer")
     implementation("com.squareup.okhttp3:okhttp:$okhttpVer")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVer")
+    implementation ("com.squareup.okhttp3:logging-interceptor:$okhttpVer")
 
-    // https://mvnrepository.com/artifact/io.mockk/mockk
     testImplementation("io.mockk:mockk:1.13.10")
     androidTestImplementation("io.mockk:mockk-android:1.13.10")
     androidTestImplementation("io.mockk:mockk-agent:1.13.10")
-
+// Documentation
     implementation("org.jetbrains.dokka:android-documentation-plugin:1.9.20")
-//    implementation("com.google.firebase:firebase-analytics")
-//    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+// Firebase SDK
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
 
 //YCharts
     implementation("co.yml:ycharts:2.1.0")

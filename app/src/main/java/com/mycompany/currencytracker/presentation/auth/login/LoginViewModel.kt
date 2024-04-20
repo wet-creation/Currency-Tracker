@@ -66,7 +66,7 @@ class LoginViewModel @Inject constructor(
 
                 is Resource.Loading -> _state.value = LoginState(isLoading = true)
                 is Resource.Success -> {
-                    storeUserSetting.saveUserParam(it.data)
+                    storeUserSetting.saveUserParam(it.data.copy(password = _stateUserInput.value.passwordInput))
                     _state.value = LoginState(result = it.data)
                 }
             }

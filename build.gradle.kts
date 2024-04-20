@@ -5,6 +5,13 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.8.10" apply false
     id("com.google.dagger.hilt.android") version daggerHiltVer apply false
     id("org.jetbrains.dokka") version "1.9.20"
-//    id("com.google.gms.google-services") version "4.4.0" apply false
+    id("com.google.gms.google-services") version "4.4.0" apply false
 
+}
+
+buildscript {
+    dependencies {
+
+        classpath("com.google.gms:google-services:4.4.1")
+    }
 }

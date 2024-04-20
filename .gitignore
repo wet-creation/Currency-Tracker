@@ -15,3 +15,4 @@
 local.properties
 /app/src/main/java/gitignore/
 /app/src/main/java/com/mycompany/currencytracker/common/gitignore.kt
+/.idea/deploymentTargetSelector.xml
