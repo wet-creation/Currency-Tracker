@@ -1,9 +1,11 @@
 package com.mycompany.currencytracker.domain.model.user
 
 import com.mycompany.currencytracker.data.remote.dto.user.CryptoFollowedDto
+import com.mycompany.currencytracker.data.remote.dto.user.CryptoFollowedListDto
 import com.mycompany.currencytracker.domain.model.currency.ICrypto
 
 data class FollowedCrypto(
+    val userId: String,
     val numberInList: Int,
     override val symbol: String,
     override val market_cap: Long?,
@@ -12,8 +14,12 @@ data class FollowedCrypto(
     override val _7d: Double?,
     override val _30d: Double?,
     override val rate: Double
-): ICrypto
+): ICrypto {
+    fun toCryptoFollowedListDto() : CryptoFollowedListDto {
+        return CryptoFollowedListDto(numberInList, userId, symbol)
+    }
+}
 
 
 fun CryptoFollowedDto.toCryptoFollowed() =
-    FollowedCrypto(numberInList, symbol, market_cap, image, _24h, _7d, _1m, currentPrice)
+    FollowedCrypto(userId, numberInList, symbol, market_cap, image, _24h, _7d, _1m, currentPrice)

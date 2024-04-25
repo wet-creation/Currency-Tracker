@@ -23,3 +23,5 @@ val secondBackColor = Color(0xFF111110)
 val borderColor = Color(0xFF6F6D6D)
 
 val buttonsColor = Color(0xFF3D362D)
+
+val filterButtonsColor = Color(0xFFAFA17C)

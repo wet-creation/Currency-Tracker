@@ -2,7 +2,7 @@ package com.mycompany.currencytracker.data.repository
 
 import com.mycompany.currencytracker.data.remote.dto.user.CryptoFollowedDto
 import com.mycompany.currencytracker.data.remote.dto.user.CryptoFollowedListDto
-import com.mycompany.currencytracker.data.remote.dto.user.CurrencyFollowedList
+import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedListDto
 import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedDto
 import com.mycompany.currencytracker.data.remote.services.user.UserServiceFollowed
 import com.mycompany.currencytracker.domain.repository.UserFollowedRepository
@@ -15,7 +15,7 @@ class UserFollowedImpl @Inject constructor(
         api.followedCrypto(cryptoFollowedListDto)
     }
 
-    override suspend fun followedFiat(fiatFollowedList: CurrencyFollowedList) {
+    override suspend fun followedFiat(fiatFollowedList: FiatFollowedListDto) {
         api.followedFiat(fiatFollowedList)
     }
 
@@ -41,6 +41,13 @@ class UserFollowedImpl @Inject constructor(
         return api.getFollowedFiat(userID)
     }
 
-   // TODO() добавить на сервер получение по айди продукта добавлен ли он в список желаемого
+    override suspend fun getCryptoFollowStatus(path: String, userId: String): CryptoFollowedDto {
+        return api.getCryptoFollowStatus(path, userId)
+    }
+
+    override suspend fun getFiatFollowStatus(path: String, userId: String): FiatFollowedDto {
+        return api.getFiatFollowStatus(path, userId)
+    }
+
 
 }

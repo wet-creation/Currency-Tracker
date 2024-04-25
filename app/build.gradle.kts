@@ -65,6 +65,7 @@ dependencies {
     implementation("com.android.car.ui:car-ui-lib:2.6.0")
     implementation("androidx.datastore:datastore-preferences:1.1.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("com.google.firebase:firebase-common-ktx:20.4.3")
     val coroutinesVer = "1.7.3"
     val coroutineLifecycleScopeVer = "2.7.0"
     val daggerHiltVer = "2.49"
