@@ -10,27 +10,31 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.domain.model.currency.IChangeRates
+import com.mycompany.currencytracker.presentation.common.currency.crypto.cryptoTest
 import com.mycompany.currencytracker.presentation.ui.theme.rateDownColor
 import com.mycompany.currencytracker.presentation.ui.theme.rateUpColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
+
+@Preview
 @Composable
 fun ChangeRate(
-    fiatDetails: IChangeRates,
+    currencyRate: IChangeRates = cryptoTest,
     time: String = "24h"
 ) {
     val pastRate: Double? = when (time) {
-        "24h" -> fiatDetails._24h
-        "7d" -> fiatDetails._7d
-        "30d" -> fiatDetails._30d
+        "24h" -> currencyRate._24h
+        "7d" -> currencyRate._7d
+        "30d" -> currencyRate._30d
         else -> null
     }
 
     pastRate?.let {
-        if (fiatDetails.rate >= it) {
-            Row{
+        if (currencyRate.rate >= it) {
+            Row {
                 Icon(
                     modifier = Modifier
                         .padding(end = 0.dp)
@@ -40,7 +44,7 @@ fun ChangeRate(
                     tint = rateUpColor
                 )
                 Text(
-                    text = "${String.format("%.2f", (fiatDetails.rate / pastRate - 1) * 100)}%",
+                    text = "${String.format("%.2f", (currencyRate.rate / pastRate - 1) * 100)}%",
                     style = MaterialTheme.typography.bodyLarge,
                     color = rateUpColor
                 )
@@ -55,7 +59,7 @@ fun ChangeRate(
                     tint = rateDownColor
                 )
                 Text(
-                    text = "${String.format("%.2f", (pastRate / fiatDetails.rate - 1) * 100)}%",
+                    text = "${String.format("%.2f", (pastRate / currencyRate.rate - 1) * 100)}%",
                     style = MaterialTheme.typography.bodyLarge,
                     color = rateDownColor
                 )

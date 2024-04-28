@@ -56,7 +56,7 @@ fun CurrencyDetailScreen(
                             style = MaterialTheme.typography.titleLarge
                         )
                         Row(modifier = Modifier.padding(start = 5.dp, top = 10.dp)) {
-                            ChangeRate(fiatDetails = currency)
+                            ChangeRate(currencyRate = currency)
                         }
                     }
                 }

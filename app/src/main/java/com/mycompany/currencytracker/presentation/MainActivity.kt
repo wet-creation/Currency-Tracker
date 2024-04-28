@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.app.ActivityCompat
@@ -19,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -65,15 +67,19 @@ class MainActivity : ComponentActivity() {
             val user = userSetting.getUser()
             if (user.id.isEmpty())
                 return@addOnCompleteListener
-            val userDto =  UserLoginDto(
+            val userDto = UserLoginDto(
                 user.email,
                 user.password,
                 it.result
             )
             CoroutineScope(Dispatchers.IO).launch {
-                userRepository.login(
-                    userDto
-                )
+                try {
+                    userRepository.login(
+                        userDto
+                    )
+                } catch (e: IOException) {
+                    Log.e("Network", e.message.toString())
+                }
 
             }
         }
