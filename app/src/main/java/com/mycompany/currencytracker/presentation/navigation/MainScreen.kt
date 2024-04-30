@@ -53,7 +53,7 @@ fun MainScreen() {
 
         FIAT_DETAILS_SCREEN -> {
             bottomBarState.value = false
-            topBarState.value = true
+            topBarState.value = false
         }
 
         REGISTER_SCREEN -> {
@@ -68,12 +68,12 @@ fun MainScreen() {
 
         "$FIAT_DETAILS_SCREEN/{currencyId}" -> {
             bottomBarState.value = false
-            topBarState.value = true
+            topBarState.value = false
         }
 
         "${COIN_DETAILS_SCREEN}/{coinId}" -> {
             bottomBarState.value = false
-            topBarState.value = true
+            topBarState.value = false
         }
     }
 

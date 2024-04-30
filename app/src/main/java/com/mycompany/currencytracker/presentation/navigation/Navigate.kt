@@ -54,10 +54,10 @@ fun Navigate(navController: NavHostController) {
             CalculatorScreen()
         }
         composable(Screen.CurrencyDetailScreen.route + "/{currencyId}"){
-            CurrencyDetailScreen()
+            CurrencyDetailScreen(navController = navController)
         }
         composable(Screen.CryptoDetailScreen.route + "/{coinId}"){
-            CryptoDetailScreen()
+            CryptoDetailScreen(navController = navController)
         }
     }
 }

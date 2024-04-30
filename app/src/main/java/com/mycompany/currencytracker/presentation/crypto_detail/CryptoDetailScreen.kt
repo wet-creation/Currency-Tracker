@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
@@ -30,12 +31,14 @@ import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeCha
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
 import com.mycompany.currencytracker.presentation.crypto_detail.components.CryptoDetailInfo
+import com.mycompany.currencytracker.presentation.navigation.DetailTopBar
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
 @Composable
 fun CryptoDetailScreen(
     viewModel: CryptoDetailViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
     val state = viewModel.state.value
 
@@ -52,6 +55,17 @@ fun CryptoDetailScreen(
                         .fillMaxSize()
                         .padding(start = 20.dp, end = 20.dp)
                 ) {
+                    item{
+                        val follow = viewModel.followStatus.value
+
+                        DetailTopBar(navController, crypto.symbol, follow){
+                            if(!follow){
+                                viewModel.addCryptoToFollowList(crypto.symbol)
+                            } else {
+                                viewModel.removeCryptoFromFavoriteList(crypto.symbol)
+                            }
+                        }
+                    }
                     item {
                         Row(
                             modifier = Modifier.fillMaxWidth(),

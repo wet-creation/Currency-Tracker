@@ -9,8 +9,12 @@ import co.yml.charts.common.model.Point
 import com.mycompany.currencytracker.common.Constants.PARAM_CURRENCY_ID
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
+import com.mycompany.currencytracker.domain.model.user.FollowedFiat
 import com.mycompany.currencytracker.domain.use_case.currency.GetFiatAdditionalInfoUseCase
 import com.mycompany.currencytracker.domain.use_case.currency.GetFiatGraphInfoUseCase
+import com.mycompany.currencytracker.domain.use_case.user.DeleteFiatFromFavoriteUseCase
+import com.mycompany.currencytracker.domain.use_case.user.FollowedFiatUseCase
+import com.mycompany.currencytracker.domain.use_case.user.GetFiatFollowStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,6 +25,9 @@ import javax.inject.Inject
 class FiatDetailViewModel @Inject constructor(
     private val getFiatAdditionalInfo: GetFiatAdditionalInfoUseCase,
     private val getFiatGraphInfo: GetFiatGraphInfoUseCase,
+    private val getFiatFollowStatusUseCase: GetFiatFollowStatusUseCase,
+    private val followedFiatUseCase: FollowedFiatUseCase,
+    private val deleteFiatFromFavoriteUseCase: DeleteFiatFromFavoriteUseCase,
     private val savedStateHandle: SavedStateHandle,
     private val userSettings: StoreUserSetting
 ) : ViewModel() {
@@ -29,6 +36,10 @@ class FiatDetailViewModel @Inject constructor(
 
     private val _graphInfo = mutableStateOf<Map<Point, Long>>(mutableMapOf())
     val graphInfo: State<Map<Point, Long>> = _graphInfo
+
+    private val _followStatus = mutableStateOf(false)
+    val followStatus: State<Boolean> = _followStatus
+
     init {
         savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let {currencyId ->
             getCurrency(currencyId)
@@ -50,6 +61,20 @@ class FiatDetailViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
 
+        getFiatFollowStatusUseCase(currencySym, userSettings.getUser().id).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    _followStatus.value = true
+                }
+                is Resource.Error -> {
+                    _followStatus.value = false
+                }
+                is Resource.Loading -> {
+
+                }
+            }
+        }.launchIn(viewModelScope)
+
         updateGraphInfo(userSettings.getChartTime(), currencySym)
     }
     private fun updateGraphInfo(chartTime: String, currencySym: String) {
@@ -57,6 +82,38 @@ class FiatDetailViewModel @Inject constructor(
             when (it) {
                 is Resource.Success -> {
                     _graphInfo.value = it.data
+                }
+                is Resource.Error -> {
+
+                }
+                is Resource.Loading -> {
+
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+    fun addFiatToFavoriteList(fiatSym: String){
+        val fiat = FollowedFiat(userSettings.getUser().id, 0, symbol = fiatSym, null, null, null, 0.0)
+
+        followedFiatUseCase(fiat).onEach {
+            when (it) {
+                is Resource.Success -> {
+                    _followStatus.value = true
+                }
+                is Resource.Error -> {
+
+                }
+                is Resource.Loading -> {
+
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+    fun removeFiatFromFavoriteList(fiatSym: String){
+        deleteFiatFromFavoriteUseCase(userSettings.getUser().id, fiatSym).onEach {
+            when (it) {
+                is Resource.Success -> {
+                    _followStatus.value = false
                 }
                 is Resource.Error -> {
 

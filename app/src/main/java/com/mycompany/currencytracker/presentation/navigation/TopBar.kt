@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -33,8 +34,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.CALCULATOR_SCREEN
-import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.COIN_DETAILS_SCREEN
-import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.FIAT_DETAILS_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.HOME_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.LOGIN_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.MY_ACCOUNT_SCREEN
@@ -48,9 +47,6 @@ import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 @Composable
 fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boolean>) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-
-    val fiatId = navBackStackEntry?.arguments?.getString("currencyId")
-    val cryptoId = navBackStackEntry?.arguments?.getString("coinId")
 
     val title: String = when (navBackStackEntry?.destination?.route ?: HOME_SCREEN) {
         MY_ACCOUNT_SCREEN -> stringResource(id = R.string.account_top_bar)
@@ -71,14 +67,6 @@ fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boole
                 CALCULATOR_SCREEN -> SubTopAppBar(navController = navHostController, title = title)
                 SELECT_MAIN_CURRENCY_SCREEN -> SubTopAppBar(
                     navController = navHostController, title = title
-                )
-
-                "$FIAT_DETAILS_SCREEN/{currencyId}" -> DetailTopBar(
-                    navController = navHostController, title = fiatId ?: "Coin"
-                )
-
-                "$COIN_DETAILS_SCREEN/{coinId}" -> DetailTopBar(
-                    navController = navHostController, title = cryptoId ?: "Coin"
                 )
 
                 LOGIN_SCREEN -> AuthTopBar()
@@ -225,7 +213,12 @@ fun SubTopAppBar(navController: NavHostController, title: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailTopBar(navController: NavHostController, title: String) {
+fun DetailTopBar(
+    navController: NavHostController,
+    title: String,
+    followStatus: Boolean,
+    onItemClick: () -> Unit
+) {
 
     TopAppBar(title = {
         Text(
@@ -265,13 +258,24 @@ fun DetailTopBar(navController: NavHostController, title: String) {
                 tint = Color(0xFFFFFFFF)
             )
         }
-        IconButton(onClick = { navController.navigate(BottomBarScreen.Favorite.route) }) {
-            Icon(
-                imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "favorite",
-                modifier = Modifier
-                    .width(24.dp)
-                    .height(24.dp),
-            )
+        IconButton(onClick = { onItemClick()} )  {
+            if(followStatus){
+                Icon(
+                    imageVector = Icons.Filled.Favorite, contentDescription = "favorite",
+                    modifier = Modifier
+                        .width(24.dp)
+                        .height(24.dp),
+                )
+            }
+            else{
+                Icon(
+                    imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "favorite",
+                    modifier = Modifier
+                        .width(24.dp)
+                        .height(24.dp),
+                )
+            }
+
         }
     })
 }
