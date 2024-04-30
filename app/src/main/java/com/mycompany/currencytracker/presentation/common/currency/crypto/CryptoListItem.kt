@@ -23,20 +23,37 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.ICrypto
+import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
+
+val cryptoTest = CryptoGeneralInfo(
+    rate = 134342.0,
+    image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/225px-Bitcoin.svg.png",
+    rank = 1,
+    name = "Bitcoin",
+    symbol = "btc",
+    market_cap = 12121211,
+    _24h = 12121.0,
+    _7d = null,
+    _30d = null,
+    id = ""
+)
+
+@Preview
 @Composable
 fun CryptoListItem(
-    crypto: ICrypto,
+    crypto: ICrypto = cryptoTest,
     number: Int = 1,
-    onItemClick: (crypto: ICrypto) -> Unit
+    onItemClick: (crypto: ICrypto) -> Unit = {}
 ) {
     val context = LocalContext.current
     val dataStore = StoreUserSetting(context)
@@ -62,7 +79,8 @@ fun CryptoListItem(
                 modifier = Modifier
                     .width(24.dp)
                     .height(24.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .align(Alignment.CenterVertically),
                 painter = rememberAsyncImagePainter(model = crypto.image),
                 contentDescription = "image description",
                 contentScale = ContentScale.Crop
@@ -95,14 +113,16 @@ fun CryptoListItem(
         Text(
             modifier = Modifier
                 .weight(3f)
-                .padding(horizontal = 10.dp),
+                .padding(horizontal = 10.dp)
+                .align(Alignment.CenterVertically),
             text = calculateDecimalPlaces(crypto.rate),
             style = MaterialTheme.typography.bodyLarge,
             color = mainTextColor,
             textAlign = TextAlign.End
         )
         Row(
-            horizontalArrangement = Arrangement.End
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.align(Alignment.CenterVertically),
         ) {
             ChangeRate(crypto, dataStore.getChartTime())
         }

@@ -7,9 +7,9 @@ import javax.inject.Inject
 
 class CurrenciesImp @Inject constructor(
     private val api: CurrencyTrackerCurrencyService
-): CurrenciesRepository {
+) : CurrenciesRepository {
     override suspend fun getLatest(baseCurrency: String): List<CurrencyDto> {
-       return api.getLatest(baseCurrency)
+        return api.getLatest(baseCurrency)
     }
 
     override suspend fun getLatestBySymbol(symbol: String, baseCurrency: String): CurrencyDto {
@@ -40,7 +40,6 @@ class CurrenciesImp @Inject constructor(
     ): List<CurrencyDto> {
         return api.getHistoricalByDateRange(startDate, endDate, symbol, baseCurrency)
     }
-
 
 
 }

@@ -36,7 +36,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
             Box(modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)) {
-                ChangeRate(fiatDetails = currency, "24h")
+                ChangeRate(currencyRate = currency, "24h")
             }
         }
         Column(modifier = Modifier.weight(1f)) {
@@ -52,7 +52,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
             Box(modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)) {
-                ChangeRate(fiatDetails = currency, "7d")
+                ChangeRate(currencyRate = currency, "7d")
             }
         }
         Column(modifier = Modifier.weight(1f)) {
@@ -68,7 +68,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
             Box(modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)) {
-                ChangeRate(fiatDetails = currency, "30d")
+                ChangeRate(currencyRate = currency, "30d")
             }
         }
     }

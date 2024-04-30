@@ -78,7 +78,7 @@ fun FiatListItem(
         Row(
             horizontalArrangement = Arrangement.End
         ) {
-            ChangeRate(fiatDetails = fiatDetails)
+            ChangeRate(currencyRate = fiatDetails)
         }
     }
 }
