@@ -153,4 +153,10 @@ class CryptoDetailViewModel @Inject constructor(
         }
     }
 
+    fun refreshScreen(){
+        savedStateHandle.get<String>(Constants.PARAM_COIN_ID)?.let { coinId ->
+            getCoin(coinId)
+        }
+    }
+
 }

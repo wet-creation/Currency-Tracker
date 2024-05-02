@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.mycompany.currencytracker.presentation.common.ErrorScreen
 import com.mycompany.currencytracker.presentation.common.emptyUiText
 import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
 import eu.bambooapps.material3.pullrefresh.pullRefresh
@@ -67,15 +67,9 @@ fun <T> ItemsListScreen(
 
         )
         if (stateValue.error != emptyUiText) {
-            Text(
-                text = stateValue.error.asString()
-            )
-            PullRefreshIndicator(
-                refreshing = stateValue.isLoading,
-                state = pullRefreshState,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-            )
+            ErrorScreen(stateValue.error.asString()) {
+                onListRefresh()
+            }
         }
     }
 }
