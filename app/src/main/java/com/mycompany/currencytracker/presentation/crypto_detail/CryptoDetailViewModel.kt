@@ -10,7 +10,7 @@ import co.yml.charts.common.model.Point
 import com.mycompany.currencytracker.common.Constants
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.domain.model.user.FollowedCrypto
+import com.mycompany.currencytracker.domain.model.user.followed.FollowedCrypto
 import com.mycompany.currencytracker.domain.use_case.crypto.GetCryptoDetailsUseCase
 import com.mycompany.currencytracker.domain.use_case.crypto.GetCryptoGraphInfoUseCase
 import com.mycompany.currencytracker.domain.use_case.user.DeleteCryptoFromFavoriteUseCase

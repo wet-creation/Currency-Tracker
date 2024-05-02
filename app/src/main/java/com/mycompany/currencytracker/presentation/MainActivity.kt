@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.messaging.ktx.messaging
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.data.remote.dto.user.UserLoginDto
@@ -31,7 +32,9 @@ class MainActivity : ComponentActivity() {
     lateinit var userSetting: StoreUserSetting
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         requestNotificationPermission()
+
         setContent {
             CurrencyTrackerTheme {
                 MainScreen()

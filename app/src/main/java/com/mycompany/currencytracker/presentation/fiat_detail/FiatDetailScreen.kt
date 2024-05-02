@@ -25,7 +25,7 @@ import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeCha
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
 import com.mycompany.currencytracker.presentation.fiat_detail.components.FiatDetailInfo
-import com.mycompany.currencytracker.presentation.navigation.DetailTopBar
+import com.mycompany.currencytracker.presentation.navigation.DetailTopBarFiat
 
 @Composable
 fun CurrencyDetailScreen(
@@ -52,8 +52,8 @@ fun CurrencyDetailScreen(
                 item{
                     val follow = viewModel.followStatus.value
 
-                    DetailTopBar(navController, currency.symbol, follow){
-                        if(!follow){
+                    DetailTopBarFiat(navController, currency.symbol, follow) {
+                        if (!follow) {
                             viewModel.addFiatToFavoriteList(currency.symbol)
                         } else {
                             viewModel.removeFiatFromFavoriteList(currency.symbol)

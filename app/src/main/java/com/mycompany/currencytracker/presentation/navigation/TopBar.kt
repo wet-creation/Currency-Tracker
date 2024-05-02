@@ -272,10 +272,9 @@ fun SubTopAppBar(navController: NavHostController, title: String) {
         }
     })
 }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailTopBar(
+fun DetailTopBarFiat(
     navController: NavHostController,
     title: String,
     followStatus: Boolean,
@@ -308,8 +307,66 @@ fun DetailTopBar(
                 contentDescription = "icon"
             )
         }
+        IconButton(onClick = { onItemClick()} )  {
+            if(followStatus){
+                Icon(
+                    imageVector = Icons.Filled.Favorite, contentDescription = "favorite",
+                    modifier = Modifier
+                        .width(24.dp)
+                        .height(24.dp),
+                )
+            }
+            else{
+                Icon(
+                    imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "favorite",
+                    modifier = Modifier
+                        .width(24.dp)
+                        .height(24.dp),
+                )
+            }
+
+        }
+    })
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailTopBar(
+    navController: NavHostController,
+    title: String,
+    followStatus: Boolean,
+    onItemClick: () -> Unit,
+    onNotificationClick: () -> Unit
+) {
+
+    TopAppBar(title = {
+        Text(
+            text = title.uppercase(), style = TextStyle(
+                fontSize = 20.sp,
+                lineHeight = 22.sp,
+                fontWeight = FontWeight(600),
+                color = mainTextColor
+            )
+        )
+    }, navigationIcon = {
+        IconButton(onClick = { navController.popBackStack() }) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                contentDescription = "Back"
+            )
+        }
+    }, actions = {
+        IconButton(onClick = { navController.navigate(BottomBarScreen.Search.route) }) {
+            Icon(
+                modifier = Modifier
+                    .width(24.dp)
+                    .height(24.dp),
+                painter = painterResource(id = R.drawable.search_icon),
+                contentDescription = "icon"
+            )
+        }
         IconButton(onClick = {
-            navController.navigate(Screen.NotificationScreenList.route)
+            onNotificationClick()
         }) {
             Icon(
                 modifier = Modifier

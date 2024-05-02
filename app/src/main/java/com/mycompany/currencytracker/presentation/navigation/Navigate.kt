@@ -59,10 +59,10 @@ fun Navigate(navController: NavHostController) {
             NotificationSelectCryptoScreen(navController)
         }
         composable(Screen.CurrencyDetailScreen.route + "/{currencyId}") {
-            CurrencyDetailScreen()
+            CurrencyDetailScreen(navController = navController)
         }
         composable(Screen.CryptoDetailScreen.route + "/{coinId}") {
-            CryptoDetailScreen()
+            CryptoDetailScreen(navController = navController)
         }
         composable(Screen.NotificationScreen.route + "/{coinId}") {
             NotificationScreen(navController)

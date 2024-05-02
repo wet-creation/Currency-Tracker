@@ -9,7 +9,7 @@ import co.yml.charts.common.model.Point
 import com.mycompany.currencytracker.common.Constants.PARAM_CURRENCY_ID
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.domain.model.user.FollowedFiat
+import com.mycompany.currencytracker.domain.model.user.followed.FollowedFiat
 import com.mycompany.currencytracker.domain.use_case.currency.GetFiatAdditionalInfoUseCase
 import com.mycompany.currencytracker.domain.use_case.currency.GetFiatGraphInfoUseCase
 import com.mycompany.currencytracker.domain.use_case.user.DeleteFiatFromFavoriteUseCase

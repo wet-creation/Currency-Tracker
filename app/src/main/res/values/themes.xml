@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.MySplashScreen" parent="Theme.CurrencyTracker">
+        <item name="windowSplashScreenBackground">@color/darkBackground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.CurrencyTracker</item>
+    </style>
 
     <style name="Theme.CurrencyTracker" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

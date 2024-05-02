@@ -2,7 +2,7 @@ package com.mycompany.currencytracker.domain.use_case.user
 
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.user.FollowedCrypto
+import com.mycompany.currencytracker.domain.model.user.followed.FollowedCrypto
 import com.mycompany.currencytracker.domain.repository.UserFollowedRepository
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

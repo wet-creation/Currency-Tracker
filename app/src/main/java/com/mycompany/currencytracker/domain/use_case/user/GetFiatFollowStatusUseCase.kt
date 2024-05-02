@@ -2,8 +2,8 @@ package com.mycompany.currencytracker.domain.use_case.user
 
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.user.FollowedFiat
-import com.mycompany.currencytracker.domain.model.user.toFiatFollowed
+import com.mycompany.currencytracker.domain.model.user.followed.FollowedFiat
+import com.mycompany.currencytracker.domain.model.user.followed.toFiatFollowed
 import com.mycompany.currencytracker.domain.repository.UserFollowedRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

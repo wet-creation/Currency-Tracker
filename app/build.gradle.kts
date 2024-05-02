@@ -96,6 +96,9 @@ dependencies {
 
     implementation("eu.bambooapps:compose-material3-pullrefresh:1.1.1")
 
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
+
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVer")
