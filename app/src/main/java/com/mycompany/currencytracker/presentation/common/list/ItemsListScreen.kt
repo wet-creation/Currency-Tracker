@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.zIndex
 import com.mycompany.currencytracker.presentation.common.emptyUiText
 import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
 import eu.bambooapps.material3.pullrefresh.pullRefresh
@@ -29,6 +30,7 @@ import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> ItemsListScreen(
+    modifier: Modifier = Modifier,
     header: @Composable () -> Unit = {},
     stateValue: IListState<T>,
     list: List<T>,
@@ -49,7 +51,7 @@ fun <T> ItemsListScreen(
             .fillMaxSize()
             .pullRefresh(pullRefreshState)
     ) {
-        Column {
+        Column(modifier = modifier) {
             if (stateValue.error == emptyUiText)
                 header()
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -63,7 +65,7 @@ fun <T> ItemsListScreen(
             refreshing = stateValue.isLoading,
             state = pullRefreshState,
             modifier = Modifier
-                .align(Alignment.TopCenter)
+                .align(Alignment.TopCenter).zIndex(10f)
 
         )
         if (stateValue.error != emptyUiText) {
@@ -74,7 +76,7 @@ fun <T> ItemsListScreen(
                 refreshing = stateValue.isLoading,
                 state = pullRefreshState,
                 modifier = Modifier
-                    .align(Alignment.TopCenter)
+                    .align(Alignment.TopCenter).zIndex(10f)
             )
         }
     }

@@ -39,8 +39,8 @@ import com.mycompany.currencytracker.presentation.calculator.ui.elements.Convert
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.CryptoListItem
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.SimpleFiatListItem
 import com.mycompany.currencytracker.presentation.common.ConnectionErrorDialog
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListSearchState
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
-import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.emptyUiText
@@ -76,7 +76,7 @@ fun CalculatorScreen() {
         sheetContent = {
             CurrencyListsScreen(
                 searchPosition = SearchPosition.InBetween,
-                currencyListsScreenState = CurrencyListsScreenState(searchQuery) {
+                currencyListSearchState = CurrencyListSearchState(searchQuery) {
                     searchQuery = it
                 },
                 fiatListScreen = {

@@ -13,8 +13,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
 import com.mycompany.currencytracker.presentation.common.currency.CurrenciesListHeader
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListSearchState
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
-import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoListItem
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatListItem
@@ -35,7 +35,7 @@ fun SearchScreen(
     }
     CurrencyListsScreen(
         searchPosition = SearchPosition.Top,
-        CurrencyListsScreenState(stateQuery) {
+        currencyListSearchState = CurrencyListSearchState(stateQuery) {
             stateQuery = it
         },
         fiatListScreen = {

@@ -1,9 +1,9 @@
 package com.mycompany.currencytracker.presentation.common.currency
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,11 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.common.currency.crypto.FilterButtons
 
+@Preview
 @Composable
 fun CurrenciesListHeader(
     hasFilter: Boolean = false,
@@ -24,12 +26,12 @@ fun CurrenciesListHeader(
     val context = LocalContext.current
     val dataStore = StoreUserSetting(context)
 
-    if (hasFilter){
+    if (hasFilter) {
         FilterButtons(onClick)
     }
     Row(
         modifier = Modifier
-            .width(349.dp)
+            .fillMaxWidth()
             .height(42.dp)
             .padding(start = 20.dp, end = 13.dp, top = 15.dp)
     ) {
@@ -40,6 +42,7 @@ fun CurrenciesListHeader(
         )
         Text(
             modifier = Modifier.weight(2f),
+            textAlign = TextAlign.Start,
             text = stringResource(R.string.list_column_name),
             style = MaterialTheme.typography.labelSmall
         )

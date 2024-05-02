@@ -2,23 +2,20 @@ package com.mycompany.currencytracker.domain.use_case.user
 
 import com.mycompany.currencytracker.common.DataError
 import com.mycompany.currencytracker.common.Resource
-import com.mycompany.currencytracker.domain.model.user.followed.FollowedFiat
-import com.mycompany.currencytracker.domain.model.user.followed.toFiatFollowed
-import com.mycompany.currencytracker.domain.repository.UserFollowedRepository
+import com.mycompany.currencytracker.domain.repository.UserNotificationRepository
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-
-class GetFavoriteFiatListUseCase @Inject constructor(
-    val userFollowedRepository: UserFollowedRepository
+class DeleteNotificationUseCase @Inject constructor(
+    private val repository: UserNotificationRepository
 ) {
-    operator fun invoke(userId: String, baseCurrency : String = "USD") = flow<Resource<List<FollowedFiat>, DataError.Network>> {
+    operator fun invoke(id: String) =  flow<Resource<Unit, DataError.Network>> {
         try {
             emit(Resource.Loading())
-            val fiat = userFollowedRepository.getFollowedFiat(userId, baseCurrency)
-            emit(Resource.Success(fiat.map { it.toFiatFollowed() }.sortedBy { it.numberInList }))
+            repository.delete(id)
+            emit(Resource.Success(Unit))
         } catch (e: HttpException) {
             when (e.code()) {
                 408 -> emit(Resource.Error(DataError.Network.REQUEST_TIMEOUT))

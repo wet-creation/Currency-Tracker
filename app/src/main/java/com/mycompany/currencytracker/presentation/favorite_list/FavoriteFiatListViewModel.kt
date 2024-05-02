@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.domain.model.user.FollowedFiat
+import com.mycompany.currencytracker.domain.model.user.followed.FollowedFiat
 import com.mycompany.currencytracker.domain.use_case.user.DeleteFiatFromFavoriteUseCase
 import com.mycompany.currencytracker.domain.use_case.user.GetFavoriteFiatListUseCase
 import com.mycompany.currencytracker.presentation.common.asErrorUiText

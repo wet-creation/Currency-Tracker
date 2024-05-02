@@ -17,14 +17,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.R
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListSearchState
 import com.mycompany.currencytracker.presentation.ui.theme.buttonsColor
 
 
 @Composable
-fun SearchBar(searchText : String, onSearchTextChanged: (String) -> Unit) {
+fun SearchBar(searchState: CurrencyListSearchState) {
     TextField(
-        value = searchText,
-        onValueChange = onSearchTextChanged,
+        value = searchState.inputText,
+        onValueChange = searchState.inputTextAction,
         placeholder = {
             Text(
                 text = stringResource(id = R.string.search),

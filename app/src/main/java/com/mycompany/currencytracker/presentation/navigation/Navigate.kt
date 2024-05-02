@@ -12,6 +12,8 @@ import com.mycompany.currencytracker.presentation.crypto_detail.CryptoDetailScre
 import com.mycompany.currencytracker.presentation.favorite_list.ui.FavoriteListScreen
 import com.mycompany.currencytracker.presentation.fiat_detail.CurrencyDetailScreen
 import com.mycompany.currencytracker.presentation.notification_screen.NotificationScreen
+import com.mycompany.currencytracker.presentation.notification_screen.list.main.NotificationListScreen
+import com.mycompany.currencytracker.presentation.notification_screen.list.select.NotificationSelectCryptoScreen
 import com.mycompany.currencytracker.presentation.seacrh.SearchScreen
 import com.mycompany.currencytracker.presentation.setting_screen.SettingScreen
 import com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.CurrencySelectScreen
@@ -32,32 +34,38 @@ fun Navigate(navController: NavHostController) {
         composable(BottomBarScreen.Favorite.route) {
             FavoriteListScreen(navController)
         }
-        composable(Screen.NotificationScreen.route){
-            NotificationScreen()
+        composable(Screen.NotificationScreenList.route) {
+            NotificationListScreen(navController)
         }
-        composable(Screen.SettingScreen.route){
+        composable(Screen.SettingScreen.route) {
             SettingScreen(navController = navController)
         }
-        composable(Screen.SelectMainCurrencyScreen.route){
+        composable(Screen.SelectMainCurrencyScreen.route) {
             CurrencySelectScreen()
         }
-        composable(Screen.RegisterScreen.route){
+        composable(Screen.RegisterScreen.route) {
             RegisterScreen(navController)
         }
-        composable(Screen.ProfileScreen.route){
+        composable(Screen.ProfileScreen.route) {
             ProfileScreen(navController)
         }
-        composable(Screen.LoginScreen.route){
+        composable(Screen.LoginScreen.route) {
             LoginScreen(navController)
         }
-        composable(Screen.CalculatorScreen.route){
+        composable(Screen.CalculatorScreen.route) {
             CalculatorScreen()
         }
-        composable(Screen.CurrencyDetailScreen.route + "/{currencyId}"){
+        composable(Screen.NotificationScreenSelect.route) {
+            NotificationSelectCryptoScreen(navController)
+        }
+        composable(Screen.CurrencyDetailScreen.route + "/{currencyId}") {
             CurrencyDetailScreen()
         }
-        composable(Screen.CryptoDetailScreen.route + "/{coinId}"){
+        composable(Screen.CryptoDetailScreen.route + "/{coinId}") {
             CryptoDetailScreen()
+        }
+        composable(Screen.NotificationScreen.route + "/{coinId}") {
+            NotificationScreen(navController)
         }
     }
 }

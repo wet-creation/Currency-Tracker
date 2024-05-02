@@ -28,7 +28,7 @@ import com.mycompany.currencytracker.presentation.common.search.SearchPosition
  *
  * @param searchPosition Specifies the position of the search bar on the screen. It can be at the top,
  *                       in between the tabs and content, or not present at all. Defaults to None if not specified.
- * @param currencyListsScreenState Holds the state for the list screen, including the current text in the search bar and
+ * @param currencyListSearchState Holds the state for the list screen, including the current text in the search bar and
  *                        an action to be performed when the text changes. Defaults to an empty state if not specified.
  * @param fiatListScreen A composable function to render the list of fiat currencies. This is displayed when the fiat tab is selected.
  * @param cryptoListScreen A composable function to render the list of crypto currencies. This is displayed when the crypto tab is selected.
@@ -36,8 +36,9 @@ import com.mycompany.currencytracker.presentation.common.search.SearchPosition
  */
 @Composable
 fun CurrencyListsScreen(
+    modifier: Modifier = Modifier,
     searchPosition: SearchPosition = SearchPosition.None,
-    currencyListsScreenState: CurrencyListsScreenState = CurrencyListsScreenState(),
+    currencyListSearchState: CurrencyListSearchState = CurrencyListSearchState(),
     fiatListScreen: @Composable () -> Unit,
     cryptoListScreen: @Composable () -> Unit,
     tabContent: @Composable (title: String) -> Unit,
@@ -45,14 +46,12 @@ fun CurrencyListsScreen(
     var tabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf(stringResource(id = R.string.fiat), stringResource(id = R.string.crypto))
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
         if (searchPosition == SearchPosition.Top) {
             Row(
                 modifier = Modifier.padding(20.dp)
             ) {
-                SearchBar(searchText = currencyListsScreenState.inputText) {
-                    currencyListsScreenState.inputTextAction(it)
-                }
+                SearchBar(currencyListSearchState)
             }
 
         }
@@ -80,9 +79,7 @@ fun CurrencyListsScreen(
             Row(
                 modifier = Modifier.padding(20.dp)
             ) {
-                SearchBar(searchText = currencyListsScreenState.inputText) {
-                    currencyListsScreenState.inputTextAction(it)
-                }
+                SearchBar(currencyListSearchState)
             }
         }
         HorizontalDivider()

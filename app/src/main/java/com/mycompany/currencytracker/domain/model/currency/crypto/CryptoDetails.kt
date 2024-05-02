@@ -62,3 +62,16 @@ fun CryptoDto.toCryptoDetails() = CryptoDetails(
     _7d,
     _1m
 )
+
+fun CryptoDetails.toCryptoGeneralInfo() = CryptoGeneralInfo(
+    rate,
+    image,
+    rank,
+    name,
+    symbol,
+    marketCap,
+    _24h,
+    _7d,
+    _30d,
+    ""
+)

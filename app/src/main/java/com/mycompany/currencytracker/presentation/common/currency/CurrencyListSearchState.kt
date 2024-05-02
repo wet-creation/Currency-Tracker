@@ -7,7 +7,7 @@ package com.mycompany.currencytracker.presentation.common.currency
  * @param inputText The current text entered in the search bar.
  * @param inputTextAction Callback function to handle changes in the search bar text.
  */
-data class CurrencyListsScreenState (
+data class CurrencyListSearchState (
     val inputText: String = "",
     val inputTextAction: (String) -> Unit = { }
 )
