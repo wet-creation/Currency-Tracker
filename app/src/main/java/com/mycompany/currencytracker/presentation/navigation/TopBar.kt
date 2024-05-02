@@ -4,6 +4,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +24,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -37,6 +40,9 @@ import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.CA
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.HOME_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.LOGIN_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.MY_ACCOUNT_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.NOTIFICATION_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.NOTIFICATION_SCREEN_LIST
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.NOTIFICATION_SCREEN_SELECT
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.PROFILE_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.REGISTER_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SELECT_MAIN_CURRENCY_SCREEN
@@ -53,6 +59,8 @@ fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boole
         CALCULATOR_SCREEN -> stringResource(id = R.string.converter_top_bar)
         SELECT_MAIN_CURRENCY_SCREEN -> stringResource(id = R.string.select_currency_top_bar)
         PROFILE_SCREEN -> stringResource(id = R.string.profile_screen_title)
+        NOTIFICATION_SCREEN_SELECT -> stringResource(id = R.string.add_a_price_allert)
+        "$NOTIFICATION_SCREEN/{coinId}" -> stringResource(id = R.string.add_a_price_allert)
         else -> stringResource(id = R.string.app_name)
     }
 
@@ -65,6 +73,17 @@ fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boole
                 SETTINGS_SCREEN -> SettingTopBar(navController = navHostController)
                 MY_ACCOUNT_SCREEN -> SubTopAppBar(navController = navHostController, title = title)
                 CALCULATOR_SCREEN -> SubTopAppBar(navController = navHostController, title = title)
+                NOTIFICATION_SCREEN_SELECT -> SubTopAppBar(
+                    navController = navHostController,
+                    title = title
+                )
+
+                "$NOTIFICATION_SCREEN/{coinId}" -> SubTopAppBar(
+                    navController = navHostController,
+                    title = title
+                )
+
+                NOTIFICATION_SCREEN_LIST -> NotificationsListTopBar(navController = navHostController)
                 SELECT_MAIN_CURRENCY_SCREEN -> SubTopAppBar(
                     navController = navHostController, title = title
                 )
@@ -106,7 +125,7 @@ fun MainTopBar(navHostController: NavHostController) {
         )
     }, actions = {
         IconButton(onClick = {
-            navHostController.navigate(Screen.NotificationScreen.route)
+            navHostController.navigate(Screen.NotificationScreenList.route)
         }) {
             Icon(
                 modifier = Modifier
@@ -136,10 +155,13 @@ fun MainTopBar(navHostController: NavHostController) {
 @Composable
 fun SettingTopBar(navController: NavHostController) {
     CenterAlignedTopAppBar(title = {
-        Row {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
             Image(
                 modifier = Modifier
-                    .padding(top = 3.dp, end = 5.dp)
+                    .padding(end = 5.dp)
                     .width(23.dp)
                     .height(23.dp),
                 painter = painterResource(id = R.drawable.logo),
@@ -166,12 +188,52 @@ fun SettingTopBar(navController: NavHostController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+fun NotificationsListTopBar(navController: NavHostController) {
+    CenterAlignedTopAppBar(title = {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = stringResource(id = R.string.price_allerts), style = TextStyle(
+                    fontSize = 20.sp,
+                    lineHeight = 22.sp,
+                    fontWeight = FontWeight(600),
+                    color = mainTextColor
+                )
+            )
+        }
+    }, navigationIcon = {
+        IconButton(onClick = { navController.popBackStack() }) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                contentDescription = "Back"
+            )
+        }
+    },
+        actions = {
+            Icon(
+                painter = painterResource(id = R.drawable.add_notification_icon),
+                contentDescription = "add notifications",
+                modifier = Modifier
+                    .padding(end = 20.dp)
+                    .clickable { navController.navigate(Screen.NotificationScreenSelect.route) }
+            )
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun AuthTopBar() {
     CenterAlignedTopAppBar(title = {
-        Row {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
             Image(
                 modifier = Modifier
-                    .padding(top = 3.dp, end = 5.dp)
+                    .padding(end = 5.dp)
                     .width(23.dp)
                     .height(23.dp),
                 painter = painterResource(id = R.drawable.logo),
@@ -247,7 +309,7 @@ fun DetailTopBar(
             )
         }
         IconButton(onClick = {
-            navController.navigate(Screen.NotificationScreen.route)
+            navController.navigate(Screen.NotificationScreenList.route)
         }) {
             Icon(
                 modifier = Modifier

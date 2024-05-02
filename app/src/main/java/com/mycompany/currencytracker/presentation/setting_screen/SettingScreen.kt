@@ -111,7 +111,7 @@ fun SettingScreen(navController: NavHostController) {
         Row(
             modifier = Modifier
                 .padding(start = 20.dp, top = 20.dp)
-                .clickable(onClick = { navController.navigate(Screen.NotificationScreen.route) })
+                .clickable(onClick = { navController.navigate(Screen.NotificationScreenList.route) })
         ) {
             Icon(
                 modifier = Modifier.padding(end = 4.dp),

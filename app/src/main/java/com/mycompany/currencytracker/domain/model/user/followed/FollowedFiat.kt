@@ -1,4 +1,4 @@
-package com.mycompany.currencytracker.domain.model.user
+package com.mycompany.currencytracker.domain.model.user.followed
 
 import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedListDto
 import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedDto

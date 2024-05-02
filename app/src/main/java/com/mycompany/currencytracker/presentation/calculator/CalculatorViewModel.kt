@@ -126,7 +126,6 @@ class CalculatorViewModel @Inject constructor(
                 writeDecimal()
             }
         }
-
     }
 
     fun convert(sum: Double) {

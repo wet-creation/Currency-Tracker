@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
-import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreenState
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListSearchState
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
@@ -35,7 +35,7 @@ fun CurrencySelectScreen() {
 
     CurrencyListsScreen(
         searchPosition = SearchPosition.InBetween,
-        currencyListsScreenState = CurrencyListsScreenState(searchQuery) {
+        currencyListSearchState = CurrencyListSearchState(searchQuery) {
             searchQuery = it
         },
         fiatListScreen = {

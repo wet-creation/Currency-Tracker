@@ -32,7 +32,7 @@ fun FiatListItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable{onItemClick(fiatDetails)}
+            .clickable { onItemClick(fiatDetails) }
             .padding(20.dp)
             .height(24.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -66,10 +66,10 @@ fun FiatListItem(
                 .weight(3f)
                 .padding(horizontal = 10.dp),
             text = when {
-                fiatDetails.rate >= 1 -> "$${String.format("%.2f", fiatDetails.rate)}"
-                fiatDetails.rate >= 0.0001 -> "$${String.format("%.4f", fiatDetails.rate)}"
-                fiatDetails.rate >= 0.00000001 -> "$${String.format("%.8f", fiatDetails.rate)}"
-                else -> "$0.00000000"
+                fiatDetails.rate >= 1 -> "${String.format("%.2f", fiatDetails.rate)}"
+                fiatDetails.rate >= 0.0001 -> "${String.format("%.4f", fiatDetails.rate)}"
+                fiatDetails.rate >= 0.00000001 -> "${String.format("%.8f", fiatDetails.rate)}"
+                else -> "0.00000000"
             },
             style = MaterialTheme.typography.bodyLarge,
             color = mainTextColor,

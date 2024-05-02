@@ -16,6 +16,9 @@ import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.FA
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.FIAT_DETAILS_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.HOME_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.LOGIN_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.NOTIFICATION_SCREEN
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.NOTIFICATION_SCREEN_LIST
+import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.NOTIFICATION_SCREEN_SELECT
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.REGISTER_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SEARCH_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SETTINGS_SCREEN
@@ -51,6 +54,15 @@ fun MainScreen() {
             topBarState.value = true
         }
 
+        NOTIFICATION_SCREEN_LIST -> {
+            bottomBarState.value = false
+            topBarState.value = true
+        }
+        NOTIFICATION_SCREEN_SELECT -> {
+            bottomBarState.value = false
+            topBarState.value = true
+        }
+
         FIAT_DETAILS_SCREEN -> {
             bottomBarState.value = false
             topBarState.value = false
@@ -64,6 +76,11 @@ fun MainScreen() {
         LOGIN_SCREEN -> {
             bottomBarState.value = false
             topBarState.value = true
+        }
+
+        "$NOTIFICATION_SCREEN/{coinId}" -> {
+            bottomBarState.value = false
+            topBarState.value = false
         }
 
         "$FIAT_DETAILS_SCREEN/{currencyId}" -> {

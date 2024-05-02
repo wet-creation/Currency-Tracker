@@ -115,7 +115,7 @@ fun FavoriteListScreen(navController: NavHostController) {
 }
 
 @Composable
-private fun HiddenRowEnd() {
+fun HiddenRowEnd() {
     Row(horizontalArrangement = Arrangement.End) {
         Box(
             Modifier

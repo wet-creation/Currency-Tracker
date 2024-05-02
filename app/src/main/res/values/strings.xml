@@ -62,4 +62,18 @@
     <string name="network_error_dialog_title">Network Error</string>
     <string name="profile_screen_title">Profile</string>
     <string name="register_text">Register</string>
+    <string name="follow_the_prices_of_cryptocurrency">Follow the prices of cryptocurrencies</string>
+    <string name="get_notification_when_prices_reach_your_targets">"Get notified when prices reach your targets</string>
+    <string name="add_a_price_allert">Add a price alert</string>
+    <string name="price_allerts">Price alerts</string>
+    <string name="added_to_watchlist">Added to the watch list</string>
+    <string name="all_coins">All coins</string>
+    <string name="by_price">By price</string>
+    <string name="by_percent">By %</string>
+    <string name="current_price">Current price</string>
+    <string name="when_price_reach_target">When price reach target</string>
+    <string name="set_a_price_allert">Set A Price Alert</string>
+    <string name="above">Above</string>
+    <string name="below">Below</string>
+    <string name="add">+ Add</string>
 </resources>
