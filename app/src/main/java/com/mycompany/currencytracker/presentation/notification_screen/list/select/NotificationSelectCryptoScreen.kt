@@ -105,14 +105,16 @@ fun SelectCryptoNotificationItem(
             modifier = Modifier
                 .height(24.dp)
                 .width(24.dp)
-                .weight(1f),
+                .fillMaxWidth()
+                .weight(0.5f),
             model = crypto.image,
             contentDescription = crypto.symbol + " img"
         )
-        Text(
+        AutoResizedText(
             text = crypto.symbol.uppercase(),
             modifier = Modifier
-                .padding(start = 10.dp, end = 10.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)
                 .weight(1f),
             style = TextStyle(
                 fontSize = 16.sp,
@@ -121,8 +123,8 @@ fun SelectCryptoNotificationItem(
                 color = Color.White,
             )
         )
-        AutoResizedText(
-            modifier = Modifier.weight(3.3f),
+        Text(
+            modifier = Modifier.weight(5f).fillMaxWidth(),
             text = crypto.name,
             textAlign = TextAlign.Start,
             style = TextStyle(
