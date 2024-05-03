@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -25,6 +24,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
@@ -91,13 +91,11 @@ fun AddItem(
 
     Box(
         modifier = Modifier
-            .width(47.dp)
+            .width(60.dp)
             .height(62.dp)
-            .padding(top = 2.dp)
 
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.clickable(onClick = {
                 navController.navigate(screen.route) {
@@ -108,7 +106,6 @@ fun AddItem(
         ) {
             Image(
                 modifier = Modifier
-                    .padding(0.17778.dp)
                     .width(40.dp)
                     .height(40.dp),
                 painter = painterResource(id = screen.icon),
@@ -116,7 +113,8 @@ fun AddItem(
                 colorFilter = ColorFilter.tint(contentColor)
             )
             Text(
-                text = screen.title,
+                text = screen.title.asString(),
+                textAlign = TextAlign.Center,
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 22.sp,
