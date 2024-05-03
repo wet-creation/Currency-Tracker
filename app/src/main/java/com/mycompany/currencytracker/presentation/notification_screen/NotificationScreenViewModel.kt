@@ -128,12 +128,14 @@ class NotificationScreenViewMode @Inject constructor(
             if (isFiat) _screenState.value.currentPriceForFiat
             else _screenState.value.currentPriceForCrypto
         _screenState.value =
-            _screenState.value.copy(fiatSelected = isFiat, writtenPrice = selectedPrice)
+            _screenState.value.copy(
+                fiatSelected = isFiat,
+                writtenPrice = selectedPrice.replace(",", ".")
+            )
     }
 
 
     fun readInput(input: ActionInput) {
-        resizeText()
         when (input) {
             is ActionInput.Number -> {
                 writeNumber(input.number)
@@ -149,19 +151,6 @@ class NotificationScreenViewMode @Inject constructor(
         }
     }
 
-    private fun resizeText() {
-//        val width = _screenState.value.textWidth
-//        var textSize = _screenState.value.textSize
-//
-//        var textSize =
-//            _screenState.value.textSize * (_screenState.value.writtenPrice.length.dp / _screenState.value.textWidth)
-//        if (textSize > 48.sp)
-//            textSize = 48.sp
-//        if (textSize < 24.sp)
-//            textSize = 24.sp
-//        _screenState.value = _screenState.value.copy(textSize = textSize)
-
-    }
 
     private fun writeDecimal() {
         if (!_screenState.value.writtenPrice.contains("."))

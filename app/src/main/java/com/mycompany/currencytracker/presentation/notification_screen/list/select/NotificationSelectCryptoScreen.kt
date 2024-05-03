@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,6 +32,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.domain.model.user.notification.CryptoSelectNotification
+import com.mycompany.currencytracker.presentation.common.AutoResizedText
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListSearchState
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.search.SearchBar
@@ -102,13 +104,16 @@ fun SelectCryptoNotificationItem(
         AsyncImage(
             modifier = Modifier
                 .height(24.dp)
-                .width(24.dp),
+                .width(24.dp)
+                .weight(1f),
             model = crypto.image,
             contentDescription = crypto.symbol + " img"
         )
         Text(
             text = crypto.symbol.uppercase(),
-            modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+            modifier = Modifier
+                .padding(start = 10.dp, end = 10.dp)
+                .weight(1f),
             style = TextStyle(
                 fontSize = 16.sp,
                 lineHeight = 22.sp,
@@ -116,8 +121,10 @@ fun SelectCryptoNotificationItem(
                 color = Color.White,
             )
         )
-        Text(
+        AutoResizedText(
+            modifier = Modifier.weight(3.3f),
             text = crypto.name,
+            textAlign = TextAlign.Start,
             style = TextStyle(
                 fontSize = 16.sp,
                 lineHeight = 22.sp,
