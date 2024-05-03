@@ -40,7 +40,7 @@ class FiatDetailViewModel @Inject constructor(
 
     private val _followStatus = mutableStateOf(false)
     val followStatus: State<Boolean> = _followStatus
-
+    private val chartTime = mutableStateOf("")
     init {
         savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let { currencyId ->
             getCurrency(currencyId)
@@ -85,6 +85,13 @@ class FiatDetailViewModel @Inject constructor(
 
         }
 
+    }
+
+    fun getChartTime(): String {
+        viewModelScope.launch {
+            chartTime.value = userSettings.getChartTime()
+        }
+        return chartTime.value
     }
 
     private suspend fun updateGraphInfo(chartTime: String, currencySym: String) {
@@ -149,7 +156,7 @@ class FiatDetailViewModel @Inject constructor(
         viewModelScope.launch {
             userSettings.saveChartTime(newTime)
             savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let { currencyId ->
-                updateGraphInfo(userSettings.getChartTime(), currencyId)
+                updateGraphInfo(newTime, currencyId)
             }
         }
     }

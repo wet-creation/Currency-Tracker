@@ -1,6 +1,6 @@
 package com.mycompany.currencytracker.di
 
-import com.mycompany.currencytracker.common.Constants
+import com.mycompany.currencytracker.common.Constants.CURRENCY_TRACKER_REST_API_URL
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerConvertService
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCryptoService
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCurrencyService
@@ -34,26 +34,29 @@ import javax.inject.Singleton
 abstract class AppModule {
     companion object {
         val interceptor = HttpLoggingInterceptor()
-        val client =  OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
         @Provides
         @Singleton
-        fun provideRetrofit(url: String): Retrofit {
+        fun provideRetrofit(): Retrofit {
             return Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(CURRENCY_TRACKER_REST_API_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
+
+
+        inline fun <reified T> provideCurrencyTrackerApi(retrofit: Retrofit, clazz: Class<T>): T {
+            return retrofit.create(T::class.java)
+        }
+
         @Provides
         @Singleton
-        inline fun <reified T> provideCurrencyTrackerApi(clazz: Class<T>): T {
-            return provideRetrofit(Constants.CURRENCY_TRACKER_REST_API_URL).create(T::class.java)
+        fun provideCurrencyTrackerCurrencyService(retrofit: Retrofit): CurrencyTrackerCurrencyService {
+            return provideCurrencyTrackerApi(retrofit, CurrencyTrackerCurrencyService::class.java)
         }
-        @Provides
-        @Singleton
-        fun provideCurrencyTrackerCurrencyService(): CurrencyTrackerCurrencyService {
-            return provideCurrencyTrackerApi(CurrencyTrackerCurrencyService::class.java)
-        }
+
         @Provides
         @Singleton
         fun provideCurrencyRepository(api: CurrencyTrackerCurrencyService): CurrenciesRepository {
@@ -62,8 +65,8 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideCurrencyTrackerCryptoService(): CurrencyTrackerCryptoService {
-            return provideCurrencyTrackerApi(CurrencyTrackerCryptoService::class.java)
+        fun provideCurrencyTrackerCryptoService(retrofit: Retrofit): CurrencyTrackerCryptoService {
+            return provideCurrencyTrackerApi(retrofit, CurrencyTrackerCryptoService::class.java)
         }
 
         @Provides
@@ -74,8 +77,8 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideCurrencyTrackerConvertService(): CurrencyTrackerConvertService {
-            return provideCurrencyTrackerApi(CurrencyTrackerConvertService::class.java)
+        fun provideCurrencyTrackerConvertService(retrofit: Retrofit): CurrencyTrackerConvertService {
+            return provideCurrencyTrackerApi(retrofit, CurrencyTrackerConvertService::class.java)
         }
 
         @Provides
@@ -86,8 +89,8 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideUserService(): UserService {
-            return provideCurrencyTrackerApi(UserService::class.java)
+        fun provideUserService(retrofit: Retrofit): UserService {
+            return provideCurrencyTrackerApi(retrofit, UserService::class.java)
         }
 
         @Provides
@@ -98,8 +101,8 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideUserFollowedService(): UserServiceFollowed {
-            return provideCurrencyTrackerApi(UserServiceFollowed::class.java)
+        fun provideUserFollowedService(retrofit: Retrofit): UserServiceFollowed {
+            return provideCurrencyTrackerApi(retrofit, UserServiceFollowed::class.java)
         }
 
         @Provides
@@ -110,8 +113,8 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideUserNotificationService(): UserServiceNotification {
-            return provideCurrencyTrackerApi(UserServiceNotification::class.java)
+        fun provideUserNotificationService(retrofit: Retrofit): UserServiceNotification {
+            return provideCurrencyTrackerApi(retrofit, UserServiceNotification::class.java)
         }
 
         @Provides

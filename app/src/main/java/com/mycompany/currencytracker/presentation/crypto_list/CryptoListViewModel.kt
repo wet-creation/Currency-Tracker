@@ -12,12 +12,11 @@ import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import com.mycompany.currencytracker.presentation.common.list.IListState
 import com.mycompany.currencytracker.presentation.common.list.IListViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class  CryptoListViewModel @Inject constructor(
+class CryptoListViewModel @Inject constructor(
     private val getTop100RateUseCase: GetTop100RateUseCase,
     private val userSettings: StoreUserSetting
 ) : ViewModel(), IListViewModel<CryptoGeneralInfo> {
@@ -31,19 +30,24 @@ class  CryptoListViewModel @Inject constructor(
     }
 
     override fun getItems(vararg args: Any) {
-        getTop100RateUseCase(userSettings.getSelectViewCurrency()).onEach { result ->
-            when(result) {
-                is Resource.Success -> {
-                    _state.value = CryptoListState(items = result.data)
-                }
-                is Resource.Error -> {
-                    val msg = result.asErrorUiText()
-                    _state.value = CryptoListState(error = msg)
-                }
-                is Resource.Loading -> {
-                    _state.value = CryptoListState(isLoading = true)
+        viewModelScope.launch {
+            getTop100RateUseCase(userSettings.getSelectViewCurrency()).collect() { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        _state.value = CryptoListState(items = result.data)
+                    }
+
+                    is Resource.Error -> {
+                        val msg = result.asErrorUiText()
+                        _state.value = CryptoListState(error = msg)
+                    }
+
+                    is Resource.Loading -> {
+                        _state.value = CryptoListState(isLoading = true)
+                    }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
+
     }
 }

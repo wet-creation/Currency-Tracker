@@ -42,7 +42,7 @@ fun SearchScreen(
         },
         fiatListScreen = {
             ItemsListScreen(
-                header = { CurrenciesListHeader() },
+                header = { CurrenciesListHeader(userSetting) },
                 stateValue = fiatSearchListViewModel.state.value,
                 list = fiatSearchListViewModel.searchResult.value,
                 onListRefresh = fiatSearchListViewModel::getItems
@@ -54,7 +54,7 @@ fun SearchScreen(
         },
         cryptoListScreen = {
             ItemsListScreen(
-                header = { CurrenciesListHeader() },
+                header = { CurrenciesListHeader(userSetting) },
                 stateValue = cryptoSearchListViewModel.state.value,
                 list = cryptoSearchListViewModel.searchResult.value,
                 onListRefresh = cryptoSearchListViewModel::getItems

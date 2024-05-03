@@ -13,6 +13,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,7 +59,13 @@ fun CryptoListItem(
     dataStore: StoreUserSetting,
     onItemClick: (crypto: ICrypto) -> Unit = {}
 ) {
-
+    val baseCurrency = remember {
+        mutableStateOf("USD")
+    }
+    val chartTime by dataStore.getChartTime.collectAsState(initial = "24h")
+    LaunchedEffect(key1 = Unit) {
+        baseCurrency.value = dataStore.getSelectViewCurrency()
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -115,7 +126,7 @@ fun CryptoListItem(
             modifier = Modifier
                 .weight(3f)
                 .fillMaxWidth(),
-            text = dataStore.getSelectViewCurrency().uppercase() + " " +calculateDecimalPlaces(crypto.rate),
+            text = baseCurrency.value.uppercase() + " " +calculateDecimalPlaces(crypto.rate),
             color = mainTextColor,
             textAlign = TextAlign.End
         )
@@ -126,7 +137,7 @@ fun CryptoListItem(
                 .fillMaxWidth()
                 .weight(2f),
         ) {
-            ChangeRateTable(currencyRate = crypto, time = dataStore.getChartTime())
+            ChangeRateTable(currencyRate = crypto, time = chartTime)
         }
     }
 }

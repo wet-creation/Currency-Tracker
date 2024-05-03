@@ -42,6 +42,10 @@ class CryptoDetailViewModel @Inject constructor(
     private val _secondRate = mutableDoubleStateOf(0.0)
     val secondRate: State<Double> = _secondRate
 
+    private val _secondRateSymbol = mutableStateOf("")
+    private val _primaryRateSymbol = mutableStateOf("")
+    private val chartTime = mutableStateOf("24h")
+
     private val _followStatus = mutableStateOf(false)
     val followStatus: State<Boolean> = _followStatus
 
@@ -95,8 +99,7 @@ class CryptoDetailViewModel @Inject constructor(
             ).collect { result ->
                 if (result is Resource.Success) {
                     _graphInfo.value = result.data
-                }
-                else if (result is Resource.Error)
+                } else if (result is Resource.Error)
                     _state.value = CryptoDetailState(error = result.asErrorUiText())
             }
 
@@ -107,16 +110,36 @@ class CryptoDetailViewModel @Inject constructor(
                 if (result is Resource.Success) {
                     _secondRate.doubleValue = result.data.rate
                     _state.value = _state.value.copy(isLoading = false)
-                }
-                else if (result is Resource.Error)
+                } else if (result is Resource.Error)
                     _state.value = CryptoDetailState(error = result.asErrorUiText())
             }
         }
-
-
     }
 
-    private fun updateGraphInfo(coinSym: String) {
+    fun getChartTime(): String {
+        viewModelScope.launch {
+            chartTime.value = userSettings.getChartTime()
+        }
+        return chartTime.value
+    }
+
+    fun getSecondViewCurrency(): String {
+        if (_secondRateSymbol.value == "")
+            viewModelScope.launch {
+                _secondRateSymbol.value = userSettings.getSecondViewCurrency()
+            }
+        return _secondRateSymbol.value
+    }
+
+    fun getPrimaryCurrency(): String {
+        if (_primaryRateSymbol.value == "")
+            viewModelScope.launch {
+                _primaryRateSymbol.value = userSettings.getSelectViewCurrency()
+            }
+        return _primaryRateSymbol.value
+    }
+
+    private suspend fun updateGraphInfo(coinSym: String) {
         getCryptoGraphInfo(
             userSettings.getChartTime(),
             coinSym,

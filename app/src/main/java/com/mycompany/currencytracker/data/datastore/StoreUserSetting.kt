@@ -41,12 +41,12 @@ class StoreUserSetting
             preferences[USER_MAIN_CRYPTO_KEY] ?: "btc"
         }
 
-    private val getChartTime: Flow<String> = context.dataStore.data
+    val getChartTime: Flow<String> = context.dataStore.data
         .map { preferences ->
             preferences[USER_SELECTED_CHART_TIME] ?: "24h"
         }
 
-    private val isFiatSelected: Flow<Boolean> = context.dataStore.data
+    val isFiatSelected: Flow<Boolean> = context.dataStore.data
         .map { preferences ->
             preferences[USER_IS_FIAT_SELECTED] ?: true
         }
@@ -67,41 +67,24 @@ class StoreUserSetting
         return crypto
     }
 
-    fun getChartTime(): String {
-        var time: String
-        runBlocking(Dispatchers.IO) {
-            time = getChartTime.first()
-        }
-        return time
-    }
-    fun getIsFiatSelected() : Boolean {
-        var isFiat: Boolean
-        runBlocking(Dispatchers.IO) {
-            isFiat = isFiatSelected.first()
-        }
-        return isFiat
+    suspend fun getChartTime(): String {
+        return getChartTime.first()
     }
 
-    fun getSelectViewCurrency(): String {
-        var currency: String
-        runBlocking(Dispatchers.IO) {
-            currency = if (isFiatSelected.first()) {
-                getFiat()
-            } else {
-                getCrypto()
-            }
+    suspend fun getSelectViewCurrency(): String {
+        val currency = if (isFiatSelected.first()) {
+            getFiat()
+        } else {
+            getCrypto()
         }
         return currency
     }
 
-    fun getSecondViewCurrency(): String {
-        var currency: String
-        runBlocking(Dispatchers.IO) {
-            currency = if (!isFiatSelected.first()) {
-                getFiat()
-            } else {
-                getCrypto()
-            }
+    suspend fun getSecondViewCurrency(): String {
+        val currency: String = if (!isFiatSelected.first()) {
+            getFiat()
+        } else {
+            getCrypto()
         }
         return currency
     }

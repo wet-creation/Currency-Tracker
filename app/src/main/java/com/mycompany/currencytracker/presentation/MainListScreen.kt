@@ -28,7 +28,7 @@ fun MainListScreen(
     CurrencyListsScreen(
         fiatListScreen = {
             ItemsListScreen(
-                header = { CurrenciesListHeader() },
+                header = { CurrenciesListHeader(dataStore) },
                 stateValue = fiatSearchListViewModel.state.value,
                 list = fiatSearchListViewModel.state.value.items,
                 key = {_, item -> item.id},
@@ -40,7 +40,7 @@ fun MainListScreen(
             }
         }, cryptoListScreen = {
             ItemsListScreen(
-                header = { CurrenciesListHeader(true, cryptoSearchListViewModel::getItems) },
+                header = { CurrenciesListHeader(dataStore,true, cryptoSearchListViewModel::getItems) },
                 list = cryptoSearchListViewModel.state.value.items,
                 stateValue = cryptoSearchListViewModel.state.value,
                 key = {_, item -> item.id},

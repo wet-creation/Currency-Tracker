@@ -96,7 +96,7 @@ fun CurrencyDetailScreen(
                     item {
                         Chart(viewModel.graphInfo.value)
                         ChangeChartTimeButtons(
-                            dataStore.getChartTime()
+                            viewModel.getChartTime()
                         ) { time ->
                             viewModel.changeChartTime(time)
                         }

@@ -94,7 +94,7 @@ fun CryptoDetailScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "${dataStore.getSelectViewCurrency().uppercase()} ${
+                                text = "${viewModel.getPrimaryCurrency().uppercase()} ${
                                     calculateDecimalPlaces(
                                         crypto.rate
                                     )
@@ -102,7 +102,7 @@ fun CryptoDetailScreen(
                                 style = MaterialTheme.typography.displayLarge
                             )
                             Row(modifier = Modifier.padding(start = 5.dp, top = 5.dp)) {
-                                ChangeRate(currencyRate = crypto, time = dataStore.getChartTime())
+                                ChangeRate(currencyRate = crypto, time = viewModel.getChartTime())
                             }
                         }
                         Row(modifier = Modifier.padding(top = 8.dp)) {
@@ -118,7 +118,7 @@ fun CryptoDetailScreen(
                             )
                             Text(
                                 text = "${
-                                    dataStore.getSecondViewCurrency().uppercase()
+                                    viewModel.getSecondViewCurrency().uppercase()
                                 } ${calculateDecimalPlaces(viewModel.secondRate.value)}",
                                 style = MaterialTheme.typography.displaySmall,
                                 color = secondTextColor
@@ -128,7 +128,7 @@ fun CryptoDetailScreen(
                     item {
                         Chart(viewModel.graphInfo.value)
                         ChangeChartTimeButtons(
-                            dataStore.getChartTime()
+                            viewModel.getChartTime()
                         ) { time ->
                             viewModel.changeChartTime(time)
                         }
@@ -137,7 +137,7 @@ fun CryptoDetailScreen(
                         ChangeRatesItem(crypto)
                     }
                     item {
-                        CryptoDetailInfo(crypto, dataStore.getSelectViewCurrency().uppercase())
+                        CryptoDetailInfo(crypto, viewModel.getPrimaryCurrency().uppercase())
                     }
 
                 }

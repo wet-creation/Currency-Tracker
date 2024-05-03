@@ -10,13 +10,13 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.ui.theme.filterButtonsColor
@@ -24,13 +24,13 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun FilterButtons(
+    dataStore: StoreUserSetting,
     onClick: () -> Unit
 ) {
-    val context = LocalContext.current
-    val dataStore = StoreUserSetting(context)
     val scope = rememberCoroutineScope()
 
-    val isFiat = dataStore.getIsFiatSelected()
+    val isFiat by dataStore.isFiatSelected.collectAsState(initial = true)
+    val chartTime by dataStore.getChartTime.collectAsState(initial = "24h")
 
     var showPopupMenu by remember {
         mutableStateOf(false)
@@ -67,7 +67,7 @@ fun FilterButtons(
                 modifier = Modifier.size(width = 75.dp, height = 35.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = filterButtonsColor)
             ) {
-                Text(text = dataStore.getChartTime())
+                Text(text = chartTime)
             }
 
             DropdownMenu(expanded = showPopupMenu, onDismissRequest = { showPopupMenu = false }) {

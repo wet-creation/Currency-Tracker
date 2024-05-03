@@ -50,7 +50,7 @@ fun FavoriteListScreen(navController: NavHostController) {
         CurrencyListsScreen(
             fiatListScreen = {
                 ItemsListScreen(
-                    header = { CurrenciesListHeader() },
+                    header = { CurrenciesListHeader(dataStore = userSetting) },
                     stateValue = fiatListViewModel.state.value,
                     list = fiatListViewModel.state.value.items,
                     onListRefresh = fiatListViewModel::getItems
@@ -78,7 +78,7 @@ fun FavoriteListScreen(navController: NavHostController) {
                 }
             }, cryptoListScreen = {
                 ItemsListScreen(
-                    header = { CurrenciesListHeader() },
+                    header = { CurrenciesListHeader(userSetting) },
                     stateValue = cryptoListViewModel.state.value,
                     list = cryptoListViewModel.state.value.items,
                     onListRefresh = cryptoListViewModel::getItems,

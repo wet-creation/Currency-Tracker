@@ -27,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mycompany.currencytracker.R
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.CALCULATOR_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.HOME_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.LOGIN_SCREEN
@@ -105,6 +107,7 @@ fun TopBar(navHostController: NavHostController, topBarState: MutableState<Boole
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTopBar(navHostController: NavHostController) {
+    val dataStore = StoreUserSetting(LocalContext.current)
     TopAppBar(modifier = Modifier.padding(horizontal = 10.dp), title = {
         Text(
             "Currency tracker", style = TextStyle(
@@ -125,7 +128,10 @@ fun MainTopBar(navHostController: NavHostController) {
         )
     }, actions = {
         IconButton(onClick = {
-            navHostController.navigate(Screen.LoginScreen.route)
+            if (dataStore.getUser().email.isEmpty())
+                navHostController.navigate(Screen.LoginScreen.route)
+            else
+                navHostController.navigate(Screen.NotificationScreenList.route)
         }) {
             Icon(
                 modifier = Modifier
