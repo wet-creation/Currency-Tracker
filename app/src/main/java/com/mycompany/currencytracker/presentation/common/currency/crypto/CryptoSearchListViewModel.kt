@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.currencytracker.common.Resource
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.domain.use_case.crypto.GetTop100RateUseCase
 import com.mycompany.currencytracker.presentation.common.asErrorUiText
@@ -24,7 +25,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class CryptoSearchListViewModel @Inject constructor(
-    private val getTop100RateUseCase: GetTop100RateUseCase
+    private val getTop100RateUseCase: GetTop100RateUseCase,
+    val userSetting: StoreUserSetting
 ) : ViewModel(), IListViewModel<CryptoGeneralInfo> {
 
     /** Mutable state for holding the current state of the screen. */

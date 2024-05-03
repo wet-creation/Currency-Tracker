@@ -1,7 +1,6 @@
 package com.mycompany.currencytracker.presentation.common
 
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,14 +12,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -81,42 +77,48 @@ data class FontSizeRange(
 }
 
 @Composable
-fun measureTextWidth(text: String, style: TextStyle): Dp {
-    val textMeasurer = rememberTextMeasurer()
-    val widthInPixels = textMeasurer.measure(text, style).size.width
-    return with(LocalDensity.current) { widthInPixels.toDp() }
-}
-
-@Composable
-fun DynamicText(
+fun AutoResizedText2(
     modifier: Modifier = Modifier,
     text: String,
-    softWrap: Boolean = true,
     textAlign: TextAlign = TextAlign.Start,
     color: Color = Color.Unspecified,
     fontStyle: FontStyle? = null,
     style: TextStyle = LocalTextStyle.current,
 ) {
-    var fontSize by remember { mutableStateOf(48.sp) } // Начальный размер шрифта
-
-    BoxWithConstraints {
-        Text(
-            text = text,
-            color = color,
-            style = style,
-            textAlign = textAlign,
-            softWrap = softWrap,
-            fontStyle = fontStyle,
-            modifier = Modifier.padding(16.dp)
-        )
-        val maxWidth = maxWidth.value
-        val textWidth = with(LocalDensity.current) { fontSize.toDp() * text.length }
-
-        // Изменяем размер шрифта, если текст не помещается или есть место для увеличения шрифта
-        if (textWidth.value > maxWidth) {
-            fontSize *= maxWidth / textWidth.value
-        } else if (fontSize < 40.sp) { // Максимальный размер шрифта (может быть настраиваемым)
-            fontSize *= 1.1f // Увеличиваем шрифт на 10%
-        }
+    var resizedTextStyle by remember {
+        mutableStateOf(style)
     }
+    var shouldDraw by remember {
+        mutableStateOf(false)
+    }
+
+    val defaultFontSize = MaterialTheme.typography.body1.fontSize
+
+    Text(
+        fontStyle = fontStyle,
+        textAlign = textAlign,
+        text = text,
+        color = color,
+        modifier = modifier.drawWithContent {
+            if (shouldDraw) {
+                drawContent()
+            }
+        },
+        softWrap = false,
+        style = resizedTextStyle,
+        onTextLayout = { result ->
+            if (result.didOverflowWidth) {
+                if (style.fontSize.isUnspecified) {
+                    resizedTextStyle = resizedTextStyle.copy(
+                        fontSize = defaultFontSize
+                    )
+                }
+                resizedTextStyle = resizedTextStyle.copy(
+                    fontSize = resizedTextStyle.fontSize * 0.95
+                )
+            } else {
+                shouldDraw = true
+            }
+        }
+    )
 }

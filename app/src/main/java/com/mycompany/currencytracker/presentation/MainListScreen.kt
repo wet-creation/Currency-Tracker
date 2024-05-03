@@ -23,6 +23,8 @@ fun MainListScreen(
 ) {
     val fiatSearchListViewModel = hiltViewModel<CurrencyListViewModel>()
     val cryptoSearchListViewModel = hiltViewModel<CryptoListViewModel>()
+
+    val dataStore = fiatSearchListViewModel.userSettings
     CurrencyListsScreen(
         fiatListScreen = {
             ItemsListScreen(
@@ -32,7 +34,7 @@ fun MainListScreen(
                 key = {_, item -> item.id},
                 onListRefresh = fiatSearchListViewModel::getItems
             ) { currencyItem, currNumber ->
-                FiatListItem(currencyItem, currNumber) {
+                FiatListItem(currencyItem, currNumber, dataStore) {
                     navController.navigate(Screen.CurrencyDetailScreen.route + "/${currencyItem.symbol}")
                 }
             }
@@ -44,13 +46,12 @@ fun MainListScreen(
                 key = {_, item -> item.id},
                 onListRefresh = cryptoSearchListViewModel::getItems
             ) { crypto, _->
-                CryptoListItem(crypto = crypto, number = crypto.rank) {
+                CryptoListItem(crypto = crypto, number = crypto.rank, dataStore = dataStore) {
                     navController.navigate(Screen.CryptoDetailScreen.route + "/${crypto.symbol}")
                 }
             }
         })
     { title ->
-
         Text(
             text = title,
             style = TextStyle(

@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
+import com.mycompany.currencytracker.presentation.common.currency.ChangeRate
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeChartTimeButtons
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart

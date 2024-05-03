@@ -33,7 +33,7 @@ fun CurrenciesListHeader(
         modifier = Modifier
             .fillMaxWidth()
             .height(42.dp)
-            .padding(start = 20.dp, end = 13.dp, top = 15.dp)
+            .padding(start = 20.dp, end = 20.dp, top = 15.dp)
     ) {
         Text(
             modifier = Modifier.weight(0.9f),
@@ -53,7 +53,7 @@ fun CurrenciesListHeader(
             style = MaterialTheme.typography.labelSmall
         )
         Text(
-            modifier = Modifier.weight(1.8f),
+            modifier = Modifier.weight(2f),
             text = dataStore.getChartTime(),
             textAlign = TextAlign.End,
             style = MaterialTheme.typography.labelSmall

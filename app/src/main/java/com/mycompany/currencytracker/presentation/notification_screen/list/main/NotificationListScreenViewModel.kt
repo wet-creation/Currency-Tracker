@@ -21,7 +21,7 @@ import javax.inject.Inject
 class NotificationListScreenViewModel @Inject constructor(
     private val getNotificationsUseCase: GetNotificationsUseCase,
     private val deleteNotification: DeleteNotificationUseCase,
-    private val dataStore: StoreUserSetting
+    val dataStore: StoreUserSetting
 ) : ViewModel(), IListViewModel<UserNotification> {
 
     private var _state = mutableStateOf(NotificationListScreenState())

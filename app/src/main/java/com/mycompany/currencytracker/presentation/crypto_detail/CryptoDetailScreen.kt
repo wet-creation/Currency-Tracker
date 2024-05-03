@@ -25,8 +25,8 @@ import androidx.navigation.NavHostController
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.presentation.common.ErrorScreen
+import com.mycompany.currencytracker.presentation.common.currency.ChangeRate
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
-import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeChartTimeButtons
 import com.mycompany.currencytracker.presentation.common.detail_screen.ChangeRatesItem
 import com.mycompany.currencytracker.presentation.common.detail_screen.Chart
@@ -83,7 +83,7 @@ fun CryptoDetailScreen(
                             style = MaterialTheme.typography.displayLarge
                         )
                         Row(modifier = Modifier.padding(start = 5.dp, top = 5.dp)) {
-                            ChangeRate(crypto, dataStore.getChartTime())
+                            ChangeRate(currencyRate = crypto, time = dataStore.getChartTime())
                         }
                     }
                     Row(modifier = Modifier.padding(top = 8.dp)) {

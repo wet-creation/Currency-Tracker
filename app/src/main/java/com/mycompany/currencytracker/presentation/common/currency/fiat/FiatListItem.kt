@@ -17,68 +17,86 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.common.Constants.IMAGE_URL
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.IFiat
+import com.mycompany.currencytracker.presentation.common.AutoResizeText
+import com.mycompany.currencytracker.presentation.common.FontSizeRange
+import com.mycompany.currencytracker.presentation.common.currency.ChangeRateTable
+import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
+
 
 @Composable
 fun FiatListItem(
     fiatDetails: IFiat,
     currNumber: Int = 1,
+    dataStore: StoreUserSetting,
     onItemClick: (IFiat) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onItemClick(fiatDetails) }
-            .padding(20.dp)
+            .padding(vertical = 14.dp, horizontal = 20.dp)
             .height(24.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.weight(0.9f),
+            modifier = Modifier
+                .weight(0.9f)
+                .fillMaxWidth(),
             text = "$currNumber",
+            textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge,
             color = secondTextColor
         )
-        Row(modifier = Modifier.weight(2f)) {
+        Row(
+            modifier = Modifier
+                .weight(2f)
+                .fillMaxWidth()
+        ) {
             AsyncImage(
                 modifier = Modifier
                     .width(24.dp)
                     .height(24.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .align(Alignment.CenterVertically)
+                    .fillMaxWidth(),
                 model = IMAGE_URL + fiatDetails.symbol.lowercase() + ".png",
                 contentDescription = "image description",
                 contentScale = ContentScale.Crop
             )
             Text(
-                modifier = Modifier.padding(start = 12.dp),
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .fillMaxWidth(),
                 text = fiatDetails.symbol,
                 style = MaterialTheme.typography.bodyLarge,
                 color = mainTextColor
             )
         }
-        Text(
+        AutoResizeText(
             modifier = Modifier
                 .weight(3f)
-                .padding(horizontal = 10.dp),
-            text = when {
-                fiatDetails.rate >= 1 -> "${String.format("%.2f", fiatDetails.rate)}"
-                fiatDetails.rate >= 0.0001 -> "${String.format("%.4f", fiatDetails.rate)}"
-                fiatDetails.rate >= 0.00000001 -> "${String.format("%.8f", fiatDetails.rate)}"
-                else -> "0.00000000"
-            },
+                .fillMaxWidth(),
+            text = dataStore.getFiat() + " " + calculateDecimalPlaces(fiatDetails.rate),
             style = MaterialTheme.typography.bodyLarge,
             color = mainTextColor,
+            softWrap = false,
+            fontSizeRange = FontSizeRange(8.sp, 16.sp),
             textAlign = TextAlign.End
         )
         Row(
-            horizontalArrangement = Arrangement.End
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(2f),
         ) {
-            ChangeRate(currencyRate = fiatDetails)
+            ChangeRateTable(currencyRate = fiatDetails)
         }
     }
 }

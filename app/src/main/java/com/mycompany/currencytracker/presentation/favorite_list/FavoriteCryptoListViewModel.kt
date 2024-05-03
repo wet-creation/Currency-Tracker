@@ -21,7 +21,7 @@ import javax.inject.Inject
 class FavoriteCryptoListViewModel @Inject constructor(
     private val getFavoriteCryptoUseCase: GetFavoriteCryptoListUseCase,
     private val deleteCryptoFromFavoriteUseCase: DeleteCryptoFromFavoriteUseCase,
-    private val userSetting: StoreUserSetting
+    val userSetting: StoreUserSetting
 ) : ViewModel(), IListViewModel<FollowedCrypto> {
 
     private var _state = mutableStateOf(CryptoFollowedState())

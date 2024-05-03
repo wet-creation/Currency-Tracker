@@ -30,6 +30,8 @@ fun SearchScreen(
 ) {
     val fiatSearchListViewModel = hiltViewModel<FiatSearchListViewModel>()
     val cryptoSearchListViewModel = hiltViewModel<CryptoSearchListViewModel>()
+    val userSetting = cryptoSearchListViewModel.userSetting
+
     var stateQuery by remember {
         mutableStateOf("")
     }
@@ -45,7 +47,7 @@ fun SearchScreen(
                 list = fiatSearchListViewModel.searchResult.value,
                 onListRefresh = fiatSearchListViewModel::getItems
             ) { currencyItem: FiatDetails, currNumber: Int ->
-                FiatListItem(fiatDetails = currencyItem, currNumber = currNumber) {
+                FiatListItem(fiatDetails = currencyItem, currNumber = currNumber, dataStore = userSetting) {
                     navController.navigate(Screen.CurrencyDetailScreen.route + "/${currencyItem.symbol}")
                 }
             }
@@ -57,7 +59,7 @@ fun SearchScreen(
                 list = cryptoSearchListViewModel.searchResult.value,
                 onListRefresh = cryptoSearchListViewModel::getItems
             ) { crypto, _ ->
-                CryptoListItem(crypto = crypto, number = crypto.rank) {
+                CryptoListItem(crypto = crypto, number = crypto.rank, dataStore = userSetting) {
                     navController.navigate(Screen.CryptoDetailScreen.route + "/${crypto.symbol}")
                 }
             }

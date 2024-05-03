@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.domain.model.currency.IChangeRates
-import com.mycompany.currencytracker.presentation.common.currency.fiat.ChangeRate
+import com.mycompany.currencytracker.presentation.common.currency.ChangeRate
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 
 @Composable
@@ -36,7 +36,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
             Box(modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)) {
-                ChangeRate(currencyRate = currency, "24h")
+                ChangeRate(currencyRate = currency, time = "24h")
             }
         }
         Column(modifier = Modifier.weight(1f)) {
@@ -52,7 +52,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
             Box(modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)) {
-                ChangeRate(currencyRate = currency, "7d")
+                ChangeRate(currencyRate = currency, time = "7d")
             }
         }
         Column(modifier = Modifier.weight(1f)) {
@@ -68,7 +68,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
             Box(modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)) {
-                ChangeRate(currencyRate = currency, "30d")
+                ChangeRate(currencyRate = currency, time = "30d")
             }
         }
     }

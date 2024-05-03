@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CurrencyListViewModel @Inject constructor(
     private val getCurrenciesListUseCase: GetCurrenciesListUseCase,
-    private val userSettings: StoreUserSetting
+    val userSettings: StoreUserSetting
 ) : ViewModel(), IListViewModel<FiatDetails> {
     private val _state = mutableStateOf(CurrencyListState())
     override val state: State<CurrencyListState> = _state
