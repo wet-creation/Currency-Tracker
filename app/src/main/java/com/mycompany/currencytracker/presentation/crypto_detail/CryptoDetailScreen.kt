@@ -73,13 +73,19 @@ fun CryptoDetailScreen(
                         val follow = viewModel.followStatus.value
 
                         DetailTopBar(navController, crypto.symbol, follow, {
-                            if (!follow) {
+                            if (dataStore.getUser().email.isEmpty()) {
+                                navController.navigate(Screen.LoginScreen.route)
+
+                            } else if (!follow) {
                                 viewModel.addCryptoToFollowList(crypto.symbol)
                             } else {
                                 viewModel.removeCryptoFromFavoriteList(crypto.symbol)
                             }
                         }, {
-                            navController.navigate(Screen.NotificationScreen.route + "/${crypto.symbol}")
+                            if (dataStore.getUser().email.isEmpty()) {
+                                navController.navigate(Screen.LoginScreen.route)
+                            } else
+                                navController.navigate(Screen.NotificationScreen.route + "/${crypto.symbol}")
                         })
                     }
                     item {

@@ -14,6 +14,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,7 +43,9 @@ fun FavoriteListScreen(navController: NavHostController) {
     val cryptoListViewModel = hiltViewModel<FavoriteCryptoListViewModel>()
     val fiatListViewModel = hiltViewModel<FavoriteFiatListViewModel>()
     val userSetting = cryptoListViewModel.userSetting
-
+    val onLoginScreen = remember {
+        mutableStateOf(false)
+    }
     if (userSetting.getUser().email != "") {
         CurrencyListsScreen(
             fiatListScreen = {
@@ -91,14 +95,17 @@ fun FavoriteListScreen(navController: NavHostController) {
                             cryptoListViewModel.delete(crypto)
                         }
                     ) {
-                        CryptoListItem(crypto = crypto, number = currNumber, dataStore = userSetting) {
+                        CryptoListItem(
+                            crypto = crypto,
+                            number = currNumber,
+                            dataStore = userSetting
+                        ) {
                             navController.navigate(Screen.CryptoDetailScreen.route + "/${crypto.symbol}")
                         }
                     }
                 }
             })
         { title ->
-
             Text(
                 text = title,
                 style = TextStyle(
@@ -109,8 +116,14 @@ fun FavoriteListScreen(navController: NavHostController) {
         }
     } else {
         PleaseLoginScreen(navController)
+        if (!onLoginScreen.value) {
+            navController.navigate(Screen.LoginScreen.route)
+            onLoginScreen.value = true
+        }
     }
+
 }
+
 
 @Composable
 fun HiddenRowEnd() {
@@ -119,7 +132,8 @@ fun HiddenRowEnd() {
             Modifier
                 .background(Color.Red)
                 .height(60.dp)
-                .width(60.dp)) {
+                .width(60.dp)
+        ) {
             Icon(
                 imageVector = Icons.Outlined.Delete,
                 contentDescription = "favorite",

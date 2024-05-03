@@ -76,4 +76,7 @@
     <string name="above">Above</string>
     <string name="below">Below</string>
     <string name="add">+ Додати</string>
+    <string name="logout">Вийти</string>
+    <string name="name_text">Ім`я</string>
+    <string name="surname_text">Прізвище</string>
 </resources>

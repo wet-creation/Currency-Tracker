@@ -60,7 +60,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
     override fun onStart() {
         super.onStart()
         com.google.firebase.ktx.Firebase.messaging.token.addOnCompleteListener {

@@ -42,7 +42,7 @@ class FiatDetailViewModel @Inject constructor(
     val followStatus: State<Boolean> = _followStatus
 
     init {
-        savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let {currencyId ->
+        savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let { currencyId ->
             getCurrency(currencyId)
         }
     }
@@ -54,23 +54,27 @@ class FiatDetailViewModel @Inject constructor(
                     is Resource.Success -> {
                         _state.value = _state.value.copy(currency = result.data)
                     }
+
                     is Resource.Error -> {
                         _state.value = FiatDetailState(error = result.asErrorUiText())
                     }
+
                     is Resource.Loading -> {
                         _state.value = FiatDetailState(isLoading = true)
                     }
                 }
             }
 
-            getFiatFollowStatusUseCase(currencySym, userSettings.getUser().id).onEach { result ->
+            getFiatFollowStatusUseCase(currencySym, userSettings.getUser().id).collect { result ->
                 when (result) {
                     is Resource.Success -> {
                         _followStatus.value = true
                     }
+
                     is Resource.Error -> {
                         _followStatus.value = false
                     }
+
                     is Resource.Loading -> {
 
                     }
@@ -82,6 +86,7 @@ class FiatDetailViewModel @Inject constructor(
         }
 
     }
+
     private suspend fun updateGraphInfo(chartTime: String, currencySym: String) {
         getFiatGraphInfo(chartTime, currencySym, userSettings.getFiat()).collect {
             when (it) {
@@ -89,51 +94,61 @@ class FiatDetailViewModel @Inject constructor(
                     _graphInfo.value = it.data
                     _state.value = _state.value.copy(isLoading = false)
                 }
+
                 is Resource.Error -> {
                     _state.value = FiatDetailState(error = it.asErrorUiText())
                 }
+
                 is Resource.Loading -> {
 
                 }
             }
         }
     }
-    fun addFiatToFavoriteList(fiatSym: String){
-        val fiat = FollowedFiat(userSettings.getUser().id, 0, symbol = fiatSym, null, null, null, 0.0)
+
+    fun addFiatToFavoriteList(fiatSym: String) {
+        val fiat =
+            FollowedFiat(userSettings.getUser().id, 0, symbol = fiatSym, null, null, null, 0.0)
 
         followedFiatUseCase(fiat).onEach {
             when (it) {
                 is Resource.Success -> {
                     _followStatus.value = true
                 }
+
                 is Resource.Error -> {
 
                 }
+
                 is Resource.Loading -> {
 
                 }
             }
         }.launchIn(viewModelScope)
     }
-    fun removeFiatFromFavoriteList(fiatSym: String){
+
+    fun removeFiatFromFavoriteList(fiatSym: String) {
         deleteFiatFromFavoriteUseCase(userSettings.getUser().id, fiatSym).onEach {
             when (it) {
                 is Resource.Success -> {
                     _followStatus.value = false
                 }
+
                 is Resource.Error -> {
 
                 }
+
                 is Resource.Loading -> {
 
                 }
             }
         }.launchIn(viewModelScope)
     }
+
     fun changeChartTime(newTime: String) {
         viewModelScope.launch {
             userSettings.saveChartTime(newTime)
-            savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let {currencyId ->
+            savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let { currencyId ->
                 updateGraphInfo(userSettings.getChartTime(), currencyId)
             }
         }

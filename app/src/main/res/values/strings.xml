@@ -76,4 +76,7 @@
     <string name="above">Above</string>
     <string name="below">Below</string>
     <string name="add">+ Add</string>
+    <string name="logout">Logout</string>
+    <string name="name_text">Name</string>
+    <string name="surname_text">Surname</string>
 </resources>

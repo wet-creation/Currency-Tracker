@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.auth.login
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import com.mycompany.currencytracker.presentation.auth.PasswordInput
 import com.mycompany.currencytracker.presentation.auth.TextInput
 import com.mycompany.currencytracker.presentation.common.ConnectionErrorDialog
 import com.mycompany.currencytracker.presentation.common.emptyUiText
+import com.mycompany.currencytracker.presentation.navigation.BottomBarScreen
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.HOME_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.Screen
 
@@ -112,6 +114,10 @@ fun LoginScreen(navController: NavHostController) {
         if (stateValue.result != User()) {
             navController.navigate(HOME_SCREEN)
         }
+    }
+    BackHandler(navController.backQueue.map {it.destination.route}.contains(BottomBarScreen.Favorite.route)) {
+
+        navController.popBackStack(BottomBarScreen.Favorite.route, true)
     }
 
 }

@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.navigation
 
+import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,7 +29,6 @@ import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SE
 fun MainScreen() {
     val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
     val topBarState = rememberSaveable { (mutableStateOf(true)) }
-
     val navController = rememberNavController()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()

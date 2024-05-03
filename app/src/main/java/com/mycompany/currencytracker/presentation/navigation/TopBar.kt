@@ -125,7 +125,7 @@ fun MainTopBar(navHostController: NavHostController) {
         )
     }, actions = {
         IconButton(onClick = {
-            navHostController.navigate(Screen.NotificationScreenList.route)
+            navHostController.navigate(Screen.LoginScreen.route)
         }) {
             Icon(
                 modifier = Modifier
