@@ -31,7 +31,7 @@ class CryptoDetailViewModel @Inject constructor(
     private val followedCryptoUseCase: FollowedCryptoUseCase,
     private val deleteCryptoFromFavoriteUseCase: DeleteCryptoFromFavoriteUseCase,
     private val savedStateHandle: SavedStateHandle,
-    private val userSettings: StoreUserSetting
+    val userSettings: StoreUserSetting
 ) : ViewModel() {
     private val _state = mutableStateOf(CryptoDetailState())
     val state: State<CryptoDetailState> = _state
