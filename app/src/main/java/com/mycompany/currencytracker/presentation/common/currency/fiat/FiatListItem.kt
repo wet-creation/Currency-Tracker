@@ -17,13 +17,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.common.Constants.IMAGE_URL
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.IFiat
-import com.mycompany.currencytracker.presentation.common.AutoResizeText
-import com.mycompany.currencytracker.presentation.common.FontSizeRange
+import com.mycompany.currencytracker.presentation.common.AutoResizedText
 import com.mycompany.currencytracker.presentation.common.currency.ChangeRateTable
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
@@ -78,15 +76,12 @@ fun FiatListItem(
                 color = mainTextColor
             )
         }
-        AutoResizeText(
+        AutoResizedText(
             modifier = Modifier
                 .weight(3f)
                 .fillMaxWidth(),
             text = dataStore.getFiat() + " " + calculateDecimalPlaces(fiatDetails.rate),
-            style = MaterialTheme.typography.bodyLarge,
             color = mainTextColor,
-            softWrap = false,
-            fontSizeRange = FontSizeRange(8.sp, 16.sp),
             textAlign = TextAlign.End
         )
         Row(

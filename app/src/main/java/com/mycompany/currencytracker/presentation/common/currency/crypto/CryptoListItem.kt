@@ -27,7 +27,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.ICrypto
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
-import com.mycompany.currencytracker.presentation.common.AutoResizedText2
+import com.mycompany.currencytracker.presentation.common.AutoResizedText
 import com.mycompany.currencytracker.presentation.common.currency.ChangeRateTable
 import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
@@ -111,7 +111,7 @@ fun CryptoListItem(
             }
 
         }
-        AutoResizedText2(
+        AutoResizedText(
             modifier = Modifier
                 .weight(3f)
                 .fillMaxWidth(),
