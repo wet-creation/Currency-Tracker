@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.R
@@ -39,9 +41,10 @@ fun CurrencyListsScreen(
     modifier: Modifier = Modifier,
     searchPosition: SearchPosition = SearchPosition.None,
     currencyListSearchState: CurrencyListSearchState = CurrencyListSearchState(),
+    tabRowColor: Color = MaterialTheme.colorScheme.background,
     fiatListScreen: @Composable () -> Unit,
     cryptoListScreen: @Composable () -> Unit,
-    tabContent: @Composable (title: String) -> Unit,
+    tabContent: @Composable (title: String) -> Unit
 ) {
     var tabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf(stringResource(id = R.string.fiat), stringResource(id = R.string.crypto))
@@ -56,10 +59,12 @@ fun CurrencyListsScreen(
 
         }
         TabRow(
+            containerColor = tabRowColor,
             modifier = Modifier
                 .size(height = 22.dp, width = 200.dp)
                 .padding(start = 20.dp),
-            selectedTabIndex = tabIndex
+            selectedTabIndex = tabIndex,
+
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(

@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
@@ -14,8 +15,6 @@ import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.crypto_list.CryptoListViewModel
 import com.mycompany.currencytracker.presentation.fiat_list.CurrencyListViewModel
 import com.mycompany.currencytracker.presentation.navigation.Screen
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
-
 
 @Composable
 fun MainListScreen(
@@ -56,7 +55,7 @@ fun MainListScreen(
             text = title,
             style = TextStyle(
                 fontSize = 16.sp,
-                color = selectTextColor,
+                color = MaterialTheme.colorScheme.outline,
             )
         )
     }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -65,7 +66,7 @@ fun NotificationSelectCryptoScreen(navController: NavController) {
                             fontSize = 16.sp,
                             lineHeight = 22.sp,
                             fontWeight = FontWeight(400),
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 }
@@ -120,7 +121,7 @@ fun SelectCryptoNotificationItem(
                 fontSize = 16.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.primary,
             )
         )
         Text(
@@ -131,7 +132,7 @@ fun SelectCryptoNotificationItem(
                 fontSize = 16.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(400),
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.secondary,
             )
         )
 

@@ -56,7 +56,8 @@ fun ConvertItem(
                 style = MaterialTheme.typography.displayMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
@@ -71,13 +72,15 @@ fun ConvertItem(
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
-                maxLines = 1
+                maxLines = 1,
+                color = MaterialTheme.colorScheme.primary
             )
             Text(
                 text = rowStateCalculator.name,
                 style = MaterialTheme.typography.displaySmall,
                 textAlign = TextAlign.End,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

@@ -20,7 +20,6 @@ import coil.compose.AsyncImage
 import com.mycompany.currencytracker.common.Constants
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 import java.util.Locale
 
 @Composable
@@ -51,7 +50,8 @@ fun CryptoListItem(
                 .padding(start = 12.dp)
                 .width(79.dp),
             text = crypto.symbol.uppercase(Locale.getDefault()),
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.secondary
         )
         Text(
             text = crypto.name,
@@ -59,7 +59,8 @@ fun CryptoListItem(
                 fontSize = 16.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(400),
-            )
+            ),
+            color = MaterialTheme.colorScheme.secondary
         )
     }
 }
@@ -93,7 +94,7 @@ fun SimpleFiatListItem(
                 .width(79.dp),
             text = fiat.symbol.uppercase(Locale.getDefault()),
             style = MaterialTheme.typography.bodyLarge,
-            color = secondTextColor
+            color = MaterialTheme.colorScheme.secondary
         )
         Text(
             text = fiat.name,
@@ -101,7 +102,7 @@ fun SimpleFiatListItem(
                 fontSize = 16.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(400),
-                color = secondTextColor
+                color = MaterialTheme.colorScheme.secondary
             )
         )
     }

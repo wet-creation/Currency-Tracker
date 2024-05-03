@@ -34,8 +34,6 @@ import com.mycompany.currencytracker.domain.model.currency.ICrypto
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
 import com.mycompany.currencytracker.presentation.common.AutoResizedText
 import com.mycompany.currencytracker.presentation.common.currency.ChangeRateTable
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
 
 val cryptoTest = CryptoGeneralInfo(
@@ -82,7 +80,7 @@ fun CryptoListItem(
             textAlign = TextAlign.Start,
             text = "$number",
             style = MaterialTheme.typography.bodyLarge,
-            color = secondTextColor
+            color = MaterialTheme.colorScheme.secondary
         )
         Row(modifier = Modifier.weight(2f)) {
             Image(
@@ -103,10 +101,10 @@ fun CryptoListItem(
                     .padding(start = 12.dp)
                     .fillMaxWidth()
             ) {
-                Text(
+                AutoResizedText(
                     text = crypto.symbol.uppercase(),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Text(
                     text = calculateDigit(crypto.market_cap!!),
@@ -117,7 +115,7 @@ fun CryptoListItem(
                         lineHeight = 22.sp,
                         letterSpacing = 0.5.sp
                     ),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -127,7 +125,7 @@ fun CryptoListItem(
                 .weight(3f)
                 .fillMaxWidth(),
             text = baseCurrency.value.uppercase() + " " +calculateDecimalPlaces(crypto.rate),
-            color = mainTextColor,
+            color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.End
         )
         Row(

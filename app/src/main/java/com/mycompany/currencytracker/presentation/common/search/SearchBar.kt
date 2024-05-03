@@ -18,8 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListSearchState
-import com.mycompany.currencytracker.presentation.ui.theme.buttonsColor
-
 
 @Composable
 fun SearchBar(searchState: CurrencyListSearchState) {
@@ -48,11 +46,11 @@ fun SearchBar(searchState: CurrencyListSearchState) {
         },
         shape = CircleShape,
         colors = TextFieldDefaults.colors(
-            unfocusedTextColor = Color.Gray,
-            focusedTextColor = Color.White,
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            focusedTextColor = MaterialTheme.colorScheme.primary,
             disabledTextColor = Color.Transparent,
-            focusedContainerColor = buttonsColor,
-            unfocusedContainerColor = buttonsColor,
+            focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent

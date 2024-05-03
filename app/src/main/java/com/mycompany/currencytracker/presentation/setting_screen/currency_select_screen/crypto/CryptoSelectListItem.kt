@@ -21,8 +21,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoGeneralInfo
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import java.util.Locale
 
 @Composable
@@ -36,9 +34,9 @@ fun CryptoSelectListItem(
     val savedCrypto = dataStore.getCrypto.collectAsState(initial = "")
 
     val color = if (savedCrypto.value == crypto.symbol) {
-        selectTextColor
+        MaterialTheme.colorScheme.outline
     } else {
-        secondTextColor
+        MaterialTheme.colorScheme.secondary
     }
 
     Row(

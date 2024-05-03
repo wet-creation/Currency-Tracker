@@ -17,8 +17,6 @@ import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDigit
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -29,10 +27,6 @@ fun CryptoDetailInfo(crypto: CryptoDetails, baseCurrency: String) {
         TableItem(name = stringResource(id = R.string.crypto_rank), value = crypto.rank.toString())
         HorizontalDivider()
         TableItem(name = stringResource(id = R.string.market_cap), value = baseCurrency + " " + calculateDigit(crypto.marketCap))
-        HorizontalDivider()
-        TableItem(name = stringResource(id = R.string._24h_max), value = "TBA")
-        HorizontalDivider()
-        TableItem(name = stringResource(id = R.string._24h_low), value = "TBA")
         HorizontalDivider()
         TableItem(name = stringResource(id = R.string.total_supply), value = calculateDigit(crypto.totalSupply?.toLong() ?: 0))
         HorizontalDivider()
@@ -61,7 +55,7 @@ fun TableItem(name: String, value: String) {
             Text(
                 style = MaterialTheme.typography.bodyLarge,
                 text = name,
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
         }
         Column(
@@ -71,7 +65,7 @@ fun TableItem(name: String, value: String) {
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.align(Alignment.End),
                 text = value,
-                color = secondTextColor
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }
@@ -91,7 +85,7 @@ fun TableItemAllTimeValue(name: String, value: String, time: Long) {
             Text(
                 style = MaterialTheme.typography.bodyLarge,
                 text = name,
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
         }
         Column(
@@ -101,13 +95,13 @@ fun TableItemAllTimeValue(name: String, value: String, time: Long) {
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.align(Alignment.End),
                 text = value,
-                color = secondTextColor
+                color = MaterialTheme.colorScheme.secondary
             )
             Text(
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.align(Alignment.End).padding(top = 3.dp),
                 text = formatTimestampWithDaysSince(time),
-                color = secondTextColor
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }

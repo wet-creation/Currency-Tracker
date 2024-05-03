@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.domain.model.currency.IChangeRates
 import com.mycompany.currencytracker.presentation.common.currency.ChangeRate
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 
 @Composable
 fun ChangeRatesItem(currency: IChangeRates) {
@@ -30,7 +29,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
                     .padding(bottom = 6.dp),
                 text = "24H",
                 style = MaterialTheme.typography.bodyLarge,
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
             HorizontalDivider()
             Box(modifier = Modifier
@@ -46,7 +45,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
                     .padding(bottom = 6.dp),
                 text = "7D",
                 style = MaterialTheme.typography.bodyLarge,
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
             HorizontalDivider()
             Box(modifier = Modifier
@@ -62,7 +61,7 @@ fun ChangeRatesItem(currency: IChangeRates) {
                     .padding(bottom = 6.dp),
                 text = "30D",
                 style = MaterialTheme.typography.bodyLarge,
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
             HorizontalDivider()
             Box(modifier = Modifier

@@ -33,7 +33,6 @@ import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.favorite_list.FavoriteCryptoListViewModel
 import com.mycompany.currencytracker.presentation.favorite_list.FavoriteFiatListViewModel
 import com.mycompany.currencytracker.presentation.navigation.Screen
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import de.charlex.compose.RevealDirection
 import de.charlex.compose.RevealSwipe
 
@@ -110,7 +109,7 @@ fun FavoriteListScreen(navController: NavHostController) {
                 text = title,
                 style = TextStyle(
                     fontSize = 16.sp,
-                    color = selectTextColor,
+                    color = MaterialTheme.colorScheme.outline,
                 )
             )
         }

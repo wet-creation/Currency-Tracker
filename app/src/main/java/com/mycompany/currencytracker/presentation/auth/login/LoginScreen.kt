@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -86,12 +88,23 @@ fun LoginScreen(navController: NavHostController) {
                 .fillMaxWidth()
         ) {
             Button(
+                colors = ButtonColors(
+                    containerColor = MaterialTheme.colorScheme.outline,
+                    contentColor = MaterialTheme.colorScheme.primaryContainer,
+                    disabledContainerColor = MaterialTheme.colorScheme.outline,
+                    disabledContentColor = MaterialTheme.colorScheme.primaryContainer
+                ),
                 onClick = { navController.navigate(Screen.RegisterScreen.route) },
                 modifier = Modifier.width(150.dp)
             ) {
                 Text(text = "Register")
             }
             Button(
+                colors = ButtonColors(containerColor = MaterialTheme.colorScheme.outline,
+                    contentColor = MaterialTheme.colorScheme.primaryContainer,
+                    disabledContainerColor = MaterialTheme.colorScheme.outline,
+                    disabledContentColor = MaterialTheme.colorScheme.primaryContainer
+                ),
                 onClick = {
                     sendForm()
                 },
@@ -115,7 +128,8 @@ fun LoginScreen(navController: NavHostController) {
             navController.navigate(HOME_SCREEN)
         }
     }
-    BackHandler(navController.backQueue.map {it.destination.route}.contains(BottomBarScreen.Favorite.route)) {
+    BackHandler(navController.backQueue.map { it.destination.route }
+        .contains(BottomBarScreen.Favorite.route)) {
 
         navController.popBackStack(BottomBarScreen.Favorite.route, true)
     }

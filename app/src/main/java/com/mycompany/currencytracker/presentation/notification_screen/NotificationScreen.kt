@@ -21,12 +21,13 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -45,11 +46,9 @@ import coil.compose.AsyncImage
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.presentation.calculator.states.ActionInput
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertButton
+import com.mycompany.currencytracker.presentation.common.AutoResizedText
 import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.notification_screen.list.main.YellowButton
-import com.mycompany.currencytracker.presentation.ui.theme.buttonsColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,7 +59,7 @@ fun NotificationScreen(navController: NavController) {
     CenterAlignedTopAppBar(title = {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.Center
         ) {
             AsyncImage(
                 modifier = Modifier
@@ -74,7 +73,7 @@ fun NotificationScreen(navController: NavController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.primary
                 ), modifier = Modifier.padding(horizontal = 10.dp)
             )
             Text(
@@ -82,7 +81,7 @@ fun NotificationScreen(navController: NavController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = secondTextColor
+                    color = MaterialTheme.colorScheme.secondary
                 )
             )
         }
@@ -93,7 +92,15 @@ fun NotificationScreen(navController: NavController) {
                 contentDescription = "Back"
             )
         }
-    })
+    },
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.primary
+        )
+    )
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -112,13 +119,13 @@ fun NotificationScreen(navController: NavController) {
                 top = 71.dp, end = 101.dp, start = 101.dp, bottom = 48.dp
             )
         ) {
-            Text(
+            AutoResizedText(
                 text = stringResource(id = R.string.when_price_reach_target),
                 style = TextStyle(
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.primary
                 ),
 
                 )
@@ -137,14 +144,13 @@ fun NotificationScreen(navController: NavController) {
                     fontSize = calculateShrunkFontSize(
                         state.value.writtenPrice, TextStyle(
                             lineHeight = 22.sp,
-                            fontWeight = FontWeight(600),
-                            color = Color.White
+                            fontWeight = FontWeight(600)
                         )
                     ),
                     style = TextStyle(
                         lineHeight = 22.sp,
                         fontWeight = FontWeight(600),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.primary
                     )
                 )
             }
@@ -181,7 +187,7 @@ fun NotificationScreen(navController: NavController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = secondTextColor
+                    color = MaterialTheme.colorScheme.secondary
                 )
             )
             Text(
@@ -191,7 +197,7 @@ fun NotificationScreen(navController: NavController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.outline
                 )
             )
         }
@@ -299,13 +305,13 @@ fun CustomButton(
             .width(88.dp)
             .height(38.dp)
             .clickable { onClick() }
-            .background(color = buttonsColor, shape = RoundedCornerShape(size = 21.dp))) {
+            .background(color = MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(size = 21.dp))) {
         Text(
             text = text, style = TextStyle(
                 fontSize = 16.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(600),
-                color = if (isSelected) selectTextColor else secondTextColor,
+                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
             )
         )
     }

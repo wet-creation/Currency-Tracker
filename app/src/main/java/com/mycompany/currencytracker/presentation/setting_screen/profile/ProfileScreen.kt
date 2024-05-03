@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,6 +61,11 @@ fun ProfileScreen(navController: NavHostController) {
             }
             HorizontalDivider()
             Button(
+                colors = ButtonColors(containerColor = MaterialTheme.colorScheme.outline,
+                    contentColor = MaterialTheme.colorScheme.primaryContainer,
+                    disabledContainerColor = MaterialTheme.colorScheme.outline,
+                    disabledContentColor = MaterialTheme.colorScheme.primaryContainer
+                ),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(16.dp),

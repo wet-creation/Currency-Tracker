@@ -24,8 +24,6 @@ import com.mycompany.currencytracker.domain.model.currency.IFiat
 import com.mycompany.currencytracker.presentation.common.AutoResizedText
 import com.mycompany.currencytracker.presentation.common.currency.ChangeRateTable
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
 
 @Composable
@@ -49,7 +47,7 @@ fun FiatListItem(
             text = "$currNumber",
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge,
-            color = secondTextColor
+            color = MaterialTheme.colorScheme.secondary
         )
         Row(
             modifier = Modifier
@@ -73,7 +71,7 @@ fun FiatListItem(
                     .fillMaxWidth(),
                 text = fiatDetails.symbol,
                 style = MaterialTheme.typography.bodyLarge,
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
         }
         AutoResizedText(
@@ -81,7 +79,7 @@ fun FiatListItem(
                 .weight(3f)
                 .fillMaxWidth(),
             text = dataStore.getFiat() + " " + calculateDecimalPlaces(fiatDetails.rate),
-            color = mainTextColor,
+            color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.End
         )
         Row(

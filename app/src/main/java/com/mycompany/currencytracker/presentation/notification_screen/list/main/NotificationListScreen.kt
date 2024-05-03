@@ -22,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,9 +42,6 @@ import com.mycompany.currencytracker.presentation.common.emptyUiText
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.favorite_list.ui.HiddenRowEnd
 import com.mycompany.currencytracker.presentation.navigation.Screen
-import com.mycompany.currencytracker.presentation.ui.theme.secondBackColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import de.charlex.compose.RevealDirection
 import de.charlex.compose.RevealSwipe
 
@@ -112,7 +108,7 @@ fun NotificationListScreen(navController: NavHostController) {
                             fontSize = 16.sp,
                             lineHeight = 22.sp,
                             fontWeight = FontWeight(400),
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.primary
                         ),
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
@@ -122,8 +118,9 @@ fun NotificationListScreen(navController: NavHostController) {
                             fontSize = 12.sp,
                             lineHeight = 22.sp,
                             fontWeight = FontWeight(400),
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.secondary,
                         ),
+                        textAlign = TextAlign.Center,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
 
@@ -171,7 +168,7 @@ fun NotificationItem(
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.primary,
                 ),
             )
             Text(
@@ -180,7 +177,7 @@ fun NotificationItem(
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = secondTextColor,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             )
             Text(
@@ -190,7 +187,7 @@ fun NotificationItem(
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = selectTextColor
+                    color = MaterialTheme.colorScheme.outline
                 ),
                 modifier = Modifier
                     .clickable { onClick(notification) }
@@ -219,7 +216,7 @@ fun NotificationItem(
                         fontSize = 16.sp,
                         lineHeight = 22.sp,
                         fontWeight = FontWeight(400),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.primary
                     )
                 )
                 Text(
@@ -228,7 +225,7 @@ fun NotificationItem(
                         fontSize = 16.sp,
                         lineHeight = 22.sp,
                         fontWeight = FontWeight(400),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.primary
                     )
                 )
             } else {
@@ -247,7 +244,7 @@ fun NotificationItem(
                         fontSize = 16.sp,
                         lineHeight = 22.sp,
                         fontWeight = FontWeight(400),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.primary
                     )
                 )
                 Text(
@@ -256,7 +253,7 @@ fun NotificationItem(
                         fontSize = 16.sp,
                         lineHeight = 22.sp,
                         fontWeight = FontWeight(400),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.primary
                     )
                 )
             }
@@ -275,7 +272,7 @@ fun YellowButton(modifier: Modifier = Modifier, text: String, onClick: () -> Uni
             .height(46.dp)
             .bounceClick()
             .background(
-                color = selectTextColor,
+                color = MaterialTheme.colorScheme.outline,
                 shape = RoundedCornerShape(size = 16.dp)
             )
             .clickable { onClick() }) {
@@ -285,7 +282,7 @@ fun YellowButton(modifier: Modifier = Modifier, text: String, onClick: () -> Uni
                 fontSize = 20.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(700),
-                color = secondBackColor
+                color = MaterialTheme.colorScheme.primaryContainer
             )
         )
     }

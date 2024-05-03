@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,15 +15,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mycompany.currencytracker.common.debugLog
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.currency.CurrencyListSearchState
+import com.mycompany.currencytracker.presentation.common.currency.CurrencyListsScreen
 import com.mycompany.currencytracker.presentation.common.currency.crypto.CryptoSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearchListViewModel
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.crypto.CryptoSelectListItem
 import com.mycompany.currencytracker.presentation.setting_screen.currency_select_screen.сurrency.CurrencySelectListItem
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import kotlinx.coroutines.launch
 
 @Composable
@@ -68,7 +68,7 @@ fun CurrencySelectScreen() {
             text = title,
             style = TextStyle(
                 fontSize = 16.sp,
-                color = selectTextColor,
+                color = MaterialTheme.colorScheme.outline,
             )
         )
 

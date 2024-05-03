@@ -19,7 +19,6 @@ import com.mycompany.currencytracker.domain.model.currency.IChangeRates
 import com.mycompany.currencytracker.presentation.common.currency.crypto.cryptoTest
 import com.mycompany.currencytracker.presentation.ui.theme.rateDownColor
 import com.mycompany.currencytracker.presentation.ui.theme.rateUpColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
 
 @Preview
@@ -91,7 +90,7 @@ fun ChangeRateTable(
     Text(
         text = "-",
         style = MaterialTheme.typography.bodyLarge,
-        color = secondTextColor
+        color = MaterialTheme.colorScheme.secondary
     )
 
 }
@@ -154,7 +153,7 @@ fun ChangeRate(
     Text(
         text = "-",
         style = MaterialTheme.typography.bodyLarge,
-        color = secondTextColor
+        color = MaterialTheme.colorScheme.secondary
     )
 
 }

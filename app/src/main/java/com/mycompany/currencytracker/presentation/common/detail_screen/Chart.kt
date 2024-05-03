@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import co.yml.charts.axis.AxisData
 import co.yml.charts.common.model.Point
@@ -24,8 +24,6 @@ import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
 import co.yml.charts.ui.linechart.model.SelectionHighlightPopUp
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
 import com.mycompany.currencytracker.presentation.ui.theme.borderColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -51,38 +49,40 @@ fun Chart(currencies: Map<Point, Long>) {
 
     val xAxisData = AxisData.Builder()
         .axisStepSize(22.dp)
-        .backgroundColor(Color.Transparent)
+        .backgroundColor(MaterialTheme.colorScheme.background)
+        .axisLineColor(MaterialTheme.colorScheme.background)
         .steps(currencies.size - 1)
         .labelAndAxisLinePadding(15.dp)
-        .axisLineColor(Color.Transparent)
         .build()
 
     val yAxisData = AxisData.Builder()
         .steps(steps)
-        .backgroundColor(Color.Transparent)
+        .backgroundColor(MaterialTheme.colorScheme.background)
+        .axisLineColor(MaterialTheme.colorScheme.background)
         .labelAndAxisLinePadding(20.dp)
         .labelData { i ->
             val yScale = difference / steps
             (minValue + (i * yScale)).toString()
         }
-        .axisLineColor(Color.Transparent)
         .axisLabelColor(borderColor)
         .build()
 
     val lineChartData = LineChartData(
+        paddingRight = 0.dp,
+        backgroundColor = MaterialTheme.colorScheme.background,
         linePlotData = LinePlotData(
             lines = listOf(
                 Line(
                     dataPoints = dataPoints,
                     LineStyle(
-                        color = selectTextColor
+                        color = MaterialTheme.colorScheme.primary
                     ),
                     IntersectionPoint(
-                        color = selectTextColor,
+                        color = MaterialTheme.colorScheme.secondary,
                         radius = 4.dp
                     ),
                     SelectionHighlightPoint(
-                        color = secondTextColor,
+                        color = MaterialTheme.colorScheme.secondary,
                         radius = 4.dp
                     ),
                     ShadowUnderLine(),
@@ -106,8 +106,7 @@ fun Chart(currencies: Map<Point, Long>) {
         gridLines = GridLines(
             enableVerticalLines = false,
             color = borderColor
-        ),
-        backgroundColor = Color.Transparent
+        )
     )
 
     LineChart(

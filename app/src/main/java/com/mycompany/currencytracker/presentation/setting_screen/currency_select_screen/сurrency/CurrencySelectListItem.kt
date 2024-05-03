@@ -22,8 +22,6 @@ import coil.compose.AsyncImage
 import com.mycompany.currencytracker.common.Constants
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatDetails
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable
 fun CurrencySelectListItem(
@@ -36,9 +34,9 @@ fun CurrencySelectListItem(
     val savedCurrency = dataStore.getFiat.collectAsState(initial = "")
 
     val color = if (savedCurrency.value == fiatDetails.symbol) {
-        selectTextColor
+        MaterialTheme.colorScheme.outline
     } else {
-        secondTextColor
+        MaterialTheme.colorScheme.secondary
     }
 
     Row(

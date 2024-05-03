@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.seacrh
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +23,6 @@ import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearc
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
 import com.mycompany.currencytracker.presentation.navigation.Screen
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable
 fun SearchScreen(
@@ -68,7 +68,7 @@ fun SearchScreen(
             text = it,
             style = TextStyle(
                 fontSize = 16.sp,
-                color = selectTextColor,
+                color = MaterialTheme.colorScheme.outline,
             )
         )
     }

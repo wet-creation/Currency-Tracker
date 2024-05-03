@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -32,9 +33,6 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.mycompany.currencytracker.presentation.ui.theme.secondBackColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable
 fun BottomBar(
@@ -61,7 +59,7 @@ fun BottomBar(
                     .fillMaxWidth()
                     .height(80.dp)
                     .background(
-                        color = secondBackColor,
+                        color = MaterialTheme.colorScheme.primaryContainer,
                         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
                     ),
                 horizontalArrangement = Arrangement.SpaceEvenly,
@@ -87,7 +85,7 @@ fun AddItem(
     val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
 
     val contentColor =
-        if (selected) selectTextColor else secondTextColor
+        if (selected) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.secondary
 
     Box(
         modifier = Modifier

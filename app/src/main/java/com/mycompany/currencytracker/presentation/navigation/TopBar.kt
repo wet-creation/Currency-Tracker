@@ -19,14 +19,15 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -49,7 +50,6 @@ import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.PR
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.REGISTER_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SELECT_MAIN_CURRENCY_SCREEN
 import com.mycompany.currencytracker.presentation.navigation.NavigationRoutes.SETTINGS_SCREEN
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 
 
 @Composable
@@ -114,7 +114,7 @@ fun MainTopBar(navHostController: NavHostController) {
                 fontSize = 24.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(600),
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
         )
     }, navigationIcon = {
@@ -139,8 +139,7 @@ fun MainTopBar(navHostController: NavHostController) {
                     .width(24.dp)
                     .height(24.dp),
                 painter = painterResource(id = R.drawable.notification_icon),
-                contentDescription = "notification",
-                tint = Color(0xFFFFFFFF)
+                contentDescription = "notification"
             )
         }
         IconButton(onClick = {
@@ -154,7 +153,15 @@ fun MainTopBar(navHostController: NavHostController) {
                 contentDescription = "profile"
             )
         }
-    })
+    },
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            navigationIconContentColor = MaterialTheme.colorScheme.secondary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.secondary
+        )
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -178,7 +185,7 @@ fun SettingTopBar(navController: NavHostController) {
                     fontSize = 20.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(600),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -189,7 +196,15 @@ fun SettingTopBar(navController: NavHostController) {
                 contentDescription = "Back"
             )
         }
-    })
+    },
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.primary
+        )
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -205,7 +220,7 @@ fun NotificationsListTopBar(navController: NavHostController) {
                     fontSize = 20.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(600),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -225,36 +240,52 @@ fun NotificationsListTopBar(navController: NavHostController) {
                     .padding(end = 20.dp)
                     .clickable { navController.navigate(Screen.NotificationScreenSelect.route) }
             )
-        }
+        },
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.primary
+        )
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthTopBar() {
-    CenterAlignedTopAppBar(title = {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Image(
-                modifier = Modifier
-                    .padding(end = 5.dp)
-                    .width(23.dp)
-                    .height(23.dp),
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "logo"
-            )
-            Text(
-                text = "Currency Tracker", style = TextStyle(
-                    fontSize = 20.sp,
-                    lineHeight = 22.sp,
-                    fontWeight = FontWeight(600),
-                    color = mainTextColor
+    CenterAlignedTopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    modifier = Modifier
+                        .padding(end = 5.dp)
+                        .width(23.dp)
+                        .height(23.dp),
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = "logo"
                 )
-            )
-        }
-    })
+                Text(
+                    text = "Currency Tracker", style = TextStyle(
+                        fontSize = 20.sp,
+                        lineHeight = 22.sp,
+                        fontWeight = FontWeight(600),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                )
+            }
+        },
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.primary
+        )
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -266,7 +297,7 @@ fun SubTopAppBar(navController: NavHostController, title: String) {
                 fontSize = 20.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(600),
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
         )
     }, navigationIcon = {
@@ -276,8 +307,17 @@ fun SubTopAppBar(navController: NavHostController, title: String) {
                 contentDescription = "Back"
             )
         }
-    })
+    },
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.primary
+        )
+    )
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailTopBarFiat(
@@ -293,7 +333,7 @@ fun DetailTopBarFiat(
                 fontSize = 20.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(600),
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
         )
     }, navigationIcon = {
@@ -313,18 +353,18 @@ fun DetailTopBarFiat(
                 contentDescription = "icon"
             )
         }
-        IconButton(onClick = { onItemClick()} )  {
-            if(followStatus){
+        IconButton(onClick = { onItemClick() }) {
+            if (followStatus) {
                 Icon(
                     imageVector = Icons.Filled.Favorite, contentDescription = "favorite",
                     modifier = Modifier
                         .width(24.dp)
                         .height(24.dp),
                 )
-            }
-            else{
+            } else {
                 Icon(
-                    imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "favorite",
+                    imageVector = Icons.Outlined.FavoriteBorder,
+                    contentDescription = "favorite",
                     modifier = Modifier
                         .width(24.dp)
                         .height(24.dp),
@@ -332,7 +372,15 @@ fun DetailTopBarFiat(
             }
 
         }
-    })
+    },
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.primary
+        )
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -351,7 +399,7 @@ fun DetailTopBar(
                 fontSize = 20.sp,
                 lineHeight = 22.sp,
                 fontWeight = FontWeight(600),
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
         )
     }, navigationIcon = {
@@ -379,22 +427,21 @@ fun DetailTopBar(
                     .width(24.dp)
                     .height(24.dp),
                 painter = painterResource(id = R.drawable.notification_icon),
-                contentDescription = "notification",
-                tint = Color(0xFFFFFFFF)
+                contentDescription = "notification"
             )
         }
-        IconButton(onClick = { onItemClick()} )  {
-            if(followStatus){
+        IconButton(onClick = { onItemClick() }) {
+            if (followStatus) {
                 Icon(
                     imageVector = Icons.Filled.Favorite, contentDescription = "favorite",
                     modifier = Modifier
                         .width(24.dp)
                         .height(24.dp),
                 )
-            }
-            else{
+            } else {
                 Icon(
-                    imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "favorite",
+                    imageVector = Icons.Outlined.FavoriteBorder,
+                    contentDescription = "favorite",
                     modifier = Modifier
                         .width(24.dp)
                         .height(24.dp),
@@ -402,5 +449,13 @@ fun DetailTopBar(
             }
 
         }
-    })
+    },
+        colors = TopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background,
+            navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.primary
+        )
+    )
 }

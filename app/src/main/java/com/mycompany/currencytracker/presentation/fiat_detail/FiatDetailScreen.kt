@@ -2,6 +2,7 @@ package com.mycompany.currencytracker.presentation.fiat_detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -57,55 +58,58 @@ fun CurrencyDetailScreen(
             }
         } else {
             state.currency?.let { currency ->
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 20.dp, end = 20.dp)
-                ) {
-                    item {
-                        val follow = viewModel.followStatus.value
-                        DetailTopBarFiat(navController, currency.symbol, follow) {
-                            if (dataStore.getUser().email.isEmpty()) {
-                                navController.navigate(Screen.LoginScreen.route)
+                Column{
+                    val follow = viewModel.followStatus.value
+                    DetailTopBarFiat(navController, currency.symbol, follow) {
+                        if (dataStore.getUser().email.isEmpty()) {
+                            navController.navigate(Screen.LoginScreen.route)
 
-                            }
-                            else if (!follow) {
-                                viewModel.addFiatToFavoriteList(currency.symbol)
-                            } else {
-                                viewModel.removeFiatFromFavoriteList(currency.symbol)
-                            }
+                        } else if (!follow) {
+                            viewModel.addFiatToFavoriteList(currency.symbol)
+                        } else {
+                            viewModel.removeFiatFromFavoriteList(currency.symbol)
                         }
                     }
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = "${savedCurrency.value} ${
-                                    String.format("%.6f", currency.rate)
-                                }",
-                                style = MaterialTheme.typography.titleLarge
-                            )
-                            Row(modifier = Modifier.padding(start = 5.dp, top = 10.dp)) {
-                                ChangeRate(currencyRate = currency)
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(start = 20.dp, end = 20.dp)
+                    ) {
+                        item {
+
+                        }
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = "${savedCurrency.value} ${
+                                        String.format("%.6f", currency.rate)
+                                    }",
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+                                Row(modifier = Modifier.padding(start = 5.dp, top = 10.dp)) {
+                                    ChangeRate(currencyRate = currency)
+                                }
                             }
                         }
-                    }
-                    item {
-                        Chart(viewModel.graphInfo.value)
-                        ChangeChartTimeButtons(
-                            viewModel.getChartTime()
-                        ) { time ->
-                            viewModel.changeChartTime(time)
+                        item {
+                            Chart(viewModel.graphInfo.value)
+                            ChangeChartTimeButtons(
+                                viewModel.getChartTime()
+                            ) { time ->
+                                viewModel.changeChartTime(time)
+                            }
                         }
-                    }
-                    item {
-                        ChangeRatesItem(currency = currency)
-                    }
-                    item {
-                        FiatDetailInfo(currency = currency, savedCurrency.value)
+                        item {
+                            ChangeRatesItem(currency = currency)
+                        }
+                        item {
+                            FiatDetailInfo(currency = currency, savedCurrency.value)
+                        }
                     }
                 }
 

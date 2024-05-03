@@ -21,9 +21,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.R
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondBackColor
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 
 @Composable
 fun ErrorScreen(
@@ -31,7 +28,8 @@ fun ErrorScreen(
     onClick: () -> Unit
 ){
     Row(modifier = Modifier.fillMaxSize(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -43,20 +41,20 @@ fun ErrorScreen(
                 modifier = Modifier.padding(top = 40.dp, bottom = 20.dp),
                 text = error,
                 style = MaterialTheme.typography.displayMedium,
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
             Button(
                 modifier = Modifier
-                    .width(158.dp)
-                    .height(46.dp)
-                    .background(color = selectTextColor, shape = RoundedCornerShape(size = 16.dp)),
+                    .width(300.dp)
+                    .height(50.dp)
+                    .background(color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(size = 16.dp)),
                 onClick = { onClick() },
-                colors = ButtonDefaults.buttonColors(containerColor = selectTextColor)
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.outline)
             ) {
                 Text(
                     text = stringResource(R.string.retry_text),
                     style = MaterialTheme.typography.displayMedium,
-                    color = secondBackColor
+                    color = MaterialTheme.colorScheme.primaryContainer
                 )
             }
         }

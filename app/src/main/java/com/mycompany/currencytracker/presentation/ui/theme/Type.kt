@@ -19,37 +19,31 @@ val Typography = Typography(
         fontSize = 12.sp,
         lineHeight = 22.sp,
         fontWeight = FontWeight(400),
-        color = mainTextColor
     ),
     labelMedium = TextStyle(
         fontSize = 16.sp,
         lineHeight = 22.sp,
-        fontWeight = FontWeight(400),
-        color = mainTextColor
+        fontWeight = FontWeight(400)
     ),
     displayMedium = TextStyle(
         fontSize = 20.sp,
         lineHeight = 22.sp,
-        fontWeight = FontWeight(400),
-        color = mainTextColor
+        fontWeight = FontWeight(400)
     ),
     displayLarge = TextStyle(
         fontSize = 28.sp,
         lineHeight = 22.sp,
-        fontWeight = FontWeight(600),
-        color = mainTextColor
+        fontWeight = FontWeight(600)
     ),
     displaySmall = TextStyle(
         fontSize = 12.sp,
         lineHeight = 22.sp,
-        fontWeight = FontWeight(400),
-        color = mainTextColor
+        fontWeight = FontWeight(400)
     ),
     titleLarge = TextStyle(
         fontSize = 32.sp,
         lineHeight = 22.sp,
-        fontWeight = FontWeight(600),
-        color = mainTextColor
+        fontWeight = FontWeight(600)
     )
 
     /* Other default text styles to override

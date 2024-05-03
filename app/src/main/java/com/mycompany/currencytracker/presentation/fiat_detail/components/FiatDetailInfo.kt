@@ -15,8 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.domain.model.currency.fiat.FiatAdditionalInfo
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
 
 @Composable
 fun FiatDetailInfo(currency: FiatAdditionalInfo, baseCurrency: String) {
@@ -48,7 +46,7 @@ fun TableItem(name: String, value: Double, baseCurrency: String) {
             Text(
                 style = MaterialTheme.typography.bodyLarge,
                 text = name,
-                color = mainTextColor
+                color = MaterialTheme.colorScheme.primary
             )
         }
         Column(
@@ -58,7 +56,7 @@ fun TableItem(name: String, value: Double, baseCurrency: String) {
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.align(Alignment.End),
                 text = baseCurrency + " " + String.format("%.6f", value),
-                color = secondTextColor
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }

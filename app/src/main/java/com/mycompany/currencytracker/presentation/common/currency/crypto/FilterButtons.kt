@@ -8,6 +8,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,7 +20,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.presentation.ui.theme.filterButtonsColor
 import kotlinx.coroutines.launch
 
 @Composable
@@ -56,7 +56,10 @@ fun FilterButtons(
             content = {
                 Text(text = buttonText)
             },
-            colors = ButtonDefaults.buttonColors(containerColor = filterButtonsColor)
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                contentColor = MaterialTheme.colorScheme.primaryContainer
+            )
         )
 
         Box(
@@ -65,7 +68,10 @@ fun FilterButtons(
             Button(
                 onClick = { showPopupMenu = true },
                 modifier = Modifier.size(width = 75.dp, height = 35.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = filterButtonsColor)
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    contentColor = MaterialTheme.colorScheme.primaryContainer
+                )
             ) {
                 Text(text = chartTime)
             }

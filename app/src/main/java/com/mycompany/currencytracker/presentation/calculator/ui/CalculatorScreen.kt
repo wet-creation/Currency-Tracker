@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.calculator.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,9 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -46,7 +49,6 @@ import com.mycompany.currencytracker.presentation.common.currency.fiat.FiatSearc
 import com.mycompany.currencytracker.presentation.common.emptyUiText
 import com.mycompany.currencytracker.presentation.common.list.ItemsListScreen
 import com.mycompany.currencytracker.presentation.common.search.SearchPosition
-import com.mycompany.currencytracker.presentation.ui.theme.selectTextColor
 import kotlinx.coroutines.launch
 
 
@@ -79,6 +81,7 @@ fun CalculatorScreen() {
                 currencyListSearchState = CurrencyListSearchState(searchQuery) {
                     searchQuery = it
                 },
+                tabRowColor = MaterialTheme.colorScheme.primaryContainer,
                 fiatListScreen = {
                     ItemsListScreen(
                         stateValue = fiatSearchListViewModel.state.value,
@@ -112,7 +115,7 @@ fun CalculatorScreen() {
                     text = title,
                     style = TextStyle(
                         fontSize = 16.sp,
-                        color = selectTextColor,
+                        color = MaterialTheme.colorScheme.outline
                     )
                 )
             }
@@ -124,6 +127,7 @@ fun CalculatorScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
                 .padding(top = 20.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -155,9 +159,16 @@ fun CalculatorScreen() {
                     .fillMaxWidth()
                     .padding(start = 20.dp, bottom = 20.dp)
             ) {
-                Button(onClick = {
+                Button(
+                    colors = ButtonColors(containerColor = MaterialTheme.colorScheme.outline,
+                        contentColor = MaterialTheme.colorScheme.primaryContainer,
+                        disabledContainerColor = MaterialTheme.colorScheme.outline,
+                        disabledContentColor = MaterialTheme.colorScheme.primaryContainer
+                    ),
+                    onClick = {
                     viewModel.swapRows()
-                }) {
+                },
+                    ) {
                     Box(modifier = Modifier) {
                         Icon(
                             painter = painterResource(id = R.drawable.change_values_icon),

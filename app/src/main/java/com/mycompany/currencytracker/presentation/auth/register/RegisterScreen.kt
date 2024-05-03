@@ -13,8 +13,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -136,6 +138,11 @@ fun RegisterScreen(
                 .fillMaxWidth()
         ) {
             Button(
+                colors = ButtonColors(containerColor = MaterialTheme.colorScheme.outline,
+                    contentColor = MaterialTheme.colorScheme.primaryContainer,
+                    disabledContainerColor = MaterialTheme.colorScheme.outline,
+                    disabledContentColor = MaterialTheme.colorScheme.primaryContainer
+                ),
                 onClick = {
                     sendForm()
                 },

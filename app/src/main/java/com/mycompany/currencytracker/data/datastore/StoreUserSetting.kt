@@ -3,6 +3,7 @@ package com.mycompany.currencytracker.data.datastore
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mycompany.currencytracker.domain.model.user.User
@@ -29,6 +30,8 @@ class StoreUserSetting
 
         val USER_SELECTED_CHART_TIME = stringPreferencesKey("user_chart_time_string")
         val USER_IS_FIAT_SELECTED = booleanPreferencesKey("isFiat")
+
+        val USER_THEME = intPreferencesKey("user_theme")
     }
 
     val getFiat: Flow<String> = context.dataStore.data
@@ -49,6 +52,11 @@ class StoreUserSetting
     val isFiatSelected: Flow<Boolean> = context.dataStore.data
         .map { preferences ->
             preferences[USER_IS_FIAT_SELECTED] ?: true
+        }
+
+    val user_theme: Flow<Int> = context.dataStore.data
+        .map { preferences ->
+            preferences[USER_THEME] ?: Theme.SYSTEM.ordinal
         }
 
     fun getFiat(): String {
@@ -87,6 +95,24 @@ class StoreUserSetting
             getCrypto()
         }
         return currency
+    }
+
+    fun getTheme(): Theme {
+        var theme: Theme
+        runBlocking {
+            theme = if (user_theme.first() == 0){
+                Theme.SYSTEM
+            }
+            else if (user_theme.first() == 1){
+                Theme.DARK
+            }
+            else{
+                Theme.LIGHT
+            }
+
+        }
+
+        return theme
     }
 
     fun getUser(): User {
@@ -156,4 +182,16 @@ class StoreUserSetting
             preferences[USER_IS_FIAT_SELECTED] = isFiat
         }
     }
+
+    fun saveTheme(theme: Theme) {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences[USER_THEME] = theme.ordinal
+            }
+        }
+    }
+}
+
+enum class Theme(){
+    SYSTEM, DARK, LIGHT
 }

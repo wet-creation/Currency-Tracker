@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
+import com.mycompany.currencytracker.data.datastore.Theme
 import com.mycompany.currencytracker.presentation.navigation.Screen
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
 
 @Composable
 fun SettingScreen(navController: NavHostController) {
@@ -48,13 +48,24 @@ fun SettingScreen(navController: NavHostController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }
         HorizontalDivider()
         Row(
-            modifier = Modifier.padding(start = 18.dp, top = 16.dp, bottom = 16.dp)
+            modifier = Modifier.padding(start = 18.dp, top = 16.dp, bottom = 16.dp).clickable {
+                val theme = dataStore.getTheme()
+
+                val res = if (theme == Theme.DARK){
+                    Theme.LIGHT
+                }
+                else {
+                    Theme.DARK
+                }
+                
+                dataStore.saveTheme(res)
+            }
         ) {
             Text(
                 text = stringResource(id = R.string.setting_dark_mode),
@@ -62,7 +73,7 @@ fun SettingScreen(navController: NavHostController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -78,7 +89,7 @@ fun SettingScreen(navController: NavHostController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 ),
             )
         }
@@ -92,7 +103,7 @@ fun SettingScreen(navController: NavHostController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -106,7 +117,7 @@ fun SettingScreen(navController: NavHostController) {
                 modifier = Modifier.padding(end = 4.dp),
                 painter = painterResource(id = R.drawable.calculator_icon),
                 contentDescription = "notification",
-                tint = Color(0xFFFFFFFF)
+                tint = MaterialTheme.colorScheme.secondary
             )
             Text(
                 text = stringResource(id = R.string.calculator),
@@ -114,7 +125,7 @@ fun SettingScreen(navController: NavHostController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -131,7 +142,7 @@ fun SettingScreen(navController: NavHostController) {
                 modifier = Modifier.padding(end = 4.dp),
                 painter = painterResource(id = R.drawable.notification_icon),
                 contentDescription = "notification",
-                tint = Color(0xFFFFFFFF)
+                tint = MaterialTheme.colorScheme.secondary
             )
             Text(
                 text = stringResource(id = R.string.notification),
@@ -139,7 +150,7 @@ fun SettingScreen(navController: NavHostController) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp,
                     fontWeight = FontWeight(400),
-                    color = mainTextColor
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
         }

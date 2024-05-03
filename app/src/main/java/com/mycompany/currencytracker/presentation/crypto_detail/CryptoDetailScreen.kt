@@ -2,6 +2,7 @@ package com.mycompany.currencytracker.presentation.crypto_detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,8 +35,7 @@ import com.mycompany.currencytracker.presentation.common.emptyUiText
 import com.mycompany.currencytracker.presentation.crypto_detail.components.CryptoDetailInfo
 import com.mycompany.currencytracker.presentation.navigation.DetailTopBar
 import com.mycompany.currencytracker.presentation.navigation.Screen
-import com.mycompany.currencytracker.presentation.ui.theme.mainTextColor
-import com.mycompany.currencytracker.presentation.ui.theme.secondTextColor
+
 
 @Composable
 fun CryptoDetailScreen(
@@ -64,83 +64,87 @@ fun CryptoDetailScreen(
             }
         } else {
             state.cryptoSelected?.let { crypto ->
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 20.dp, end = 20.dp)
-                ) {
-                    item {
-                        val follow = viewModel.followStatus.value
+                val follow = viewModel.followStatus.value
+                Column {
+                    DetailTopBar(navController, crypto.symbol, follow, {
+                        if (dataStore.getUser().email.isEmpty()) {
+                            navController.navigate(Screen.LoginScreen.route)
 
-                        DetailTopBar(navController, crypto.symbol, follow, {
-                            if (dataStore.getUser().email.isEmpty()) {
-                                navController.navigate(Screen.LoginScreen.route)
+                        } else if (!follow) {
+                            viewModel.addCryptoToFollowList(crypto.symbol)
+                        } else {
+                            viewModel.removeCryptoFromFavoriteList(crypto.symbol)
+                        }
+                    }, {
+                        if (dataStore.getUser().email.isEmpty()) {
+                            navController.navigate(Screen.LoginScreen.route)
+                        } else
+                            navController.navigate(Screen.NotificationScreen.route + "/${crypto.symbol}")
+                    })
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(start = 20.dp, end = 20.dp)
+                    ) {
+                        item {
 
-                            } else if (!follow) {
-                                viewModel.addCryptoToFollowList(crypto.symbol)
-                            } else {
-                                viewModel.removeCryptoFromFavoriteList(crypto.symbol)
+                        }
+                        item {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = "${viewModel.getPrimaryCurrency().uppercase()} ${
+                                        calculateDecimalPlaces(
+                                            crypto.rate
+                                        )
+                                    }",
+                                    style = MaterialTheme.typography.displayLarge
+                                )
+                                Row(modifier = Modifier.padding(start = 5.dp, top = 5.dp)) {
+                                    ChangeRate(currencyRate = crypto, time = viewModel.getChartTime())
+                                }
                             }
-                        }, {
-                            if (dataStore.getUser().email.isEmpty()) {
-                                navController.navigate(Screen.LoginScreen.route)
-                            } else
-                                navController.navigate(Screen.NotificationScreen.route + "/${crypto.symbol}")
-                        })
-                    }
-                    item {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = "${viewModel.getPrimaryCurrency().uppercase()} ${
-                                    calculateDecimalPlaces(
-                                        crypto.rate
-                                    )
-                                }",
-                                style = MaterialTheme.typography.displayLarge
-                            )
-                            Row(modifier = Modifier.padding(start = 5.dp, top = 5.dp)) {
-                                ChangeRate(currencyRate = crypto, time = viewModel.getChartTime())
+                            Row(modifier = Modifier.padding(top = 8.dp)) {
+                                Icon(
+                                    painterResource(id = R.drawable.change_values_icon),
+                                    modifier = Modifier
+                                        .rotate(90f)
+                                        .padding(end = 9.dp, top = 6.dp)
+                                        .width(15.dp)
+                                        .height(15.dp),
+                                    contentDescription = "change_values",
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                                Text(
+                                    text = "${
+                                        viewModel.getSecondViewCurrency().uppercase()
+                                    } ${calculateDecimalPlaces(viewModel.secondRate.value)}",
+                                    style = MaterialTheme.typography.displaySmall,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
                             }
                         }
-                        Row(modifier = Modifier.padding(top = 8.dp)) {
-                            Icon(
-                                painterResource(id = R.drawable.change_values_icon),
-                                modifier = Modifier
-                                    .rotate(90f)
-                                    .padding(end = 9.dp, top = 6.dp)
-                                    .width(15.dp)
-                                    .height(15.dp),
-                                contentDescription = "change_values",
-                                tint = mainTextColor
-                            )
-                            Text(
-                                text = "${
-                                    viewModel.getSecondViewCurrency().uppercase()
-                                } ${calculateDecimalPlaces(viewModel.secondRate.value)}",
-                                style = MaterialTheme.typography.displaySmall,
-                                color = secondTextColor
-                            )
+                        item {
+                            Chart(viewModel.graphInfo.value)
+                            ChangeChartTimeButtons(
+                                viewModel.getChartTime()
+                            ) { time ->
+                                viewModel.changeChartTime(time)
+                            }
                         }
-                    }
-                    item {
-                        Chart(viewModel.graphInfo.value)
-                        ChangeChartTimeButtons(
-                            viewModel.getChartTime()
-                        ) { time ->
-                            viewModel.changeChartTime(time)
+                        item {
+                            ChangeRatesItem(crypto)
                         }
-                    }
-                    item {
-                        ChangeRatesItem(crypto)
-                    }
-                    item {
-                        CryptoDetailInfo(crypto, viewModel.getPrimaryCurrency().uppercase())
-                    }
+                        item {
+                            CryptoDetailInfo(crypto, viewModel.getPrimaryCurrency().uppercase())
+                        }
 
+                    }
                 }
+
+
 
             }
         }

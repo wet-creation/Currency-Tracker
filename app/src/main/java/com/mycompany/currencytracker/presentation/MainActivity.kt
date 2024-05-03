@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.messaging.ktx.messaging
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
+import com.mycompany.currencytracker.data.datastore.Theme
 import com.mycompany.currencytracker.data.remote.dto.user.UserLoginDto
 import com.mycompany.currencytracker.domain.repository.UserRepository
 import com.mycompany.currencytracker.presentation.navigation.MainScreen
@@ -36,7 +38,12 @@ class MainActivity : ComponentActivity() {
         requestNotificationPermission()
 
         setContent {
-            CurrencyTrackerTheme {
+            val theme = when (userSetting.getTheme() ){
+                Theme.SYSTEM -> isSystemInDarkTheme()
+                Theme.DARK -> true
+                Theme.LIGHT -> false
+            }
+            CurrencyTrackerTheme(theme) {
                 MainScreen()
             }
         }
