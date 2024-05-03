@@ -16,6 +16,7 @@ import com.mycompany.currencytracker.domain.use_case.crypto.GetCryptoGraphInfoUs
 import com.mycompany.currencytracker.domain.use_case.user.DeleteCryptoFromFavoriteUseCase
 import com.mycompany.currencytracker.domain.use_case.user.FollowedCryptoUseCase
 import com.mycompany.currencytracker.domain.use_case.user.GetCryptoFollowStatusUseCase
+import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -51,54 +52,68 @@ class CryptoDetailViewModel @Inject constructor(
     }
 
     private fun getCoin(coinSym: String) {
-        getCryptoDetailsUseCase(coinSym, userSettings.getSelectViewCurrency()).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _state.value = CryptoDetailState(cryptoSelected = result.data)
-                }
+        viewModelScope.launch {
+            getCryptoDetailsUseCase(
+                coinSym,
+                userSettings.getSelectViewCurrency()
+            ).collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        _state.value = _state.value.copy(cryptoSelected = result.data)
+                    }
 
-                is Resource.Error -> {
+                    is Resource.Error -> {
+                        _state.value = CryptoDetailState(error = result.asErrorUiText())
+                    }
 
-                }
-
-                is Resource.Loading -> {
-                    _state.value = CryptoDetailState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-
-        getCryptoFollowStatusUseCase(coinSym, userSettings.getUser().id).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _followStatus.value = true
-                }
-                is Resource.Error -> {
-                    _followStatus.value = false
-                }
-                is Resource.Loading -> {
-
+                    is Resource.Loading -> {
+                        _state.value = CryptoDetailState(isLoading = true)
+                    }
                 }
             }
-        }.launchIn(viewModelScope)
 
-        getCryptoGraphInfo(
-            userSettings.getChartTime(),
-            coinSym,
-            userSettings.getSelectViewCurrency()
-        ).onEach { result ->
-            if (result is Resource.Success) {
-                _graphInfo.value = result.data
+            getCryptoFollowStatusUseCase(coinSym, userSettings.getUser().id).collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        _followStatus.value = true
+                    }
+
+                    is Resource.Error -> {
+                        _followStatus.value = false
+                    }
+
+                    is Resource.Loading -> {
+
+                    }
+                }
             }
-        }.launchIn(viewModelScope)
 
-        getCryptoDetailsUseCase(coinSym, userSettings.getSecondViewCurrency()).onEach { result ->
-            if (result is Resource.Success) {
-                _secondRate.doubleValue = result.data.rate
-
+            getCryptoGraphInfo(
+                userSettings.getChartTime(),
+                coinSym,
+                userSettings.getSelectViewCurrency()
+            ).collect { result ->
+                if (result is Resource.Success) {
+                    _graphInfo.value = result.data
+                }
+                else if (result is Resource.Error)
+                    _state.value = CryptoDetailState(error = result.asErrorUiText())
             }
 
+            getCryptoDetailsUseCase(
+                coinSym,
+                userSettings.getSecondViewCurrency()
+            ).collect { result ->
+                if (result is Resource.Success) {
+                    _secondRate.doubleValue = result.data.rate
+                    _state.value = _state.value.copy(isLoading = false)
+                }
+                else if (result is Resource.Error)
+                    _state.value = CryptoDetailState(error = result.asErrorUiText())
+            }
+        }
 
-        }.launchIn(viewModelScope)
+
     }
 
     private fun updateGraphInfo(coinSym: String) {
@@ -112,38 +127,55 @@ class CryptoDetailViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-    fun addCryptoToFollowList(coinSym: String){
-        val coin = FollowedCrypto(userSettings.getUser().id, 0, symbol = coinSym, null, null, null, null,null,0.0)
+
+    fun addCryptoToFollowList(coinSym: String) {
+        val coin = FollowedCrypto(
+            userSettings.getUser().id,
+            0,
+            symbol = coinSym,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.0
+        )
 
         followedCryptoUseCase(coin).onEach {
             when (it) {
                 is Resource.Success -> {
                     _followStatus.value = true
                 }
+
                 is Resource.Error -> {
 
                 }
+
                 is Resource.Loading -> {
 
                 }
             }
         }.launchIn(viewModelScope)
     }
-    fun removeCryptoFromFavoriteList(coinSym: String){
+
+    fun removeCryptoFromFavoriteList(coinSym: String) {
         deleteCryptoFromFavoriteUseCase(userSettings.getUser().id, coinSym).onEach {
             when (it) {
                 is Resource.Success -> {
                     _followStatus.value = false
                 }
+
                 is Resource.Error -> {
 
                 }
+
                 is Resource.Loading -> {
 
                 }
             }
         }.launchIn(viewModelScope)
     }
+
     fun changeChartTime(newTime: String) {
         viewModelScope.launch {
             userSettings.saveChartTime(newTime)
@@ -153,7 +185,7 @@ class CryptoDetailViewModel @Inject constructor(
         }
     }
 
-    fun refreshScreen(){
+    fun refreshScreen() {
         savedStateHandle.get<String>(Constants.PARAM_COIN_ID)?.let { coinId ->
             getCoin(coinId)
         }

@@ -15,6 +15,7 @@ import com.mycompany.currencytracker.domain.use_case.currency.GetFiatGraphInfoUs
 import com.mycompany.currencytracker.domain.use_case.user.DeleteFiatFromFavoriteUseCase
 import com.mycompany.currencytracker.domain.use_case.user.FollowedFiatUseCase
 import com.mycompany.currencytracker.domain.use_case.user.GetFiatFollowStatusUseCase
+import com.mycompany.currencytracker.presentation.common.asErrorUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -47,50 +48,55 @@ class FiatDetailViewModel @Inject constructor(
     }
 
     private fun getCurrency(currencySym: String) {
-        getFiatAdditionalInfo(currencySym, userSettings.getFiat()).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _state.value = FiatDetailState(currency = result.data)
-                }
-                is Resource.Error -> {
-
-                }
-                is Resource.Loading -> {
-                    _state.value = FiatDetailState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-
-        getFiatFollowStatusUseCase(currencySym, userSettings.getUser().id).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _followStatus.value = true
-                }
-                is Resource.Error -> {
-                    _followStatus.value = false
-                }
-                is Resource.Loading -> {
-
+        viewModelScope.launch {
+            getFiatAdditionalInfo(currencySym, userSettings.getFiat()).collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        _state.value = _state.value.copy(currency = result.data)
+                    }
+                    is Resource.Error -> {
+                        _state.value = FiatDetailState(error = result.asErrorUiText())
+                    }
+                    is Resource.Loading -> {
+                        _state.value = FiatDetailState(isLoading = true)
+                    }
                 }
             }
-        }.launchIn(viewModelScope)
 
-        updateGraphInfo(userSettings.getChartTime(), currencySym)
+            getFiatFollowStatusUseCase(currencySym, userSettings.getUser().id).onEach { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        _followStatus.value = true
+                    }
+                    is Resource.Error -> {
+                        _followStatus.value = false
+                    }
+                    is Resource.Loading -> {
+
+                    }
+                }
+            }
+
+            updateGraphInfo(userSettings.getChartTime(), currencySym)
+
+        }
+
     }
-    private fun updateGraphInfo(chartTime: String, currencySym: String) {
-        getFiatGraphInfo(chartTime, currencySym, userSettings.getFiat()).onEach {
+    private suspend fun updateGraphInfo(chartTime: String, currencySym: String) {
+        getFiatGraphInfo(chartTime, currencySym, userSettings.getFiat()).collect {
             when (it) {
                 is Resource.Success -> {
                     _graphInfo.value = it.data
+                    _state.value = _state.value.copy(isLoading = false)
                 }
                 is Resource.Error -> {
-
+                    _state.value = FiatDetailState(error = it.asErrorUiText())
                 }
                 is Resource.Loading -> {
 
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
     fun addFiatToFavoriteList(fiatSym: String){
         val fiat = FollowedFiat(userSettings.getUser().id, 0, symbol = fiatSym, null, null, null, 0.0)
@@ -130,6 +136,12 @@ class FiatDetailViewModel @Inject constructor(
             savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let {currencyId ->
                 updateGraphInfo(userSettings.getChartTime(), currencyId)
             }
+        }
+    }
+
+    fun refreshScreen() {
+        savedStateHandle.get<String>(PARAM_CURRENCY_ID)?.let { coinId ->
+            getCurrency(coinId)
         }
     }
 }
