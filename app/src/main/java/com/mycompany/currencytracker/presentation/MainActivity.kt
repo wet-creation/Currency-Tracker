@@ -1,19 +1,22 @@
 package com.mycompany.currencytracker.presentation
 
 import android.Manifest
+import android.app.LocaleManager
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.LocaleList
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.messaging.ktx.messaging
 import com.mycompany.currencytracker.data.datastore.StoreUserSetting
-import com.mycompany.currencytracker.data.datastore.Theme
 import com.mycompany.currencytracker.data.remote.dto.user.UserLoginDto
 import com.mycompany.currencytracker.domain.repository.UserRepository
 import com.mycompany.currencytracker.presentation.navigation.MainScreen
@@ -38,12 +41,7 @@ class MainActivity : ComponentActivity() {
         requestNotificationPermission()
 
         setContent {
-            val theme = when (userSetting.getTheme() ){
-                Theme.SYSTEM -> isSystemInDarkTheme()
-                Theme.DARK -> true
-                Theme.LIGHT -> false
-            }
-            CurrencyTrackerTheme(theme) {
+            CurrencyTrackerTheme(userSetting) {
                 MainScreen()
             }
         }
@@ -92,5 +90,15 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+    }
+}
+
+fun changeLocales(context: Context, localeString: String){
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        context.getSystemService(LocaleManager::class.java)
+            .applicationLocales = LocaleList.forLanguageTags(localeString)
+    }
+    else {
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(localeString))
     }
 }

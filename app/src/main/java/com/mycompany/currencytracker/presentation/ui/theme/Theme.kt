@@ -5,6 +5,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 
 
 private val DarkColorScheme = darkColorScheme(
@@ -31,16 +34,51 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun CurrencyTrackerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    userSetting: StoreUserSetting,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) {
+    val theme = userSetting.userTheme.collectAsState(initial = 0)
+
+    val systemUiController = rememberSystemUiController()
+
+
+    val colorScheme = if (theme.value == 1) {
+        systemUiController.setStatusBarColor(
+            color = DarkColorScheme.background
+        )
+        systemUiController.setNavigationBarColor(
+            color = DarkColorScheme.primaryContainer
+        )
         DarkColorScheme
-    } else {
+    } else if (theme.value == 2){
+        systemUiController.setStatusBarColor(
+            color = LightColorScheme.background
+        )
+        systemUiController.setNavigationBarColor(
+            color = LightColorScheme.primaryContainer
+        )
         LightColorScheme
     }
-
-
+    else {
+        if (isSystemInDarkTheme()){
+            systemUiController.setStatusBarColor(
+                color = DarkColorScheme.background
+            )
+            systemUiController.setNavigationBarColor(
+                color = DarkColorScheme.primaryContainer
+            )
+            DarkColorScheme
+        }
+        else{
+            systemUiController.setStatusBarColor(
+                color = LightColorScheme.background
+            )
+            systemUiController.setNavigationBarColor(
+                color = LightColorScheme.primaryContainer
+            )
+            LightColorScheme
+        }
+    }
 
     MaterialTheme(
         colorScheme = colorScheme,

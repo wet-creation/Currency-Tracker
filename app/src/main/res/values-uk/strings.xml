@@ -79,4 +79,10 @@
     <string name="logout">Вийти</string>
     <string name="name_text">Ім`я</string>
     <string name="surname_text">Прізвище</string>
+    <string name="theme_text">Тема</string>
+    <string name="theme_system">Система тема</string>
+    <string name="theme_dark">Темна</string>
+    <string name="theme_light">Свтіла</string>
+    <string name="selLanguage">Українська</string>
+
 </resources>

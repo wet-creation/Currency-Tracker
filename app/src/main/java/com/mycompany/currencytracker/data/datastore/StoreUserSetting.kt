@@ -54,7 +54,7 @@ class StoreUserSetting
             preferences[USER_IS_FIAT_SELECTED] ?: true
         }
 
-    val user_theme: Flow<Int> = context.dataStore.data
+    val userTheme: Flow<Int> = context.dataStore.data
         .map { preferences ->
             preferences[USER_THEME] ?: Theme.SYSTEM.ordinal
         }
@@ -100,10 +100,10 @@ class StoreUserSetting
     fun getTheme(): Theme {
         var theme: Theme
         runBlocking {
-            theme = if (user_theme.first() == 0){
+            theme = if (userTheme.first() == 0){
                 Theme.SYSTEM
             }
-            else if (user_theme.first() == 1){
+            else if (userTheme.first() == 1){
                 Theme.DARK
             }
             else{

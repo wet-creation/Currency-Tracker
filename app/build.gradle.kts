@@ -98,7 +98,7 @@ dependencies {
 
     implementation("androidx.core:core-splashscreen:1.0.1")
 
-
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
     // Coroutines
     //noinspection GradleDependency
