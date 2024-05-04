@@ -1,5 +1,6 @@
 package com.mycompany.currencytracker.presentation.crypto_detail.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.domain.model.currency.crypto.CryptoDetails
+import com.mycompany.currencytracker.presentation.common.AutoResizedText
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDecimalPlaces
 import com.mycompany.currencytracker.presentation.common.currency.crypto.calculateDigit
 import java.time.LocalDate
@@ -50,18 +52,20 @@ fun TableItem(name: String, value: String) {
             .padding(start = 20.dp, top = 15.dp, bottom = 15.dp, end = 15.dp)
     ) {
         Column(
-            modifier = Modifier.weight(1f)
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.weight(1.5f).fillMaxWidth()
         ){
-            Text(
+            AutoResizedText(
                 style = MaterialTheme.typography.bodyLarge,
                 text = name,
                 color = MaterialTheme.colorScheme.primary
             )
         }
         Column(
-            modifier = Modifier.weight(1f)
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.weight(1f).fillMaxWidth()
         ){
-            Text(
+            AutoResizedText(
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.align(Alignment.End),
                 text = value,
@@ -80,7 +84,8 @@ fun TableItemAllTimeValue(name: String, value: String, time: Long) {
             .padding(start = 20.dp, top = 15.dp, bottom = 15.dp, end = 15.dp)
     ) {
         Column(
-            modifier = Modifier.weight(1f)
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.weight(1.5f).fillMaxWidth()
         ){
             Text(
                 style = MaterialTheme.typography.bodyLarge,
@@ -89,7 +94,8 @@ fun TableItemAllTimeValue(name: String, value: String, time: Long) {
             )
         }
         Column(
-            modifier = Modifier.weight(1f)
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.weight(1f).fillMaxWidth()
         ){
             Text(
                 style = MaterialTheme.typography.labelSmall,

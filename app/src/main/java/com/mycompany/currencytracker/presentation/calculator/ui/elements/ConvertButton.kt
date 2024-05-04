@@ -44,7 +44,7 @@ fun ConvertButton(
                 color = MaterialTheme.colorScheme.primary
             )
         else
-            Icon(painter = painterResource(id = icon), contentDescription = "", tint = Color.White)
+            Icon(painter = painterResource(id = icon), contentDescription = "", tint = MaterialTheme.colorScheme.primary)
     }
 
 }

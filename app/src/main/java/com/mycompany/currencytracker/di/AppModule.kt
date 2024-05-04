@@ -1,6 +1,8 @@
 package com.mycompany.currencytracker.di
 
+import android.content.Context
 import com.mycompany.currencytracker.common.Constants.CURRENCY_TRACKER_REST_API_URL
+import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerConvertService
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCryptoService
 import com.mycompany.currencytracker.data.remote.services.currency.CurrencyTrackerCurrencyService
@@ -22,6 +24,7 @@ import com.mycompany.currencytracker.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -85,6 +88,12 @@ abstract class AppModule {
         @Singleton
         fun provideConvertRepository(api: CurrencyTrackerConvertService): ConvertRepository {
             return ConvertIml(api)
+        }
+
+        @Provides
+        @Singleton
+        fun provideStoreUserSettings(@ApplicationContext context: Context): StoreUserSetting {
+            return StoreUserSetting(context)
         }
 
         @Provides

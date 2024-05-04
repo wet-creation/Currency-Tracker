@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mycompany.currencytracker.domain.model.user.User
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -16,7 +15,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class StoreUserSetting
-@Inject constructor(@ApplicationContext private val context: Context) {
+@Inject constructor( private val context: Context) {
     companion object {
         private val Context.dataStore by preferencesDataStore("UserSetting")
         val USER_MAIN_CURRENCY_KEY = stringPreferencesKey("user_main_currency")
@@ -192,6 +191,6 @@ class StoreUserSetting
     }
 }
 
-enum class Theme(){
+enum class Theme{
     SYSTEM, DARK, LIGHT
 }

@@ -15,12 +15,13 @@ import com.mycompany.currencytracker.data.datastore.StoreUserSetting
 import com.mycompany.currencytracker.data.remote.dto.user.UserLoginDto
 import com.mycompany.currencytracker.domain.repository.UserRepository
 import com.mycompany.currencytracker.presentation.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
-
+@AndroidEntryPoint
 class FirebaseMessageService
     : FirebaseMessagingService() {
 

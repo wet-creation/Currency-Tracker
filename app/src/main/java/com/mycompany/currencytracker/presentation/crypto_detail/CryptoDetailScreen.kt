@@ -87,9 +87,6 @@ fun CryptoDetailScreen(
                             .padding(start = 20.dp, end = 20.dp)
                     ) {
                         item {
-
-                        }
-                        item {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
