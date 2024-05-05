@@ -24,7 +24,7 @@ class SaveNotificationUseCase @Inject constructor(
                     userNotificationSave.userId,
                     userNotificationSave.symbol,
                     convertDto.response,
-                    convertDto.response > convertDto.rate,
+                    userNotificationSave.isMoreThanTarget,
                     userNotificationSave.isConstantly,
                     "",
                     0,

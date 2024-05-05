@@ -2,8 +2,8 @@ package com.mycompany.currencytracker.data.repository
 
 import com.mycompany.currencytracker.data.remote.dto.user.CryptoFollowedDto
 import com.mycompany.currencytracker.data.remote.dto.user.CryptoFollowedListDto
-import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedListDto
 import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedDto
+import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedListDto
 import com.mycompany.currencytracker.data.remote.services.user.UserServiceFollowed
 import com.mycompany.currencytracker.domain.repository.UserFollowedRepository
 import javax.inject.Inject
@@ -31,14 +31,14 @@ class UserFollowedImpl @Inject constructor(
         userID: String,
         baseCurrency: String
     ): List<CryptoFollowedDto> {
-        return api.getFollowedCrypto(userID)
+        return api.getFollowedCrypto(userID, baseCurrency)
     }
 
     override suspend fun getFollowedFiat(
         userID: String,
         baseCurrency: String
     ): List<FiatFollowedDto> {
-        return api.getFollowedFiat(userID)
+        return api.getFollowedFiat(userID, baseCurrency)
     }
 
     override suspend fun getCryptoFollowStatus(path: String, userId: String): CryptoFollowedDto {

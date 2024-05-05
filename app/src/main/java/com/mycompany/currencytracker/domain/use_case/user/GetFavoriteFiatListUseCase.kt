@@ -14,7 +14,7 @@ import javax.inject.Inject
 class GetFavoriteFiatListUseCase @Inject constructor(
     val userFollowedRepository: UserFollowedRepository
 ) {
-    operator fun invoke(userId: String, baseCurrency : String = "USD") = flow<Resource<List<FollowedFiat>, DataError.Network>> {
+    operator fun invoke(userId: String, baseCurrency : String) = flow<Resource<List<FollowedFiat>, DataError.Network>> {
         try {
             emit(Resource.Loading())
             val fiat = userFollowedRepository.getFollowedFiat(userId, baseCurrency)

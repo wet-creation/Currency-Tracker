@@ -97,13 +97,13 @@ fun TableItemAllTimeValue(name: String, value: String, time: Long) {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.weight(1f).fillMaxWidth()
         ){
-            Text(
+            AutoResizedText(
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.align(Alignment.End),
                 text = value,
                 color = MaterialTheme.colorScheme.secondary
             )
-            Text(
+            AutoResizedText(
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.align(Alignment.End).padding(top = 3.dp),
                 text = formatTimestampWithDaysSince(time),

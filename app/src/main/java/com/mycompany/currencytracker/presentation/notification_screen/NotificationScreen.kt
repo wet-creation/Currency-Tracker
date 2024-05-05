@@ -47,6 +47,7 @@ import com.mycompany.currencytracker.R
 import com.mycompany.currencytracker.presentation.calculator.states.ActionInput
 import com.mycompany.currencytracker.presentation.calculator.ui.elements.ConvertButton
 import com.mycompany.currencytracker.presentation.common.AutoResizedText
+import com.mycompany.currencytracker.presentation.navigation.BottomBarScreen
 import com.mycompany.currencytracker.presentation.navigation.Screen
 import com.mycompany.currencytracker.presentation.notification_screen.list.main.YellowButton
 
@@ -209,9 +210,12 @@ fun NotificationScreen(navController: NavController) {
         }
 
         LaunchedEffect(key1 = viewModel.navigate.value) {
+
+            val route = if (navController.backQueue.map { it.destination.route }
+                    .contains(Screen.NotificationScreenList.route)) Screen.NotificationScreenList.route else navController.backQueue[navController.backQueue.size - 2].destination.route
             if (viewModel.navigate.value)
                 navController.popBackStack(
-                    Screen.NotificationScreenList.route,
+                    route?: BottomBarScreen.Home.route,
                     false
                 )
         }
@@ -305,7 +309,10 @@ fun CustomButton(
             .width(88.dp)
             .height(38.dp)
             .clickable { onClick() }
-            .background(color = MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(size = 21.dp))) {
+            .background(
+                color = MaterialTheme.colorScheme.secondaryContainer,
+                shape = RoundedCornerShape(size = 21.dp)
+            )) {
         Text(
             text = text, style = TextStyle(
                 fontSize = 16.sp,

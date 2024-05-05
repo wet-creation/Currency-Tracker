@@ -98,12 +98,17 @@ class NotificationScreenViewMode @Inject constructor(
             val selectedCurrency =
                 if (_screenState.value.fiatSelected) _screenState.value.symbolForFiat
                 else _screenState.value.symbolForCrypto
+            val rate =
+                if (_screenState.value.fiatSelected) _screenState.value.currentPriceForFiat
+                    .replace(",",".").toDouble()
+                else _screenState.value.currentPriceForCrypto
+                    .replace(",",".").toDouble()
             val notification = UserNotification(
                 ",",
                 userSetting.getUser().id,
                 _screenState.value.crypto.symbol,
                 _screenState.value.writtenPrice.toDouble(),
-                isMoreThanTarget = false,
+                isMoreThanTarget = _screenState.value.writtenPrice.toDouble() > rate,
                 isConstantly = false,
                 image = "", marketCapRank = 0,
                 name = ""

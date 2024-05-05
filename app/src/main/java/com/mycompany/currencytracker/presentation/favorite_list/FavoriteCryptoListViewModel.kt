@@ -15,6 +15,7 @@ import com.mycompany.currencytracker.presentation.favorite_list.ui.states.Crypto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,17 +33,20 @@ class FavoriteCryptoListViewModel @Inject constructor(
     }
 
     override fun getItems(vararg args: Any) {
-        getFavoriteCryptoUseCase(
-            userId = userSetting.getUser().id
-        ).onEach {
-            when (it) {
-                is Resource.Error ->
-                    _state.value = CryptoFollowedState(error = it.asErrorUiText())
+        viewModelScope.launch {
+            getFavoriteCryptoUseCase(
+                userId = userSetting.getUser().id,
+                userSetting.getSelectViewCurrency()
+            ).collect() {
+                when (it) {
+                    is Resource.Error ->
+                        _state.value = CryptoFollowedState(error = it.asErrorUiText())
 
-                is Resource.Loading -> _state.value = CryptoFollowedState(isLoading = true)
-                is Resource.Success -> _state.value = CryptoFollowedState(items = it.data)
+                    is Resource.Loading -> _state.value = CryptoFollowedState(isLoading = true)
+                    is Resource.Success -> _state.value = CryptoFollowedState(items = it.data)
+                }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     fun delete(followedCrypto: FollowedCrypto) {

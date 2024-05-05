@@ -15,6 +15,7 @@ import com.mycompany.currencytracker.presentation.favorite_list.ui.states.FiatFo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,23 +34,26 @@ class FavoriteFiatListViewModel @Inject constructor(
     }
 
     override fun getItems(vararg args: Any) {
-        getFavoriteFiatUseCase(
-            userId = userSetting.getUser().id
-        ).onEach {
-            when (it) {
-                is Resource.Error -> {
-                    _state.value = FiatFollowedState(error = it.asErrorUiText())
-                }
+        viewModelScope.launch {
+            getFavoriteFiatUseCase(
+                userId = userSetting.getUser().id,
+                userSetting.getFiat()
+            ).collect {
+                when (it) {
+                    is Resource.Error -> {
+                        _state.value = FiatFollowedState(error = it.asErrorUiText())
+                    }
 
-                is Resource.Loading -> {
-                    _state.value = FiatFollowedState(isLoading = true)
-                }
+                    is Resource.Loading -> {
+                        _state.value = FiatFollowedState(isLoading = true)
+                    }
 
-                is Resource.Success -> {
-                    _state.value = FiatFollowedState(items = it.data)
+                    is Resource.Success -> {
+                        _state.value = FiatFollowedState(items = it.data)
+                    }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     fun delete(followedFiat: FollowedFiat) {

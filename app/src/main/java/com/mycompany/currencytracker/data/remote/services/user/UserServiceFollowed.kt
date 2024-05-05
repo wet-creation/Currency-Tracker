@@ -2,8 +2,8 @@ package com.mycompany.currencytracker.data.remote.services.user
 
 import com.mycompany.currencytracker.data.remote.dto.user.CryptoFollowedDto
 import com.mycompany.currencytracker.data.remote.dto.user.CryptoFollowedListDto
-import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedListDto
 import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedDto
+import com.mycompany.currencytracker.data.remote.dto.user.FiatFollowedListDto
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -22,9 +22,9 @@ interface UserServiceFollowed {
     @DELETE("user/fiatlist/delete")
     suspend fun deleteFiatFollowed(@Query("userId") userId: String, @Query("symbol") symbol: String)
     @GET("user/followed/crypto")
-    suspend fun getFollowedCrypto(@Query("userId") id: String): List<CryptoFollowedDto>
+    suspend fun getFollowedCrypto(@Query("userId") id: String, @Query("baseCurrency") baseCurrency: String): List<CryptoFollowedDto>
     @GET("user/followed/fiat")
-    suspend fun getFollowedFiat(@Query("userId") id: String): List<FiatFollowedDto>
+    suspend fun getFollowedFiat(@Query("userId") id: String, @Query("baseCurrency") baseCurrency: String): List<FiatFollowedDto>
     @GET("/user/followed/crypto/{symbol}")
     suspend fun getCryptoFollowStatus(@Path("symbol") path: String, @Query("userId") id: String): CryptoFollowedDto
     @GET("/user/followed/fiat/{symbol}")
